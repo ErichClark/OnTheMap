@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct StudentLocationsJSON: Codable {
+    var results: [StudentLocation]?
+}
+
 struct  StudentLocation: Codable {
     
     var objectID: String? // auto-generated id/key by Parse, uniquely identifies StudentLocation
