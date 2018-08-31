@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct  StudentLocation {
+struct  StudentLocation: Codable {
     
     var objectID: String? // auto-generated id/key by Parse, uniquely identifies StudentLocation
-    let key = Constants.Keys.UdacityID // Recommended as Udacity acc ID
-    let firstName = Constants.Keys.FirstName // Hardcoded Fictional Names
-    let lastName = Constants.Keys.LastName
+    var uniqueKey = Constants.Keys.UdacityID // Recommended as Udacity acc ID
+    var firstName = Constants.Keys.FirstName // Hardcoded Fictional Names
+    var lastName = Constants.Keys.LastName
     var mapString: String? // plain text for geocoding student location- "Mountain View, CA"
-    let mediaURL = Constants.Keys.MediaURL // URL provided by the student
+    var mediaURL = Constants.Keys.MediaURL // URL provided by the student
     var latitude: Float? // (ranges from -90 to 90)
     var longitude: Float? // (ranges from -180 to 180)
     var createdAt: Date? // When location was created
