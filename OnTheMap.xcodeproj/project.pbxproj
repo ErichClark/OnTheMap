@@ -14,6 +14,9 @@
 		778D75C62138E703002AA868 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 778D75C42138E703002AA868 /* LaunchScreen.storyboard */; };
 		778D75CE2138E732002AA868 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75CD2138E732002AA868 /* Constants.swift */; };
 		778D75D02138E9B2002AA868 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75CF2138E9B2002AA868 /* Structs.swift */; };
+		778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D52139C1AB002AA868 /* GCDBlackbox.swift */; };
+		778D75D82139C249002AA868 /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D72139C249002AA868 /* MapClient.swift */; };
+		778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		778D75C72138E703002AA868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		778D75CD2138E732002AA868 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		778D75CF2138E9B2002AA868 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
+		778D75D52139C1AB002AA868 /* GCDBlackbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackbox.swift; sourceTree = "<group>"; };
+		778D75D72139C249002AA868 /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
+		778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				778D75BB2138E700002AA868 /* AppDelegate.swift */,
+				778D75D52139C1AB002AA868 /* GCDBlackbox.swift */,
 				778D75D42138F4A9002AA868 /* Model */,
 				778D75D12138F450002AA868 /* View Controllers */,
 				778D75D22138F472002AA868 /* Storyboards */,
@@ -96,8 +103,10 @@
 		778D75D42138F4A9002AA868 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				778D75D72139C249002AA868 /* MapClient.swift */,
 				778D75CD2138E732002AA868 /* Constants.swift */,
 				778D75CF2138E9B2002AA868 /* Structs.swift */,
+				778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -175,7 +184,10 @@
 			files = (
 				778D75D02138E9B2002AA868 /* Structs.swift in Sources */,
 				778D75BE2138E700002AA868 /* ViewController.swift in Sources */,
+				778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */,
 				778D75BC2138E700002AA868 /* AppDelegate.swift in Sources */,
+				778D75D82139C249002AA868 /* MapClient.swift in Sources */,
+				778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */,
 				778D75CE2138E732002AA868 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,7 +334,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4NUNP9WDTT;
-				INFOPLIST_FILE = OnTheMap/Info.plist;
+				INFOPLIST_FILE = OnTheMap/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -340,7 +352,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4NUNP9WDTT;
-				INFOPLIST_FILE = OnTheMap/Info.plist;
+				INFOPLIST_FILE = OnTheMap/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
