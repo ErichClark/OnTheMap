@@ -30,6 +30,9 @@ extension MapClient {
     
     // MARK: Methods
     struct Methods {
+        static let AllStudents = "https://parse.udacity.com/parse/classes/StudentLocation"
+        static let Limit = "limit=" // use with Int
+        static let Skip = "skip=" // use with Int
         
     }
     
@@ -37,6 +40,7 @@ extension MapClient {
     struct ParameterKeys {
         static let ParseApplicationIDKey = "Parse_Application_ID"
         static let RestApiKey = "REST_API_Key"
+        static let ReverseOrder = "-"
     }
     
     
