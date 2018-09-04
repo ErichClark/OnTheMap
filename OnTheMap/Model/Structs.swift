@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import MapKit
+import Contacts
 
 struct AllStudentLocationsJSON: Decodable {
     var results: [StudentLocation]?
 }
 
-struct  StudentLocation: Decodable {
+class StudentLocation: NSObject, MKLocation, Decodable {
     
         var objectID: String? // auto-generated id/key by Parse, uniquely identifies StudentLocation
         var uniqueKey: String?
@@ -25,6 +27,18 @@ struct  StudentLocation: Decodable {
         var createdAt: Date? // When location was created
         var updatedAt: Date? // When last updated
         var ACL: String? // Parse Access Control List: permissions for StudentLoaction entry
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+    }
+    
+    func mapItem() -> MKMapItem {
+        let addressDict = [CNPostalAddressCityKey: mapString!]
+        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDict)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = firstName! + " " + lastName!
+        return mapItem
+    }
 }
 
 struct POSTorPUTStudentLocationJSON: Encodable {

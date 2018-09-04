@@ -11,6 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController {
 
+    var studentPins: [StudentLocation] = []
     let centralStudentPin = StudentLocation()
     let defaultZoomDistance = CLLocationDistance(MapClient.Constants.DefaultMapZoom)
     
@@ -18,19 +19,38 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var lowerTabBar: UITabBarItem!
     
+    // MARK: -Check for Location when in use permissions
+    let locationManager = CLLocationManager()
+    func checkLocationAuthorizationStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            mapView.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        checkLocationAuthorizationStatus()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Center view on a kilometer radius of provided student pin
         let initialLocation = CLLocation(latitude: centralStudentPin.latitude!, longitude: centralStudentPin.longitude!)
         // Do any additional setup after loading the view.
         centerOnMapLocation(location: initialLocation)
+        
+        // Set the mapview delegate
+        mapView.delegate = self
+        mapView.register(PinView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
 
+    // Map centering helper
     func centerOnMapLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, defaultZoomDistance, defaultZoomDistance)
-        
-        mapView.setRegion(coordinateRegion, animated: true)
+            mapView.setRegion(coordinateRegion, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,4 +83,8 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+extension MapViewController: MKMapViewDelegate {
+    
 }

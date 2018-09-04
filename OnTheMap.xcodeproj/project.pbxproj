@@ -19,6 +19,8 @@
 		778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */; };
 		77EC8E37213EE91C00EAAE9E /* TableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */; };
 		77EC8E39213EEAA100EAAE9E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E38213EEAA100EAAE9E /* MapViewController.swift */; };
+		77EC8E3C213F096300EAAE9E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E3B213F096300EAAE9E /* MapView.swift */; };
+		77EC8E3E213F3E3800EAAE9E /* Students.json in Resources */ = {isa = PBXBuildFile; fileRef = 77EC8E3D213F3E3800EAAE9E /* Students.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHelper.swift; sourceTree = "<group>"; };
 		77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTabViewController.swift; sourceTree = "<group>"; };
 		77EC8E38213EEAA100EAAE9E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		77EC8E3B213F096300EAAE9E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		77EC8E3D213F3E3800EAAE9E /* Students.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Students.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,8 +76,10 @@
 				778D75D52139C1AB002AA868 /* GCDBlackbox.swift */,
 				778D75D42138F4A9002AA868 /* Model */,
 				778D75D12138F450002AA868 /* View Controllers */,
+				77EC8E3A213F093B00EAAE9E /* Views */,
 				778D75D22138F472002AA868 /* Storyboards */,
 				778D75D32138F494002AA868 /* Resources */,
+				77EC8E3D213F3E3800EAAE9E /* Students.json */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -115,6 +121,14 @@
 				778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		77EC8E3A213F093B00EAAE9E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				77EC8E3B213F096300EAAE9E /* MapView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,6 +192,7 @@
 				778D75C62138E703002AA868 /* LaunchScreen.storyboard in Resources */,
 				778D75C32138E703002AA868 /* Assets.xcassets in Resources */,
 				778D75C12138E700002AA868 /* Main.storyboard in Resources */,
+				77EC8E3E213F3E3800EAAE9E /* Students.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +210,7 @@
 				77EC8E39213EEAA100EAAE9E /* MapViewController.swift in Sources */,
 				778D75D82139C249002AA868 /* MapClient.swift in Sources */,
 				77EC8E37213EE91C00EAAE9E /* TableTabViewController.swift in Sources */,
+				77EC8E3C213F096300EAAE9E /* MapView.swift in Sources */,
 				778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */,
 				778D75CE2138E732002AA868 /* Constants.swift in Sources */,
 			);
