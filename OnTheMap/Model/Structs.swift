@@ -10,11 +10,11 @@ import Foundation
 import MapKit
 import Contacts
 
-struct AllStudentLocationsJSON: Decodable {
+struct AllStudentLocations: Decodable {
     var results: [StudentLocation]?
 }
 
-class StudentLocation: NSObject, MKLocation, Decodable {
+class StudentLocation: NSObject, Decodable {
     
         var objectID: String? // auto-generated id/key by Parse, uniquely identifies StudentLocation
         var uniqueKey: String?

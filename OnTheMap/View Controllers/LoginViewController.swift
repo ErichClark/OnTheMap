@@ -29,6 +29,7 @@ class LoginViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
+        performSegue(withIdentifier: "loginComplete", sender: AnyObject.self)
     }
     
 }

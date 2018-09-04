@@ -11,7 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController {
 
-    var studentPins: [StudentLocation] = []
+    var allStudentLocations = AllStudentLocations()
     let centralStudentPin = StudentLocation()
     let defaultZoomDistance = CLLocationDistance(MapClient.Constants.DefaultMapZoom)
     
@@ -38,9 +38,9 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         // Center view on a kilometer radius of provided student pin
-        let initialLocation = CLLocation(latitude: centralStudentPin.latitude!, longitude: centralStudentPin.longitude!)
+        //let initialLocation = CLLocation(latitude: centralStudentPin.latitude!, longitude: centralStudentPin.longitude!)
         // Do any additional setup after loading the view.
-        centerOnMapLocation(location: initialLocation)
+        //centerOnMapLocation(location: initialLocation)
         
         // Set the mapview delegate
         mapView.delegate = self
@@ -51,6 +51,17 @@ class MapViewController: UIViewController {
     func centerOnMapLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, defaultZoomDistance, defaultZoomDistance)
             mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func loadInitialPins() {
+        do {
+            let fileName = Bundle.main.path(forResource: "Students", ofType: "json")
+            let optionalData = try? Data(contentsOf: URL(fileURLWithPath: fileName!))
+
+            let jsonDecoder = JSONDecoder()
+            let newStudentLocations = try? jsonDecoder.decode(AllStudentLocations.self, from: optionalData!)
+            allStudentLocations = newStudentLocations!
+        }
     }
     
     override func didReceiveMemoryWarning() {
