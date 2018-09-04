@@ -17,6 +17,8 @@
 		778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D52139C1AB002AA868 /* GCDBlackbox.swift */; };
 		778D75D82139C249002AA868 /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D72139C249002AA868 /* MapClient.swift */; };
 		778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */; };
+		77EC8E37213EE91C00EAAE9E /* TableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */; };
+		77EC8E39213EEAA100EAAE9E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E38213EEAA100EAAE9E /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		778D75D52139C1AB002AA868 /* GCDBlackbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackbox.swift; sourceTree = "<group>"; };
 		778D75D72139C249002AA868 /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
 		778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHelper.swift; sourceTree = "<group>"; };
+		77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTabViewController.swift; sourceTree = "<group>"; };
+		77EC8E38213EEAA100EAAE9E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				778D75BD2138E700002AA868 /* LoginViewController.swift */,
+				77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */,
+				77EC8E38213EEAA100EAAE9E /* MapViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -186,7 +192,9 @@
 				778D75BE2138E700002AA868 /* LoginViewController.swift in Sources */,
 				778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */,
 				778D75BC2138E700002AA868 /* AppDelegate.swift in Sources */,
+				77EC8E39213EEAA100EAAE9E /* MapViewController.swift in Sources */,
 				778D75D82139C249002AA868 /* MapClient.swift in Sources */,
+				77EC8E37213EE91C00EAAE9E /* TableTabViewController.swift in Sources */,
 				778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */,
 				778D75CE2138E732002AA868 /* Constants.swift in Sources */,
 			);

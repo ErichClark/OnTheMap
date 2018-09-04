@@ -26,6 +26,7 @@ extension MapClient {
         static let HeaderFields = [
             "content-type": "application/json;charset=utf-8",
             "accept": "application/json;charset=utf-8"]
+        static let DefaultMapZoom = 1000
     }
     
     // MARK: Methods

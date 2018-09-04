@@ -93,10 +93,22 @@
                                 <rect key="frame" x="0.0" y="21" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="On the Map" id="f1d-9f-CtI">
-                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="7H5-Hb-FRe"/>
+                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="7H5-Hb-FRe">
+                                            <connections>
+                                                <action selector="logOut:" destination="pRG-ap-FDL" id="Kbr-ce-RtF"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="add" id="2go-eO-ISs"/>
-                                            <barButtonItem systemItem="refresh" id="xWN-tR-Lmr"/>
+                                            <barButtonItem systemItem="add" id="2go-eO-ISs">
+                                                <connections>
+                                                    <action selector="addEntry:" destination="pRG-ap-FDL" id="Pbl-Qb-9ub"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="refresh" id="xWN-tR-Lmr">
+                                                <connections>
+                                                    <action selector="reload:" destination="pRG-ap-FDL" id="jD8-Yp-eVu"/>
+                                                </connections>
+                                            </barButtonItem>
                                         </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
@@ -137,13 +149,14 @@
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-selected" id="78p-Uy-1cu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="peg-Ps-8lb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="pRG-ap-FDL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="805.60000000000002" y="396.25187406296857"/>
+            <point key="canvasLocation" x="815" y="450"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="bvc-cd-Od9">
             <objects>
-                <viewController id="OAd-yc-x3L" sceneMemberID="viewController">
+                <viewController id="OAd-yc-x3L" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Tr-A1-5hl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -155,32 +168,61 @@
                                 <rect key="frame" x="0.0" y="17" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="On the Map" id="Ptl-gV-nRJ">
-                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="YKH-Fa-qqP"/>
+                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="YKH-Fa-qqP">
+                                            <connections>
+                                                <action selector="logOut:" destination="OAd-yc-x3L" id="TwX-ds-dUc"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="add" id="9BO-kU-opJ"/>
-                                            <barButtonItem systemItem="refresh" id="t9F-8J-s4j"/>
+                                            <barButtonItem systemItem="add" id="9BO-kU-opJ">
+                                                <connections>
+                                                    <action selector="addPin:" destination="OAd-yc-x3L" id="Ls1-Rt-k9R"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="refresh" id="t9F-8J-s4j">
+                                                <connections>
+                                                    <action selector="reload:" destination="OAd-yc-x3L" id="WLd-Km-Tou"/>
+                                                </connections>
+                                            </barButtonItem>
                                         </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ero-2a-Gpl" userLabel="finishedButton">
+                                <rect key="frame" x="10" y="568" width="355" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="FINISHED">
+                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="finished:" destination="OAd-yc-x3L" eventType="touchUpInside" id="sMs-0b-Er7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="IRQ-af-xXS" firstAttribute="leading" secondItem="rGT-d8-ucd" secondAttribute="leading" id="24R-Gz-y6i"/>
                             <constraint firstItem="rGT-d8-ucd" firstAttribute="top" secondItem="IRQ-af-xXS" secondAttribute="bottom" id="DaV-uH-qPh"/>
+                            <constraint firstItem="W0i-Kb-DHt" firstAttribute="trailing" secondItem="ero-2a-Gpl" secondAttribute="trailing" constant="10" id="dbl-1z-vAk"/>
                             <constraint firstItem="rGT-d8-ucd" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" id="eQL-8x-G89"/>
+                            <constraint firstItem="ero-2a-Gpl" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" constant="10" id="efK-Lx-DZS"/>
                             <constraint firstItem="IRQ-af-xXS" firstAttribute="trailing" secondItem="rGT-d8-ucd" secondAttribute="trailing" id="gvu-Ek-ss5"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="bottom" secondItem="IRQ-af-xXS" secondAttribute="bottom" constant="557" id="hth-oz-Xy9"/>
+                            <constraint firstItem="W0i-Kb-DHt" firstAttribute="bottom" secondItem="ero-2a-Gpl" secondAttribute="bottom" constant="20" id="keb-NZ-WIP"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="trailing" secondItem="rGT-d8-ucd" secondAttribute="trailing" id="qok-lh-End"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="bottom" secondItem="rGT-d8-ucd" secondAttribute="bottom" id="r9m-Hh-1Nb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="W0i-Kb-DHt"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" selectedImage="icon_mapview-selected" id="xnH-Xt-6T3"/>
+                    <connections>
+                        <outlet property="lowerTabBar" destination="xnH-Xt-6T3" id="gPc-zc-Lvt"/>
+                        <outlet property="mapView" destination="rGT-d8-ucd" id="wal-Hy-jLS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evI-OX-LGh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="816.79999999999995" y="-293.70314842578711"/>
+            <point key="canvasLocation" x="816.5" y="-294.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="rXi-uU-9zN">

@@ -20,8 +20,8 @@ struct  StudentLocation: Decodable {
         var lastName: String? //= Constants.Keys.LastName
         var mapString: String? // plain text for geocoding student location- "Mountain View, CA"
         var mediaURL:String? //= Constants.Keys.MediaURL // URL provided by the student
-        var latitude: Float? // (ranges from -90 to 90)
-        var longitude: Float? // (ranges from -180 to 180)
+        var latitude: Double? // (ranges from -90 to 90)
+        var longitude: Double? // (ranges from -180 to 180)
         var createdAt: Date? // When location was created
         var updatedAt: Date? // When last updated
         var ACL: String? // Parse Access Control List: permissions for StudentLoaction entry
@@ -34,8 +34,8 @@ struct POSTorPUTStudentLocationJSON: Encodable {
     let mediaURL:String = MapClient.Constants.MediaURLValue // URL provided by the student
     
     let mapString: String // plain text for geocoding student location- "Mountain View, CA"
-    let latitude: Float // (ranges from -90 to 90)
-    let longitude: Float // (ranges from -180 to 180)
+    let latitude: Double // (ranges from -90 to 90)
+    let longitude: Double // (ranges from -180 to 180)
     // TODO: - Can a POST request be made if the objectID=nil value is sent?
     // The only difference between PUT and POST is this key:value
     let objectID: String? // For PUT auto-generated id/key by Parse, uniquely identifies StudentLocation
