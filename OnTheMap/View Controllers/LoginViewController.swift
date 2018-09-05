@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signUpLabel: UILabel!
+    @IBOutlet weak var errorTextfield: UITextField!
     
     var mapClient: MapClient!
     
@@ -53,7 +54,7 @@ class LoginViewController: UIViewController {
     }
     
     func displayError(_ errorString: String) {
-        print(errorString)
+        errorTextfield.text = errorString
     }
     
 }

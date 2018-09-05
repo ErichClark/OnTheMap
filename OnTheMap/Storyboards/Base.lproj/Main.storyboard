@@ -57,13 +57,23 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mvO-VT-tbg" userLabel="errorTextfield">
+                                <rect key="frame" x="35" y="496" width="294" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DLG-1U-NUk" firstAttribute="centerX" secondItem="lC5-8W-bph" secondAttribute="centerX" constant="-7" id="3PF-8K-3Zq"/>
+                            <constraint firstItem="mvO-VT-tbg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="35" id="3QD-dE-Ppp"/>
+                            <constraint firstItem="mvO-VT-tbg" firstAttribute="top" secondItem="lC5-8W-bph" secondAttribute="bottom" constant="88" id="4DJ-6Z-R2F"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="IVH-qg-JSL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mvO-VT-tbg" secondAttribute="trailing" constant="46" id="N6R-bI-luD"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SQL-aS-Kph"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lC5-8W-bph" secondAttribute="trailing" constant="40" id="aHR-AP-a0k"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mvO-VT-tbg" secondAttribute="bottom" constant="141" id="bNZ-yk-urO"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="top" secondItem="DLG-1U-NUk" secondAttribute="bottom" constant="35.5" id="rDc-id-oHY"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sEq-kD-mfW"/>
                             <constraint firstItem="DLG-1U-NUk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-7" id="zUb-ao-Hgc"/>
@@ -72,6 +82,7 @@
                     </view>
                     <connections>
                         <outlet property="emailField" destination="I3W-D9-Q0i" id="t1z-1W-S7w"/>
+                        <outlet property="errorTextfield" destination="mvO-VT-tbg" id="fVY-xe-DdG"/>
                         <outlet property="passwordField" destination="LBQ-K7-3be" id="LPd-Hd-D2o"/>
                         <outlet property="signUpLabel" destination="Fbq-ha-fKm" id="EMr-9Q-2rX"/>
                         <segue destination="11r-6s-E61" kind="show" identifier="loginComplete" id="cE7-UD-AQb"/>
@@ -79,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-774" y="-13"/>
+            <point key="canvasLocation" x="-775.20000000000005" y="-13.043478260869566"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="k2p-hS-l2Y">
