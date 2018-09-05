@@ -17,6 +17,8 @@ class MapClient: NSObject {
     // shared session
     var session = URLSession.shared
     var allStudents: AllStudentLocations? = nil
+    var sessionID: String? = nil
+    var accountKey: String? = nil
     // Config?
     //
     
@@ -65,11 +67,11 @@ class MapClient: NSObject {
         var errorInPOSTRequest: String? = nil
         let headerFields = Constants.HeaderFields
         
-//        var parametersWithApiKey = parameters
-//        parametersWithApiKey[ParameterKeys.RestApiKey] = Constants.REST_API_Key_Value
-//        parametersWithApiKey[ParameterKeys.ParseApplicationIDKey] = Constants.Parse_Application_ID_Value
+        var parametersWithApiKey = parameters
+        parametersWithApiKey[ParameterKeys.RestApiKey] = Constants.REST_API_Key_Value
+        parametersWithApiKey[ParameterKeys.ParseApplicationIDKey] = Constants.Parse_Application_ID_Value
         
-        let url = MapClient.URLFromParameters(parameters, withPathExtension: method)
+        let url = MapClient.URLFromParameters(parametersWithApiKey, withPathExtension: method)
         var urlRequest = URLRequest(url: url)
         print("** URL request for \(method) = \(urlRequest)")
         
@@ -77,7 +79,8 @@ class MapClient: NSObject {
         do {
             let jsonEncoder = JSONEncoder()
             postBody = try jsonEncoder.encode(postObject)
-            print("** postBody = \(postBody)")
+            print("** postBody = ")
+            print(String(data: postBody!, encoding: .utf8)!)
         }
         catch{print(error)}
         
@@ -88,18 +91,30 @@ class MapClient: NSObject {
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
             errorInPOSTRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
+            print("**task started -")
             
+            var dataToParse = data!
+            // Remove Udacity security characters
+            if method == MapClient.Methods.POSTUdacityForSession {
+                let range = Range(5..<data!.count)
+                let newData = data?.subdata(in: range)
+                dataToParse = newData!
+            }
+            print("** dataToParse = ")
+            print(String(data: dataToParse, encoding: .utf8)!)
             var jsonObject: TResponse? = nil
             do {
                 let jsonDecoder = JSONDecoder()
-                let jsonData = Data(data!)
+                let jsonData = Data(dataToParse)
                 jsonObject = try jsonDecoder.decode(TResponse.self, from: jsonData)
+                completionHandlerForPOST(jsonObject, nil)
             } catch {
-                errorInPOSTRequest = "** Could not parse JSON"
-                return
+                errorInPOSTRequest = "** Could not parse JSON as \(TResponse.self)"
+                errorInPOSTRequest = MapClient.parseUdacityError(data: dataToParse)
+                completionHandlerForPOST(nil, errorInPOSTRequest)
             }
             
-            completionHandlerForPOST(jsonObject, errorInPOSTRequest)
+            //completionHandlerForPOST(jsonObject, errorInPOSTRequest)
         }
         
         task.resume()
@@ -126,6 +141,17 @@ class MapClient: NSObject {
         return components.url!
     }
     
+    class func parseUdacityError(data: Data) -> String {
+        var returnString: String = ""
+        do {
+            let jsonDecoder = JSONDecoder()
+            let jsonData = Data(data)
+            let errorObject = try jsonDecoder.decode(UdacityError.self, from: jsonData)
+            returnString = "Error \(errorObject.status): \(errorObject.error)"
+        }
+        catch { returnString = error as! String }
+        return returnString
+    }
     // MARK: Shared Instance
     
     class func sharedInstance() -> MapClient {

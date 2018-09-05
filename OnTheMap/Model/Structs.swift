@@ -86,12 +86,12 @@ struct POSTSessionResponseJSON: Decodable {
 
 struct Account: Decodable {
     var registered: Bool
-    var key: Int
+    var key: String
 }
 
 struct Session: Decodable {
     var id: String
-    var expiration: Date
+    var expiration: String
 }
 
 struct POSTStudentLocationResponseJSON: Decodable {
@@ -103,4 +103,7 @@ struct PUTStudentLocationResponseJSON: Decodable {
     var vupdatedAt: Date
 }
 
-
+struct UdacityError: Decodable {
+    var status: Int
+    var error: String
+}

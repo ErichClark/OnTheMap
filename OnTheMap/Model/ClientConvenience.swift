@@ -26,6 +26,12 @@ extension MapClient {
         let method = MapClient.Methods.POSTUdacityForSession
         let _ = taskForPOSTMethod(method, parameters: parameters, postObject: postBody) { (results:POSTSessionResponseJSON?, errorString:String?) in
             
+//            print("** Account key = \(results?.account.key)")
+//            print("** Session id = \(results?.session.id)")
+            
+            MapClient.sharedInstance().accountKey = results?.account.key
+            MapClient.sharedInstance().sessionID = results?.session.id
+            
             if errorString != nil {
                 completionHandlerForloginToUdacity(false, nil, errorString)
             } else if results?.account.key == nil {

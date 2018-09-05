@@ -11,8 +11,8 @@ import Foundation
 extension MapClient {
     
     struct Constants {
-        static let Parse_Application_ID_Value = "NO_VALUE"
-        static let REST_API_Key_Value = "NO_VALUE"
+        static let Parse_Application_ID_Value = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let REST_API_Key_Value = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         static let UdacityIDValue = "????"
         static let FirstNameValue = "Waldo"
         static let LastNameValue = "Martin"
