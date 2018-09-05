@@ -31,6 +31,7 @@ extension MapClient {
     
     // MARK: Methods
     struct Methods {
+        static let POSTUdacityForSession = "https://www.udacity.com/api/session"
         static let AllStudents = "https://parse.udacity.com/parse/classes/StudentLocation"
         static let Limit = "limit=" // use with Int
         static let Skip = "skip=" // use with Int

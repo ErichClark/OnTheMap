@@ -59,6 +59,15 @@ struct MapErrorJSON {
     // TODO: -
 }
 
+struct SessionPOSTBody: Encodable {
+    let udacity: Udacity
+}
+
+struct Udacity: Encodable {
+    let username: String
+    let password: String
+}
+
 struct GetUdacityUserDataJSONResponse: Decodable {
      var user: UdacityUser
 }

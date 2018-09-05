@@ -16,7 +16,7 @@ class MapClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    
+    var allStudents: AllStudentLocations? = nil
     // Config?
     //
     
@@ -121,5 +121,14 @@ class MapClient: NSObject {
         }
         
         return components.url!
+    }
+    
+    // MARK: Shared Instance
+    
+    class func sharedInstance() -> MapClient {
+        struct Singleton {
+            static var sharedInstance = MapClient()
+        }
+        return Singleton.sharedInstance
     }
 }

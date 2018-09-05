@@ -10,15 +10,19 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    // MARK: - Outlets
+    // MARK: - Properties
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var signUpLabel: UILabel!
     
+    var mapClient: MapClient!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        // get the Map client
+        mapClient = MapClient.sharedInstance()
+        
     }
 
     override func didReceiveMemoryWarning() {
