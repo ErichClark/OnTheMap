@@ -18,6 +18,7 @@ extension MapClient {
     }
     
     func loginToUdacity(username: String, password: String, _ completionHandlerForloginToUdacity: @escaping (_ success: Bool, _ sessionId: String?, _ errorString: String?) -> Void) {
+        print("username = \(username), password = \(password)")
         
         let postBody = SessionPOSTBody(udacity: Udacity(username: username, password: password))
         

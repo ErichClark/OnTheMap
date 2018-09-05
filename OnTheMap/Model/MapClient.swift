@@ -76,7 +76,8 @@ class MapClient: NSObject {
         var postBody: Data? = nil
         do {
             let jsonEncoder = JSONEncoder()
-            postBody = try jsonEncoder.encode(postBody)
+            postBody = try jsonEncoder.encode(postObject)
+            print("** postBody = \(postBody)")
         }
         catch{print(error)}
         
@@ -107,13 +108,13 @@ class MapClient: NSObject {
     
     
     // Build URL from parameters
-    class func URLFromParameters(_ parameters: [String:String], withPathExtension: String? = nil) -> URL {
-        print("parameters = \(parameters)")
+    class func URLFromParameters(_ parameters: [String:String], withPathExtension: String?) -> URL {
+        //print("parameters = \(parameters)")
         var components = URLComponents()
         components.scheme = Constants.ApiScheme
         components.host = Constants.ApiHost
         components.path = withPathExtension ?? ""
-        print("components = \(components)" )
+        //print("components = \(components)" )
         components.queryItems = [URLQueryItem]()
         if parameters.count > 0 {
             for (key, value) in parameters {
@@ -121,7 +122,7 @@ class MapClient: NSObject {
                 components.queryItems!.append(queryItem)
             }
         }
-        print(components.string!)
+        //print(components.string!)
         return components.url!
     }
     
