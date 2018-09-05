@@ -11,17 +11,17 @@ import Foundation
 extension MapClient {
     
     struct Constants {
-        static let Parse_Application_ID_Value = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-        static let REST_API_Key_Value = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        static let Parse_Application_ID_Value = "NO_VALUE"
+        static let REST_API_Key_Value = "NO_VALUE"
         static let UdacityIDValue = "????"
         static let FirstNameValue = "Waldo"
         static let LastNameValue = "Martin"
         static let MediaURLValue = "www.qalang.com"
         
         static let ApiScheme = "https"
-        static let ApiHost = ""
-        static let ApiPath = ""
-        static let AuthorizationPath = ""
+        static let ApiHost = "www.udacity.com"
+        static let ApiPath = "/api"
+        static let AuthorizationPath = "/api/session"
         static let AccountURL = ""
         static let HeaderFields = [
             "content-type": "application/json;charset=utf-8",
@@ -31,7 +31,7 @@ extension MapClient {
     
     // MARK: Methods
     struct Methods {
-        static let POSTUdacityForSession = "https://www.udacity.com/api/session"
+        static let POSTUdacityForSession = "/api/session"
         static let AllStudents = "https://parse.udacity.com/parse/classes/StudentLocation"
         static let Limit = "limit=" // use with Int
         static let Skip = "skip=" // use with Int
@@ -46,6 +46,6 @@ extension MapClient {
     }
     
     
-    
+    //[REST_API_Key=QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY, Parse_Application_ID=QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr]
     
 }

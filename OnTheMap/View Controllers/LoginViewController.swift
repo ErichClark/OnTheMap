@@ -33,8 +33,25 @@ class LoginViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
-        performSegue(withIdentifier: "loginComplete", sender: AnyObject.self)
+        mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) { (success, sessionID, errorString) in
+            performUIUpdatesOnMain {
+                if success {
+                    self.loadStudentLocations()
+                } else {
+                    self.displayError(errorString!)
+                }
+            }
+        }
+        //performSegue(withIdentifier: "loginComplete", sender: AnyObject.self)
     }
     
+    func loadStudentLocations() {
+        print("TODO- implement load student lGocations.")
+        //mapClient.getAllStudentLocations()
+    }
+    
+    func displayError(_ errorString: String) {
+        print(errorString)
+    }
 }
 

@@ -65,11 +65,11 @@ class MapClient: NSObject {
         var errorInPOSTRequest: String? = nil
         let headerFields = Constants.HeaderFields
         
-        var parametersWithApiKey = parameters
-        parametersWithApiKey[ParameterKeys.RestApiKey] = Constants.REST_API_Key_Value
-        parametersWithApiKey[ParameterKeys.ParseApplicationIDKey] = Constants.Parse_Application_ID_Value
+//        var parametersWithApiKey = parameters
+//        parametersWithApiKey[ParameterKeys.RestApiKey] = Constants.REST_API_Key_Value
+//        parametersWithApiKey[ParameterKeys.ParseApplicationIDKey] = Constants.Parse_Application_ID_Value
         
-        let url = MapClient.URLFromParameters(parametersWithApiKey, withPathExtension: method)
+        let url = MapClient.URLFromParameters(parameters, withPathExtension: method)
         var urlRequest = URLRequest(url: url)
         print("** URL request for \(method) = \(urlRequest)")
         
@@ -108,18 +108,20 @@ class MapClient: NSObject {
     
     // Build URL from parameters
     class func URLFromParameters(_ parameters: [String:String], withPathExtension: String? = nil) -> URL {
-        
+        print("parameters = \(parameters)")
         var components = URLComponents()
         components.scheme = Constants.ApiScheme
         components.host = Constants.ApiHost
-        components.path = Constants.ApiPath + (withPathExtension ?? "")
+        components.path = withPathExtension ?? ""
+        print("components = \(components)" )
         components.queryItems = [URLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
+        if parameters.count > 0 {
+            for (key, value) in parameters {
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                components.queryItems!.append(queryItem)
+            }
         }
-        
+        print(components.string!)
         return components.url!
     }
     
