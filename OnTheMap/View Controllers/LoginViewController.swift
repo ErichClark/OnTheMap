@@ -34,13 +34,14 @@ class LoginViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
-        mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) { (success, sessionID, errorString) in
+        mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
+            (success, sessionID, errorString) in
 
             performUIUpdatesOnMain {
                 if success {
                     self.loadStudentLocations()
                 } else {
-                    self.displayError(errorString!)
+                    self.displayTextOnUI(errorString!)
                 }
             }
         }
@@ -49,12 +50,22 @@ class LoginViewController: UIViewController {
     }
     
     func loadStudentLocations() {
-        print("TODO- implement load student locations.")
-        //mapClient.getAllStudentLocations()
+        displayTextOnUI("Getting student locations...")
+        mapClient.getAllStudentLocations() {
+            (success, AllStudentLocations, errorString) in
+            
+            performUIUpdatesOnMain {
+                if success {
+                    self.displayTextOnUI("List of Student Locations loaded!")
+                } else {
+                    self.displayTextOnUI(errorString)
+                }
+            }
+        }
     }
     
-    func displayError(_ errorString: String) {
-        errorTextfield.text = errorString
+    func displayTextOnUI(_ displayString: String) {
+        errorTextfield.text = displayString
     }
     
 }

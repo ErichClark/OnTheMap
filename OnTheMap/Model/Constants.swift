@@ -22,6 +22,7 @@ extension MapClient {
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
         static let AuthorizationPath = "/api/session"
+        static let StudentQueryPath = "/classes/StudentLocation"
         static let AccountURL = ""
         static let HeaderFields = [
             "content-type": "application/json;charset=utf-8",

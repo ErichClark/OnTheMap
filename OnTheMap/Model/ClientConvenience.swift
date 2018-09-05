@@ -12,13 +12,9 @@ import UIKit
 // MARK: - Client Convenience Methods
 
 extension MapClient {
-    
-    func getAllStudentLocations(_ completionHandlerForGetLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
-        
-    }
+
     
     func loginToUdacity(username: String, password: String, _ completionHandlerForloginToUdacity: @escaping (_ success: Bool, _ sessionId: String?, _ errorString: String?) -> Void) {
-        print("username = \(username), password = \(password)")
         
         let postBody = SessionPOSTBody(udacity: Udacity(username: username, password: password))
         
@@ -47,6 +43,24 @@ extension MapClient {
             }
         }
         
+    }
+    
+    func getAllStudentLocations(_ completionHandlerForGetLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
+        
+        let parameters: [String:String] = [:]
+        let method = MapClient.Methods.AllStudents
+        let _ = taskForGETMethod(method, parameters: parameters) { (results:AllStudentLocations?, errorString:String?) in
+            
+            if errorString != nil {
+                completionHandlerForGetLocations(false, nil, errorString)
+            } else if results?.results?.count == 0 {
+                let errorString = "No student locations were returned"
+                completionHandlerForGetLocations(false, nil, errorString)
+            } else {
+                print("** SUCCESS! At least one student location was found.")
+                completionHandlerForGetLocations(true, results, nil)
+            }
+        }
     }
     
     private func getSingleStudentLocation(_ completionHandlerForGetSingleLocation: @escaping (_ success: Bool, _ singleStudentLocation: StudentLocation?, _ errorString: String?) -> Void) {
