@@ -60,6 +60,10 @@ extension MapClient {
         }
     }
     
+    private func cleanStudentLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForCleanStudentLocations: @escaping (_ cleanedStudentLocations: [StudentLocation]?, _ errorString: String?) -> Void ) {
+        
+    }
+    
     private func getSingleStudentLocation(_ completionHandlerForGetSingleLocation: @escaping (_ success: Bool, _ singleStudentLocation: StudentLocation?, _ errorString: String?) -> Void) {
         
     }

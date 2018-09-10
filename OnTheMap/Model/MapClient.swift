@@ -54,12 +54,13 @@ class MapClient: NSObject {
             
             var jsonObject: T? = nil
             do {
-                print("** MapClient is attempting to parse the following as a \(T.self) :")
-                print(String(data: data!, encoding: .utf8)!)
+                print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data?.count))")
+                // Verbose data printing
+                // print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(data!)
                 jsonObject = try jsonDecoder.decode(T.self, from: jsonData)
-                print(jsonObject.debugDescription)
+                //print(jsonObject.debugDescription)
                 completionHandlerForGET(jsonObject, nil)
             } catch {
                 errorInGETRequest = "** Could not parse data response from GET request \(jsonObject.debugDescription)"
@@ -88,8 +89,9 @@ class MapClient: NSObject {
         do {
             let jsonEncoder = JSONEncoder()
             postBody = try jsonEncoder.encode(postObject)
-            print("** postBody = ")
-            print(String(data: postBody!, encoding: .utf8)!)
+            print("** postBody = \(String(describing: postBody))")
+            // Verbose printing
+            // print(String(data: postBody!, encoding: .utf8)!)
         }
         catch{print(error)}
         
@@ -99,7 +101,7 @@ class MapClient: NSObject {
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
             errorInPOSTRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
-            print("**task started -")
+            print("**POST task started -")
             
             var dataToParse = data!
             // Remove Udacity security characters
@@ -108,14 +110,15 @@ class MapClient: NSObject {
                 let newData = data?.subdata(in: range)
                 dataToParse = newData!
             }
-            
+//            Verbose Printing
 //            print("** dataToParse = ")
 //            print(String(data: dataToParse, encoding: .utf8)!)
             
             var jsonObject: TResponse? = nil
             do {
-                print("** MapClient is attempting to parse the following as a \(TResponse.self) :")
-                print(String(data: data!, encoding: .utf8)!)
+                print("** MapClient is attempting to parse the following as a \(TResponse.self) : \(dataToParse)")
+//              Verbose printing
+//                print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(dataToParse)
                 jsonObject = try jsonDecoder.decode(TResponse.self, from: jsonData)
@@ -145,6 +148,7 @@ class MapClient: NSObject {
             }
             components?.queryItems = queryItems
         }
+        // Verbose Components printing
         //print(components.string!)
         return (components?.url!)!
     }

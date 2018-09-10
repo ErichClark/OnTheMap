@@ -57,7 +57,9 @@ class LoginViewController: UIViewController {
 
             performUIUpdatesOnMain {
                 if success {
-                    self.displayTextOnUI("List of Student Locations loaded!")
+                    var successMessage = "Success! "
+                    successMessage += "\(String(describing: AllStudentLocations?.results?.count)) students returned."
+                    self.displayTextOnUI(successMessage)
                 } else {
                     self.displayTextOnUI(errorString!)
                 }
