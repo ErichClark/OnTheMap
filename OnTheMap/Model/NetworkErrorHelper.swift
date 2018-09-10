@@ -19,11 +19,7 @@ func CheckForNetworkError(data: Data?, httpURLResponse: HTTPURLResponse?, error:
     
     /* GUARD: Did we get a successful 2XX response? */
     guard let statusCode = (httpURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-        if let errorMessageFromJSON = parseErrorFromReturnedJSON(methodDescription: nil, data: data!) {
-            returnError = errorMessageFromJSON
-        } else {
-            returnError = "Unable to decode JSON from non-200 response"
-        }
+        returnError = "Unable to decode JSON from non-200 response"
         return returnError
     }
     

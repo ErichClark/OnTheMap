@@ -11,42 +11,37 @@ import Foundation
 extension MapClient {
     
     struct Constants {
-        static let Parse_Application_ID_Value = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
-        static let REST_API_Key_Value = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-        static let UdacityIDValue = "????"
+        static let DefaultMapZoom = 100000
+    }
+    
+    // Addresses
+    struct Addresses {
+        static let UdacityAPIAddress = "https://www.udacity.com/api/session"
+        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&skip=50"
+    }
+    
+    struct Headers {
+        static let ParseApplicationIDKey = "X-Parse-Application-Id"
+        static let ParseApplicationIDValue = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let RestApiKey = "X-Parse-REST-API-Key"
+        static let RestAPIKeyValue = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+        
+        static let CharSetHeaderFields = [
+            "content-type": "application/json",
+            "accept": "application/json"]
+    }
+    
+    struct DummyUserData {
         static let FirstNameValue = "Waldo"
         static let LastNameValue = "Martin"
-        static let MediaURLValue = "www.qalang.com"
-        
-        static let ApiScheme = "https"
-        static let ApiHost = "www.udacity.com"
-        static let ApiPath = "/api"
-        static let AuthorizationPath = "/api/session"
-        static let StudentQueryPath = "/classes/StudentLocation"
-        static let AccountURL = ""
-        static let HeaderFields = [
-            "content-type": "application/json;charset=utf-8",
-            "accept": "application/json;charset=utf-8"]
-        static let DefaultMapZoom = 1000
+        static let MediaURLValue = "https://en.wikipedia.org/wiki/Where%27s_Wally%3F"
     }
     
     // MARK: Methods
-    struct Methods {
-        static let POSTUdacityForSession = "/api/session"
-        static let AllStudents = "https://parse.udacity.com/parse/classes/StudentLocation"
+    struct OptionalParameters {
         static let Limit = "limit=" // use with Int
         static let Skip = "skip=" // use with Int
-        
-    }
-    
-    // MARK: parameter keys
-    struct ParameterKeys {
-        static let ParseApplicationIDKey = "Parse_Application_ID"
-        static let RestApiKey = "REST_API_Key"
         static let ReverseOrder = "-"
     }
-    
-    
-    //[REST_API_Key=QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY, Parse_Application_ID=QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr]
     
 }

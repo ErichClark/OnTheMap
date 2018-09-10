@@ -12,7 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
 
     var allStudentLocations = AllStudentLocations()
-    let centralStudentPin = StudentLocation()
+    //let centralStudentPin = StudentLocation(from: Decoder)
     let defaultZoomDistance = CLLocationDistance(MapClient.Constants.DefaultMapZoom)
     
     // MARK: - Outlets

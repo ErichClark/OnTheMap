@@ -14,45 +14,78 @@ struct AllStudentLocations: Decodable {
     var results: [StudentLocation]?
 }
 
-class StudentLocation: NSObject, Decodable {
+class StudentLocation: Decodable {
     
-        var objectID: String? // auto-generated id/key by Parse, uniquely identifies StudentLocation
-        var uniqueKey: String?
-        var firstName: String?
-        var lastName: String? //= Constants.Keys.LastName
-        var mapString: String? // plain text for geocoding student location- "Mountain View, CA"
-        var mediaURL:String? //= Constants.Keys.MediaURL // URL provided by the student
-        var latitude: Double? // (ranges from -90 to 90)
-        var longitude: Double? // (ranges from -180 to 180)
-        var createdAt: Date? // When location was created
-        var updatedAt: Date? // When last updated
-        var ACL: String? // Parse Access Control List: permissions for StudentLoaction entry
+    var objectId: String?// auto-generated id/key by Parse, uniquely identifies StudentLocation
+    var uniqueKey: String?
+    var firstName: String?
+    var lastName: String? //= Constants.Keys.LastName
+    var mapString: String?// plain text for geocoding student location-
+    var mediaURL: String? //= Constants.Keys.MediaURL // URL provided by the student
+    var latitude: Double? // (ranges from -90 to 90)
+    var longitude: Double? // (ranges from -180 to 180)
+    var createdAt: String? // When location was created
+    var updatedAt: String? // When last updated
+    //var ACL: String? // Parse Access Control List: permissions for StudentLoaction entry
     
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+    enum UserResponseKeys: String, CodingKey {
+        case objectId = "objectId"
+        case uniqueKey = "uniqueKey"
+        case firstName = "firstName"
+        case lastName = "lastName"
+        case mapString = "mapString"
+        case mediaURL = "mediaURL"
+        case latitude = "latitude"
+        case longitude = "longitude"
+        case createdAt = "createdAt"
+        case updatedAt = "updatedAt"
     }
     
-    func mapItem() -> MKMapItem {
-        let addressDict = [CNPostalAddressCityKey: mapString!]
-        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: addressDict)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = firstName! + " " + lastName!
-        return mapItem
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: UserResponseKeys.self)
+    
+        self.objectId = try container.decodeIfPresent(String.self, forKey: .objectId)
+        self.uniqueKey = try container.decodeIfPresent(String.self, forKey: .uniqueKey)
+        self.firstName = try container.decodeIfPresent(String.self, forKey: .firstName)
+        self.lastName = try container.decodeIfPresent(String.self, forKey: .lastName)
+        self.mapString = try container.decodeIfPresent(String.self, forKey: .mapString)
+        self.mediaURL = try container.decodeIfPresent(String.self, forKey: .mediaURL)
+        self.latitude = try container.decodeIfPresent(Double.self, forKey: .latitude)
+        self.longitude = try container.decodeIfPresent(Double.self, forKey: .longitude)
+        self.createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
+        self.updatedAt = try container.decodeIfPresent(String.self, forKey: .updatedAt)
     }
+    
+    
 }
+func getCoordinate(latitude: Double, longitude: Double) -> CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+    }
+
+// TODO: -
+//func getMapItem(student: StudentLocation) -> MKMapItem {
+//        let addressDict = [CNPostalAddressCityKey: student.mapString!]
+//    let coordinate = getCoordinate(latitude: student.latitude!, longitude: student.longitude!)
+//
+    //let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: student.addressDict)
+//        let mapItem = MKMapItem(placemark: placemark)
+//        mapItem.name = student.firstName! + " " + student.lastName!
+//        return mapItem
+//    }
+//}
 
 struct POSTorPUTStudentLocationJSON: Encodable {
-    let uniqueKey: String = MapClient.Constants.UdacityIDValue // Recommended as Udacity acc ID
-    let firstName: String = MapClient.Constants.FirstNameValue
-    let lastName: String  = MapClient.Constants.LastNameValue
-    let mediaURL:String = MapClient.Constants.MediaURLValue // URL provided by the student
+    let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
+    let firstName: String = MapClient.DummyUserData.FirstNameValue
+    let lastName: String  = MapClient.DummyUserData.LastNameValue
+    let mediaURL:String = MapClient.DummyUserData.MediaURLValue // URL provided by the student
     
     let mapString: String // plain text for geocoding student location- "Mountain View, CA"
     let latitude: Double // (ranges from -90 to 90)
     let longitude: Double // (ranges from -180 to 180)
-    // TODO: - Can a POST request be made if the objectID=nil value is sent?
+    // TODO: - Can a POST request be made if the objectId=nil value is sent?
     // The only difference between PUT and POST is this key:value
-    let objectID: String? // For PUT auto-generated id/key by Parse, uniquely identifies StudentLocation
+    let objectId: String? // For PUT auto-generated id/key by Parse, uniquely identifies StudentLocation
 }
 
 struct MapErrorJSON {
@@ -96,7 +129,7 @@ struct Session: Decodable {
 
 struct POSTStudentLocationResponseJSON: Decodable {
     var createdAt: Date
-    var objectID: String
+    var objectId: String
 }
 
 struct PUTStudentLocationResponseJSON: Decodable {

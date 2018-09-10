@@ -19,8 +19,8 @@ extension MapClient {
         let postBody = SessionPOSTBody(udacity: Udacity(username: username, password: password))
         
         let parameters: [String:String] = [:]
-        let method = MapClient.Methods.POSTUdacityForSession
-        let _ = taskForPOSTMethod(method, parameters: parameters, postObject: postBody) { (results:POSTSessionResponseJSON?, errorString:String?) in
+        let address = MapClient.Addresses.UdacityAPIAddress
+        let _ = taskForPOSTMethod(address, optionalQueries: parameters, postObject: postBody) { (results:POSTSessionResponseJSON?, errorString:String?) in
             
 //            print("** Account key = \(results?.account.key)")
 //            print("** Session id = \(results?.session.id)")
@@ -47,18 +47,15 @@ extension MapClient {
     
     func getAllStudentLocations(_ completionHandlerForGetLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
-        let parameters: [String:String] = [:]
-        let method = MapClient.Methods.AllStudents
-        let _ = taskForGETMethod(method, parameters: parameters) { (results:AllStudentLocations?, errorString:String?) in
+        let address = MapClient.Addresses.ParseServerAddress
+        let _ = taskForGETMethod(address, optionalQueries: nil) { (results:AllStudentLocations?, errorString:String?) in
             
-            if errorString != nil {
-                completionHandlerForGetLocations(false, nil, errorString)
-            } else if results?.results?.count == 0 {
-                let errorString = "No student locations were returned"
-                completionHandlerForGetLocations(false, nil, errorString)
-            } else {
+            if results != nil {
+                MapClient.sharedInstance().allStudents = results
                 print("** SUCCESS! At least one student location was found.")
                 completionHandlerForGetLocations(true, results, nil)
+            } else {
+                completionHandlerForGetLocations(false, nil, errorString)
             }
         }
     }

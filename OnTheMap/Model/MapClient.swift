@@ -27,53 +27,62 @@ class MapClient: NSObject {
     
     // MARK: GET
     
-    func taskForGETMethod<T: Decodable>(_ method: String, parameters: [String:String], completionHandlerForGET: @escaping (_ result: T?, _ error: String?) -> Void) {
+    func taskForGETMethod<T: Decodable>(_ address: String, optionalQueries: [String:String]?, completionHandlerForGET: @escaping (_ result: T?, _ errorString: String?) -> Void) {
         
         var errorInGETRequest: String? = nil
-        // Set the parameters
-        var parametersWithAPIKey = parameters
-        parametersWithAPIKey[ParameterKeys.RestApiKey] = Constants.REST_API_Key_Value
-        parametersWithAPIKey[ParameterKeys.ParseApplicationIDKey] = Constants.Parse_Application_ID_Value
         
-        // Build URL from parameters (uses helper method below)
-        let url = MapClient.URLFromParameters(parametersWithAPIKey, withPathExtension: method)
-        let urlRequest = URLRequest(url:url)
-        print("** URL Request for \(method) = \(urlRequest)")
+        let url = MapClient.URLFromParameters(address: address, optionalQueries: optionalQueries)
+        var urlRequest = URLRequest(url:url)
+        
+        urlRequest.allHTTPHeaderFields = Headers.CharSetHeaderFields
+        urlRequest.addValue(Headers.RestAPIKeyValue, forHTTPHeaderField: Headers.RestApiKey)
+        urlRequest.addValue(Headers.ParseApplicationIDValue, forHTTPHeaderField: Headers.ParseApplicationIDKey)
+        
+        urlRequest.httpMethod = "GET"
+        
+        print("** URL Request for \(address) = \(urlRequest)")
         
         // Make the request
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
             errorInGETRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
             
+//            var dataToParse = data!
+//            let range = Range(5..<data!.count)
+//            let newData = data?.subdata(in: range)
+//            dataToParse = newData!
+            
             var jsonObject: T? = nil
             do {
+                print("** MapClient is attempting to parse the following as a \(T.self) :")
+                print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(data!)
                 jsonObject = try jsonDecoder.decode(T.self, from: jsonData)
+                print(jsonObject.debugDescription)
+                completionHandlerForGET(jsonObject, nil)
             } catch {
-                errorInGETRequest = "** Could not parse data response from GET request"
-                return
+                errorInGETRequest = "** Could not parse data response from GET request \(jsonObject.debugDescription)"
+                completionHandlerForGET(jsonObject, errorInGETRequest)
             }
-            
-            completionHandlerForGET(jsonObject, errorInGETRequest)
         }
         
         task.resume()
     }
     
     // MARK: - taskForPOSTMethod
-    func taskForPOSTMethod<TResponse: Decodable, TRequest: Encodable>(_ method: String, parameters: [String:String], postObject: TRequest, completionHandlerForPOST: @escaping (_ result: TResponse?, _ nsError: String?) -> Void ) {
+    func taskForPOSTMethod<TResponse: Decodable, TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, completionHandlerForPOST: @escaping (_ result: TResponse?, _ nsError: String?) -> Void ) {
         
         var errorInPOSTRequest: String? = nil
-        let headerFields = Constants.HeaderFields
         
-        var parametersWithApiKey = parameters
-        parametersWithApiKey[ParameterKeys.RestApiKey] = Constants.REST_API_Key_Value
-        parametersWithApiKey[ParameterKeys.ParseApplicationIDKey] = Constants.Parse_Application_ID_Value
-        
-        let url = MapClient.URLFromParameters(parametersWithApiKey, withPathExtension: method)
+        let url = MapClient.URLFromParameters(address: address, optionalQueries: optionalQueries)
         var urlRequest = URLRequest(url: url)
-        print("** URL request for \(method) = \(urlRequest)")
+        
+        urlRequest.allHTTPHeaderFields = Headers.CharSetHeaderFields
+        urlRequest.addValue(Headers.RestAPIKeyValue, forHTTPHeaderField: Headers.RestApiKey)
+        urlRequest.addValue(Headers.ParseApplicationIDValue, forHTTPHeaderField: Headers.ParseApplicationIDKey)
+        
+        print("** URL request for \(address) = \(urlRequest)")
         
         var postBody: Data? = nil
         do {
@@ -85,7 +94,6 @@ class MapClient: NSObject {
         catch{print(error)}
         
         urlRequest.httpMethod = "POST"
-        urlRequest.allHTTPHeaderFields = headerFields
         urlRequest.httpBody = postBody
         
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
@@ -95,15 +103,19 @@ class MapClient: NSObject {
             
             var dataToParse = data!
             // Remove Udacity security characters
-            if method == MapClient.Methods.POSTUdacityForSession {
+            if address == MapClient.Addresses.UdacityAPIAddress {
                 let range = Range(5..<data!.count)
                 let newData = data?.subdata(in: range)
                 dataToParse = newData!
             }
-            print("** dataToParse = ")
-            print(String(data: dataToParse, encoding: .utf8)!)
+            
+//            print("** dataToParse = ")
+//            print(String(data: dataToParse, encoding: .utf8)!)
+            
             var jsonObject: TResponse? = nil
             do {
+                print("** MapClient is attempting to parse the following as a \(TResponse.self) :")
+                print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(dataToParse)
                 jsonObject = try jsonDecoder.decode(TResponse.self, from: jsonData)
@@ -123,22 +135,18 @@ class MapClient: NSObject {
     
     
     // Build URL from parameters
-    class func URLFromParameters(_ parameters: [String:String], withPathExtension: String?) -> URL {
-        //print("parameters = \(parameters)")
-        var components = URLComponents()
-        components.scheme = Constants.ApiScheme
-        components.host = Constants.ApiHost
-        components.path = withPathExtension ?? ""
-        //print("components = \(components)" )
-        components.queryItems = [URLQueryItem]()
-        if parameters.count > 0 {
-            for (key, value) in parameters {
-                let queryItem = URLQueryItem(name: key, value: "\(value)")
-                components.queryItems!.append(queryItem)
+    class func URLFromParameters(address: String, optionalQueries: [String:String]?) -> URL {
+        var components = URLComponents(string: address)
+        
+        if optionalQueries != nil {
+            var queryItems = [URLQueryItem]()
+            for (key, value) in optionalQueries! {
+                queryItems.append( URLQueryItem(name: key, value: "\(value)"))
             }
+            components?.queryItems = queryItems
         }
         //print(components.string!)
-        return components.url!
+        return (components?.url!)!
     }
     
     class func parseUdacityError(data: Data) -> String {
