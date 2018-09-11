@@ -36,14 +36,19 @@ class LoginViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
-
-        activityIndicator.startAnimating()
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+        }
+        
         
        // mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
         mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
             (success, sessionID, errorString) in
 
-            self.activityIndicator.stopAnimating()
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
             
             performUIUpdatesOnMain {
                 if success {
@@ -58,15 +63,19 @@ class LoginViewController: UIViewController {
     }
     
     func loadStudentLocations() {
-
-        activityIndicator.startAnimating()
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+        }
         
         displayTextOnUI("Getting student locations...")
 //        temporaryGetStudentLocations()
         mapClient.getAllValidStudentLocations() {
             (success, allValidStudentLocations, errorString) in
 
-            self.activityIndicator.stopAnimating()
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
             
             performUIUpdatesOnMain {
                 if success {
