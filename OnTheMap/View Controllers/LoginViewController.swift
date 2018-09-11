@@ -60,6 +60,7 @@ class LoginViewController: UIViewController {
                     var successMessage = "Success! "
                     successMessage += "\(String(describing: allValidStudentLocations!.count)) students returned."
                     self.displayTextOnUI(successMessage)
+                    self.performSegue(withIdentifier: "loginComplete", sender: self)
                 } else {
                     self.displayTextOnUI(errorString!)
                 }
@@ -84,6 +85,12 @@ class LoginViewController: UIViewController {
             //print(String(data: data!, encoding: .utf8)!)
         }
         task.resume()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "loginComplete" {
+            
+        }
     }
 }
 

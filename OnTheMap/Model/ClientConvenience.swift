@@ -45,7 +45,7 @@ extension MapClient {
         
     }
     
-    func getAllValidStudentLocations(_ completionHandlerForGetAllValidStudentLocations: @escaping (_ success: Bool, _ validStudentLocations: [StudentLocation]?, _ errorString: String?) -> Void ) {
+    func getAllValidStudentLocations(_ completionHandlerForGetAllValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudent]?, _ errorString: String?) -> Void ) {
         
         self.getAllStudentLocations() {
             (success, allStudentLocations, errorString) in
@@ -60,7 +60,9 @@ extension MapClient {
                         let filteredCount = verifiedStudents?.count
                         print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
                         MapClient.sharedInstance().allStudents = verifiedStudents
+                        completionHandlerForGetAllValidStudentLocations(true, verifiedStudents, nil)
                     }
+                
                 }
                 
             }
