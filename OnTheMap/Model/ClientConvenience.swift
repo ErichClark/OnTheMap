@@ -111,7 +111,13 @@ extension MapClient {
             guard student.mediaURL != nil  else {
                 continue
             }
+            guard student.latitude != nil  else {
+                continue
+            }
             guard Constants.ValidLatitudeRange.contains(student.latitude!) else {
+                continue
+            }
+            guard student.longitude != nil  else {
                 continue
             }
             guard Constants.ValidLongitudeRange.contains(student.longitude!) else {
