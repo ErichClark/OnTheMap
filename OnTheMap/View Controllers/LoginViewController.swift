@@ -16,6 +16,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpLabel: UILabel!
     @IBOutlet weak var errorTextfield: UITextField!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var mapClient: MapClient!
     
     override func viewDidLoad() {
@@ -34,9 +36,14 @@ class LoginViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
+
+        activityIndicator.startAnimating()
+        
         mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
             (success, sessionID, errorString) in
 
+            self.activityIndicator.stopAnimating()
+            
             performUIUpdatesOnMain {
                 if success {
                     self.loadStudentLocations()
@@ -50,11 +57,16 @@ class LoginViewController: UIViewController {
     }
     
     func loadStudentLocations() {
+
+        activityIndicator.startAnimating()
+        
         displayTextOnUI("Getting student locations...")
 //        temporaryGetStudentLocations()
         mapClient.getAllValidStudentLocations() {
             (success, allValidStudentLocations, errorString) in
 
+            self.activityIndicator.stopAnimating()
+            
             performUIUpdatesOnMain {
                 if success {
                     var successMessage = "Success! "

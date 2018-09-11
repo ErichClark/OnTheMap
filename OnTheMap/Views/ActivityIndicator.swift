@@ -10,5 +10,24 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+    class func showSpinner(onView: UIView) -> UIView {
+        let spinnerView = UIView.init()
+        spinnerView.backgroundColor = .gray
+        let activityIndicator = UIActivityIndicatorView.init()
+        activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        activityIndicator.startAnimating()
+        activityIndicator.center = spinnerView.center
+        
+        performUIUpdatesOnMain {
+            spinnerView.addSubview(spinnerView)
+            onView.addSubview(spinnerView)
+        }
+         return spinnerView
+    }
     
+    class func hideSpinner(spinner: UIView) {
+        performUIUpdatesOnMain {
+            spinner.removeFromSuperview()
+        }
+    }
 }

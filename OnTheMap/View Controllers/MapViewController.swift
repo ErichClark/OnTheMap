@@ -11,6 +11,8 @@ import MapKit
 
 class MapViewController: UIViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var allStudentLocations = AllStudentLocations()
     //let centralStudentPin = StudentLocation(from: Decoder)
     let defaultZoomDistance = CLLocationDistance(MapClient.Constants.DefaultMapZoom)

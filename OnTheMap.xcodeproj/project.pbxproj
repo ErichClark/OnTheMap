@@ -22,7 +22,6 @@
 		77EC8E3C213F096300EAAE9E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E3B213F096300EAAE9E /* MapView.swift */; };
 		77EC8E3E213F3E3800EAAE9E /* Students.json in Resources */ = {isa = PBXBuildFile; fileRef = 77EC8E3D213F3E3800EAAE9E /* Students.json */; };
 		77EC8E40213F547400EAAE9E /* ClientConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E3F213F547400EAAE9E /* ClientConvenience.swift */; };
-		77F36CB7214767F1007BAFFF /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F36CB6214767F1007BAFFF /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +42,6 @@
 		77EC8E3B213F096300EAAE9E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		77EC8E3D213F3E3800EAAE9E /* Students.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Students.json; sourceTree = "<group>"; };
 		77EC8E3F213F547400EAAE9E /* ClientConvenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConvenience.swift; sourceTree = "<group>"; };
-		77F36CB6214767F1007BAFFF /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				77EC8E3B213F096300EAAE9E /* MapView.swift */,
-				77F36CB6214767F1007BAFFF /* ActivityIndicator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -213,7 +210,6 @@
 				778D75BE2138E700002AA868 /* LoginViewController.swift in Sources */,
 				778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */,
 				778D75BC2138E700002AA868 /* AppDelegate.swift in Sources */,
-				77F36CB7214767F1007BAFFF /* ActivityIndicator.swift in Sources */,
 				77EC8E39213EEAA100EAAE9E /* MapViewController.swift in Sources */,
 				77EC8E40213F547400EAAE9E /* ClientConvenience.swift in Sources */,
 				778D75D82139C249002AA868 /* MapClient.swift in Sources */,

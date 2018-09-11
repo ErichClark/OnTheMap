@@ -10,6 +10,8 @@ import UIKit
 
 class TableTabViewController: UITableViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

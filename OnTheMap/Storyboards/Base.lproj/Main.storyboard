@@ -25,13 +25,13 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="lC5-8W-bph">
                                 <rect key="frame" x="40" y="259.5" width="295" height="148.5"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="erich.clark@gmail.com" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I3W-D9-Q0i" userLabel="emailField">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="username" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I3W-D9-Q0i" userLabel="emailField">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="17"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="erichok2yokel" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LBQ-K7-3be" userLabel="passwordField">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="password" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LBQ-K7-3be" userLabel="passwordField">
                                         <rect key="frame" x="0.0" y="44" width="295" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -63,6 +63,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s40-bU-hbG" userLabel="activityIndicator">
+                                <rect key="frame" x="170" y="538" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -81,6 +86,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="s40-bU-hbG" id="QGO-dB-7Lk"/>
                         <outlet property="emailField" destination="I3W-D9-Q0i" id="t1z-1W-S7w"/>
                         <outlet property="errorTextfield" destination="mvO-VT-tbg" id="fVY-xe-DdG"/>
                         <outlet property="passwordField" destination="LBQ-K7-3be" id="LPd-Hd-D2o"/>
@@ -92,14 +98,18 @@
             </objects>
             <point key="canvasLocation" x="-775.20000000000005" y="-13.043478260869566"/>
         </scene>
-        <!--View Controller-->
+        <!--Table Tab View Controller-->
         <scene sceneID="k2p-hS-l2Y">
             <objects>
-                <viewController id="vzK-nJ-cel" sceneMemberID="viewController">
+                <viewController id="vzK-nJ-cel" customClass="TableTabViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gtV-E0-7SW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bv6-vd-z3Q" userLabel="activityIndicator">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcz-ba-JKA">
                                 <rect key="frame" x="0.0" y="21" width="375" height="44"/>
                                 <items>
@@ -149,15 +159,20 @@
                         <constraints>
                             <constraint firstItem="0m0-3J-VcA" firstAttribute="top" secondItem="lcz-ba-JKA" secondAttribute="bottom" id="96H-b9-NHh"/>
                             <constraint firstItem="lcz-ba-JKA" firstAttribute="leading" secondItem="0m0-3J-VcA" secondAttribute="leading" id="Cw0-lt-tjZ"/>
+                            <constraint firstItem="bv6-vd-z3Q" firstAttribute="centerX" secondItem="gtV-E0-7SW" secondAttribute="centerX" id="FOd-BL-QNG"/>
                             <constraint firstItem="lcz-ba-JKA" firstAttribute="top" secondItem="pA7-uI-1rD" secondAttribute="top" constant="1" id="I9E-Yv-pR8"/>
                             <constraint firstItem="0m0-3J-VcA" firstAttribute="leading" secondItem="gtV-E0-7SW" secondAttribute="leading" id="Oza-eq-YU1"/>
                             <constraint firstItem="lcz-ba-JKA" firstAttribute="trailing" secondItem="0m0-3J-VcA" secondAttribute="trailing" id="cmZ-3K-YNi"/>
                             <constraint firstItem="pA7-uI-1rD" firstAttribute="bottom" secondItem="0m0-3J-VcA" secondAttribute="bottom" id="v60-Se-2uh"/>
+                            <constraint firstItem="bv6-vd-z3Q" firstAttribute="centerY" secondItem="gtV-E0-7SW" secondAttribute="centerY" id="ytz-95-XG2"/>
                             <constraint firstAttribute="trailing" secondItem="0m0-3J-VcA" secondAttribute="trailing" id="zvU-uL-Aaj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pA7-uI-1rD"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-selected" id="78p-Uy-1cu"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="bv6-vd-z3Q" id="ZJl-53-1lQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="peg-Ps-8lb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="pRG-ap-FDL" userLabel="Exit" sceneMemberID="exit"/>
@@ -209,11 +224,17 @@
                                     <action selector="finished:" destination="OAd-yc-x3L" eventType="touchUpInside" id="sMs-0b-Er7"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aB7-93-jQt">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="IRQ-af-xXS" firstAttribute="leading" secondItem="rGT-d8-ucd" secondAttribute="leading" id="24R-Gz-y6i"/>
                             <constraint firstItem="rGT-d8-ucd" firstAttribute="top" secondItem="IRQ-af-xXS" secondAttribute="bottom" id="DaV-uH-qPh"/>
+                            <constraint firstItem="aB7-93-jQt" firstAttribute="centerY" secondItem="5Tr-A1-5hl" secondAttribute="centerY" id="Lby-yx-MHO"/>
+                            <constraint firstItem="aB7-93-jQt" firstAttribute="centerX" secondItem="5Tr-A1-5hl" secondAttribute="centerX" id="UJP-gK-7Ls"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="trailing" secondItem="ero-2a-Gpl" secondAttribute="trailing" constant="10" id="dbl-1z-vAk"/>
                             <constraint firstItem="rGT-d8-ucd" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" id="eQL-8x-G89"/>
                             <constraint firstItem="ero-2a-Gpl" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" constant="10" id="efK-Lx-DZS"/>
@@ -227,6 +248,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" selectedImage="icon_mapview-selected" id="xnH-Xt-6T3"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="aB7-93-jQt" id="ir6-JC-GX6"/>
                         <outlet property="lowerTabBar" destination="xnH-Xt-6T3" id="gPc-zc-Lvt"/>
                         <outlet property="mapView" destination="rGT-d8-ucd" id="wal-Hy-jLS"/>
                     </connections>
