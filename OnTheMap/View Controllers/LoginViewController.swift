@@ -52,13 +52,13 @@ class LoginViewController: UIViewController {
     func loadStudentLocations() {
         displayTextOnUI("Getting student locations...")
 //        temporaryGetStudentLocations()
-        mapClient.getAllStudentLocations() {
-            (success, AllStudentLocations, errorString) in
+        mapClient.getAllValidStudentLocations() {
+            (success, allValidStudentLocations, errorString) in
 
             performUIUpdatesOnMain {
                 if success {
                     var successMessage = "Success! "
-                    successMessage += "\(String(describing: AllStudentLocations?.results?.count)) students returned."
+                    successMessage += "\(String(describing: allValidStudentLocations!.count)) students returned."
                     self.displayTextOnUI(successMessage)
                 } else {
                     self.displayTextOnUI(errorString!)

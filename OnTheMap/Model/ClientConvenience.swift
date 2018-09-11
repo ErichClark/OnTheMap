@@ -12,7 +12,7 @@ import UIKit
 // MARK: - Client Convenience Methods
 
 extension MapClient {
-
+    
     
     func loginToUdacity(username: String, password: String, _ completionHandlerForloginToUdacity: @escaping (_ success: Bool, _ sessionId: String?, _ errorString: String?) -> Void) {
         
@@ -22,8 +22,8 @@ extension MapClient {
         let address = MapClient.Addresses.UdacityAPIAddress
         let _ = taskForPOSTMethod(address, optionalQueries: parameters, postObject: postBody) { (results:POSTSessionResponseJSON?, errorString:String?) in
             
-//            print("** Account key = \(results?.account.key)")
-//            print("** Session id = \(results?.session.id)")
+            //            print("** Account key = \(results?.account.key)")
+            //            print("** Session id = \(results?.session.id)")
             
             MapClient.sharedInstance().accountKey = results?.account.key
             MapClient.sharedInstance().sessionID = results?.session.id
@@ -45,14 +45,34 @@ extension MapClient {
         
     }
     
+    func getAllValidStudentLocations(_ completionHandlerForGetAllValidStudentLocations: @escaping (_ success: Bool, _ validStudentLocations: [StudentLocation]?, _ errorString: String?) -> Void ) {
+        
+        self.getAllStudentLocations() {
+            (success, allStudentLocations, errorString) in
+            
+            
+            if success {
+                print("** SUCCESS! Unfiltered location list parsed.")
+                self.filterInvalidLocations(allStudentLocations: allStudentLocations!) {
+                    (success, verifiedStudents, errorString) in
+                    
+                    if success {
+                        let filteredCount = verifiedStudents?.count
+                        print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
+                        MapClient.sharedInstance().allStudents = verifiedStudents
+                    }
+                }
+                
+            }
+        }
+    }
+    
     func getAllStudentLocations(_ completionHandlerForGetLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
         let address = MapClient.Addresses.ParseServerAddress
         let _ = taskForGETMethod(address, optionalQueries: nil) { (results:AllStudentLocations?, errorString:String?) in
             
             if results != nil {
-                MapClient.sharedInstance().allStudents = results
-                print("** SUCCESS! At least one student location was found.")
                 completionHandlerForGetLocations(true, results, nil)
             } else {
                 completionHandlerForGetLocations(false, nil, errorString)
@@ -60,8 +80,58 @@ extension MapClient {
         }
     }
     
-    private func cleanStudentLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForCleanStudentLocations: @escaping (_ cleanedStudentLocations: [StudentLocation]?, _ errorString: String?) -> Void ) {
+    
+    // MARK: Filter bad location data,
+    func filterInvalidLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudent]?, _ errorString: String?) -> Void ) {
         
+        let potentialStudents: [StudentLocation] = allStudentLocations.results!
+        var filteredStudents = [VerifiedStudent]()
+        var blackListedFirstNames: [String] = [""]
+        for student in potentialStudents {
+            guard student.objectId != nil  else {
+                continue
+            }
+            guard student.uniqueKey != nil  else {
+                continue
+            }
+            guard student.firstName != nil  else {
+                continue
+            }
+            guard !blackListedFirstNames.contains(student.firstName!) else {
+                continue
+            }
+            guard student.lastName != nil  else {
+                continue
+            }
+            guard student.mapString != nil  else {
+                continue
+            }
+            guard student.mediaURL != nil  else {
+                continue
+            }
+            guard Constants.ValidLatitudeRange.contains(student.latitude!) else {
+                continue
+            }
+            guard Constants.ValidLongitudeRange.contains(student.longitude!) else {
+                continue
+            }
+            guard student.createdAt != nil  else {
+                continue
+            }
+            
+            let cleanStudent = VerifiedStudent(objectId: student.objectId!, uniqueKey: student.uniqueKey!, firstName: student.firstName!, lastName: student.lastName!, mapString: student.mapString!, mediaURL: student.mediaURL!, latitude: student.latitude!, longitude: student.longitude!, createdAt: student.createdAt!, updatedAt: student.updatedAt)
+            filteredStudents.append(cleanStudent)
+            blackListedFirstNames.append(student.firstName!)
+        }
+        
+        let filteredCount = filteredStudents.count
+        if  filteredCount > 0 {
+            print("** SUCCESS! \(filteredCount) valid locations were found.")
+            completionHandlerForFilterInvalidLocations(true, filteredStudents, nil)
+        } else {
+            let errorMessage = "Could not return cleaned Students array."
+            completionHandlerForFilterInvalidLocations(false, nil, errorMessage)
+        }
     }
     
     private func getSingleStudentLocation(_ completionHandlerForGetSingleLocation: @escaping (_ success: Bool, _ singleStudentLocation: StudentLocation?, _ errorString: String?) -> Void) {

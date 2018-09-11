@@ -12,6 +12,10 @@ extension MapClient {
     
     struct Constants {
         static let DefaultMapZoom = 100000
+        static let SearchLatRange = (-90.0, 90.0)
+        static let SearchLonRange = (-180.0, 180.0)
+        static let ValidLatitudeRange = (-90.000...90.000)
+        static let ValidLongitudeRange = (-180.000...180.000)
     }
     
     // Addresses

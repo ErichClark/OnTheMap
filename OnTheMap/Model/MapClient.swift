@@ -16,7 +16,7 @@ class MapClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    var allStudents: AllStudentLocations? = nil
+    var allStudents: [VerifiedStudent]? = nil
     var sessionID: String? = nil
     var accountKey: String? = nil
     // Config?

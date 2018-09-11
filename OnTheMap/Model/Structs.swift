@@ -10,6 +10,20 @@ import Foundation
 import MapKit
 import Contacts
 
+struct VerifiedStudent {
+    var objectId: String// auto-generated id/key by Parse, uniquely identifies StudentLocation
+    var uniqueKey: String
+    var firstName: String
+    var lastName: String //= Constants.Keys.LastName
+    var mapString: String// plain text for geocoding student location-
+    var mediaURL: String //= Constants.Keys.MediaURL // URL provided by the student
+    var latitude: Double // (ranges from -90 to 90)
+    var longitude: Double // (ranges from -180 to 180)
+    var createdAt: String // When location was created
+    var updatedAt: String?
+}
+
+
 struct AllStudentLocations: Decodable {
     var results: [StudentLocation]?
 }
@@ -55,9 +69,8 @@ class StudentLocation: Decodable {
         self.createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
         self.updatedAt = try container.decodeIfPresent(String.self, forKey: .updatedAt)
     }
-    
-    
 }
+
 func getCoordinate(latitude: Double, longitude: Double) -> CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
     }
