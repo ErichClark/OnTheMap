@@ -39,7 +39,8 @@ class LoginViewController: UIViewController {
 
         activityIndicator.startAnimating()
         
-        mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
+       // mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
+        mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
             (success, sessionID, errorString) in
 
             self.activityIndicator.stopAnimating()
