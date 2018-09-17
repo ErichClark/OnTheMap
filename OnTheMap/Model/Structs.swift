@@ -14,14 +14,14 @@ import Contacts
 class VerifiedStudent: NSObject, MKAnnotation {
     
     let name: String
-    //let mapString: String
+    // let mapString: String
     let url: URL
     let coordinate: CLLocationCoordinate2D
     
-    init(firstName: String, lastName: String, mediaURL: String, latitude: Double, longitude: Double) {
+    init(firstName: String, lastName: String, url: URL, latitude: Double, longitude: Double) {
         
         self.name = firstName + " " + lastName
-        self.url = URL(string: mediaURL)!
+        self.url = url
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }

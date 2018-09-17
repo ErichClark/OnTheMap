@@ -60,9 +60,9 @@ class TableTabViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentTableCell", for: indexPath)
-        let name = allStudents![indexPath.row].firstName + allStudents![indexPath.row].lastName
-        cell.textLabel?.text = name
-        cell.detailTextLabel?.text = allStudents![indexPath.row].mediaURL
+        cell.textLabel?.text = allStudents![indexPath.row].name
+        let urlString = "\(allStudents![indexPath.row].url)"
+        cell.detailTextLabel?.text = urlString
      
         return cell
     }

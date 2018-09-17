@@ -108,7 +108,10 @@ extension MapClient {
             guard student.mapString != nil  else {
                 continue
             }
-            guard student.mediaURL != nil  else {
+            guard student.mediaURL != nil else {
+                continue
+            }
+            guard let url = URL(string: student.mediaURL!) else {
                 continue
             }
             guard student.latitude != nil  else {
@@ -127,7 +130,7 @@ extension MapClient {
                 continue
             }
             
-            let cleanStudent = VerifiedStudent(objectId: student.objectId!, uniqueKey: student.uniqueKey!, firstName: student.firstName!, lastName: student.lastName!, mapString: student.mapString!, mediaURL: student.mediaURL!, latitude: student.latitude!, longitude: student.longitude!, createdAt: student.createdAt!, updatedAt: student.updatedAt)
+            let cleanStudent = VerifiedStudent(firstName: student.firstName!, lastName: student.lastName!, url: url, latitude: student.latitude!, longitude: student.longitude!)
             filteredStudents.append(cleanStudent)
             blackListedFirstNames.append(student.firstName!)
         }
