@@ -11,25 +11,24 @@ import MapKit
 
 class MapViewController: UIViewController {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    var allStudentLocations = AllStudentLocations()
-    //let centralStudentPin = StudentLocation(from: Decoder)
+    // Data Model objects
+    var allStudents: [VerifiedStudent]? = nil
+    let centralStudentPin: VerifiedStudent? = nil
     let defaultZoomDistance = CLLocationDistance(MapClient.Constants.DefaultMapZoom)
+
+    // Location and map
+    let locationManager = CLLocationManager()
+    var mapClient: MapClient!
     
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var lowerTabBar: UITabBarItem!
     
-    // MARK: -Check for Location when in use permissions
-    let locationManager = CLLocationManager()
-    func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            mapView.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
+    // Loading and status update outlets
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var loadingTextField: UITextField!
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -39,7 +38,11 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Center view on a kilometer radius of provided student pin
+        // get the Map client
+        mapClient = MapClient.sharedInstance()
+        allStudents = mapClient.allStudents
+        
+        // Center view on a kilometer radius of a student pin from TableTab ViewController, if provided
         //let initialLocation = CLLocation(latitude: centralStudentPin.latitude!, longitude: centralStudentPin.longitude!)
         // Do any additional setup after loading the view.
         //centerOnMapLocation(location: initialLocation)
@@ -48,6 +51,16 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         mapView.register(PinView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
+    
+    
+    // MARK: -Check for Location when in use permissions
+    func checkLocationAuthorizationStatus() {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            mapView.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
 
     // Map centering helper
     func centerOnMapLocation(location: CLLocation) {
@@ -55,21 +68,24 @@ class MapViewController: UIViewController {
             mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    func loadInitialPins() {
-        do {
-            let fileName = Bundle.main.path(forResource: "Students", ofType: "json")
-            let optionalData = try? Data(contentsOf: URL(fileURLWithPath: fileName!))
-
-            let jsonDecoder = JSONDecoder()
-            let newStudentLocations = try? jsonDecoder.decode(AllStudentLocations.self, from: optionalData!)
-            allStudentLocations = newStudentLocations!
-        }
-    }
+//    func loadInitialPins() {
+//        do {
+//            let fileName = Bundle.main.path(forResource: "Students", ofType: "json")
+//            let optionalData = try? Data(contentsOf: URL(fileURLWithPath: fileName!))
+//
+//            let jsonDecoder = JSONDecoder()
+//            let newStudentLocations = try? jsonDecoder.decode(AllStudentLocations.self, from: optionalData!)
+//            allStudentLocations = newStudentLocations!
+//        }
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Debugger Textfield display
+    
     
     // MARK: - Actions
     
@@ -78,6 +94,42 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func reload(_ sender: Any) {
+        performUIUpdatesOnMain {
+            self.loadingView.isHidden = false
+            
+            self.activityIndicator.startAnimating()
+        }
+        
+        print("Getting student locations...")
+        //        temporaryGetStudentLocations()
+        mapClient.getAllValidStudentLocations() {
+            (success, allValidStudentLocations, errorString) in
+            
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
+            
+            performUIUpdatesOnMain {
+                if success {
+                    var successMessage = "Success! "
+                    successMessage += "\(String(describing: allValidStudentLocations!.count)) students returned."
+                    self.displayTextOnUI(successMessage)
+                    self.activityIndicator.stopAnimating()
+                    self.fadeOutLoadingView(self.loadingView)
+                } else {
+                    self.displayTextOnUI(errorString!)
+                    self.activityIndicator.stopAnimating()
+                    self.fadeOutLoadingView(self.loadingView)
+                    print(errorString!)
+                }
+            }
+        }
+    
+    }
+    
+    func displayTextOnUI(_ displayString: String) {
+        loadingTextField.text = displayString
+        loadingTextField.alpha = 1.0
     }
     
     @IBAction func addPin(_ sender: Any) {

@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 import Contacts
 
+// Student objects that have been cleaned
 struct VerifiedStudent {
     var objectId: String// auto-generated id/key by Parse, uniquely identifies StudentLocation
     var uniqueKey: String
@@ -23,24 +24,25 @@ struct VerifiedStudent {
     var updatedAt: String?
 }
 
-
+// These next two are junk structs.
+// Everything is optional, because Udacity Parse server response JSONs are extremely low quality and cause Decodable to fail.
+// (Measured on Sept. 12, 2018: only 8.3% was usable, non-repeated data.)
+// These structs must accept the same low quality of data as Udacity, utilizing the decodeIfPresent protocol to succeed even if keys are missing and accept any value provided for a given key.
 struct AllStudentLocations: Decodable {
     var results: [StudentLocation]?
 }
 
 class StudentLocation: Decodable {
-    
-    var objectId: String?// auto-generated id/key by Parse, uniquely identifies StudentLocation
+    var objectId: String?
     var uniqueKey: String?
     var firstName: String?
-    var lastName: String? //= Constants.Keys.LastName
-    var mapString: String?// plain text for geocoding student location-
-    var mediaURL: String? //= Constants.Keys.MediaURL // URL provided by the student
-    var latitude: Double? // (ranges from -90 to 90)
-    var longitude: Double? // (ranges from -180 to 180)
-    var createdAt: String? // When location was created
-    var updatedAt: String? // When last updated
-    //var ACL: String? // Parse Access Control List: permissions for StudentLoaction entry
+    var lastName: String?
+    var mapString: String?
+    var mediaURL: String?
+    var latitude: Double?
+    var longitude: Double?
+    var createdAt: String?
+    var updatedAt: String?
     
     enum UserResponseKeys: String, CodingKey {
         case objectId = "objectId"

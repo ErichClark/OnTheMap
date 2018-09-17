@@ -12,9 +12,19 @@ class TableTabViewController: UITableViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var titleText: UILabel!
+    
+    @IBOutlet weak var subtitle: UILabel!
+    var mapClient: MapClient!
+    var allStudents: [VerifiedStudent]? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // get the Map client
+        mapClient = MapClient.sharedInstance()
+        allStudents = mapClient.allStudents
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -40,24 +50,23 @@ class TableTabViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return allStudents!.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "studentTableCell", for: indexPath)
+        let name = allStudents![indexPath.row].firstName + allStudents![indexPath.row].lastName
+        cell.textLabel?.text = name
+        cell.detailTextLabel?.text = allStudents![indexPath.row].mediaURL
+     
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
