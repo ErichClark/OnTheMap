@@ -22,6 +22,10 @@ struct VerifiedStudent {
     var longitude: Double // (ranges from -180 to 180)
     var createdAt: String // When location was created
     var updatedAt: String?
+    
+    var pinLocation: CLLocation {
+        return CLLocation(latitude: latitude, longitude: longitude) }
+    
 }
 
 // These next two are junk structs.
@@ -73,9 +77,6 @@ class StudentLocation: Decodable {
     }
 }
 
-func getCoordinate(latitude: Double, longitude: Double) -> CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
-    }
 
 // TODO: -
 //func getMapItem(student: StudentLocation) -> MKMapItem {
