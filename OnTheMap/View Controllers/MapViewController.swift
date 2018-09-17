@@ -67,23 +67,7 @@ class MapViewController: UIViewController {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, defaultZoomDistance, defaultZoomDistance)
             mapView.setRegion(coordinateRegion, animated: true)
     }
-    
-//    func loadInitialPins() {
-//        do {
-//            let fileName = Bundle.main.path(forResource: "Students", ofType: "json")
-//            let optionalData = try? Data(contentsOf: URL(fileURLWithPath: fileName!))
-//
-//            let jsonDecoder = JSONDecoder()
-//            let newStudentLocations = try? jsonDecoder.decode(AllStudentLocations.self, from: optionalData!)
-//            allStudentLocations = newStudentLocations!
-//        }
-//    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     // Debugger Textfield display
     
     

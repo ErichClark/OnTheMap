@@ -83,7 +83,7 @@ extension MapClient {
     }
     
     
-    // MARK: Filter bad location data,
+    // MARK: - Filter bad location data, duplicates
     func filterInvalidLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudent]?, _ errorString: String?) -> Void ) {
         
         let potentialStudents: [StudentLocation] = allStudentLocations.results!
