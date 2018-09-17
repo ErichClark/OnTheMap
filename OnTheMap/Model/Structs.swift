@@ -11,21 +11,19 @@ import MapKit
 import Contacts
 
 // Student objects that have been cleaned
-struct VerifiedStudent {
-    var objectId: String// auto-generated id/key by Parse, uniquely identifies StudentLocation
-    var uniqueKey: String
-    var firstName: String
-    var lastName: String //= Constants.Keys.LastName
-    var mapString: String// plain text for geocoding student location-
-    var mediaURL: String //= Constants.Keys.MediaURL // URL provided by the student
-    var latitude: Double // (ranges from -90 to 90)
-    var longitude: Double // (ranges from -180 to 180)
-    var createdAt: String // When location was created
-    var updatedAt: String?
+class VerifiedStudent: NSObject, MKAnnotation {
     
-    var pinLocation: CLLocation {
-        return CLLocation(latitude: latitude, longitude: longitude) }
+    let name: String
+    //let mapString: String
+    let url: URL
+    let coordinate: CLLocationCoordinate2D
     
+    init(firstName: String, lastName: String, mediaURL: String, latitude: Double, longitude: Double) {
+        
+        self.name = firstName + " " + lastName
+        self.url = URL(string: mediaURL)!
+        self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 }
 
 // These next two are junk structs.
@@ -78,17 +76,14 @@ class StudentLocation: Decodable {
 }
 
 
-// TODO: -
-//func getMapItem(student: StudentLocation) -> MKMapItem {
-//        let addressDict = [CNPostalAddressCityKey: student.mapString!]
-//    let coordinate = getCoordinate(latitude: student.latitude!, longitude: student.longitude!)
-//
-    //let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: student.addressDict)
-//        let mapItem = MKMapItem(placemark: placemark)
-//        mapItem.name = student.firstName! + " " + student.lastName!
-//        return mapItem
-//    }
-//}
+// Map Kit Item Generator
+func getMapItem(student: VerifiedStudent) -> MKMapItem {
+    let placemark = MKPlacemark(coordinate: student.coordinate)
+    let mapItem = MKMapItem(placemark: placemark)
+    mapItem.name = student.name
+    mapItem.url = student.url
+    return mapItem
+}
 
 struct POSTorPUTStudentLocationJSON: Encodable {
     let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
