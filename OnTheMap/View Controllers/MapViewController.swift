@@ -40,6 +40,7 @@ class MapViewController: UIViewController {
         
         // get the Map client
         mapClient = MapClient.sharedInstance()
+        mapView.delegate = self
         allStudents = mapClient.allStudents
         
         // Center view on a kilometer radius of a student pin from TableTab ViewController, if provided
@@ -135,5 +136,23 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard  let annotation = annotation as? VerifiedStudent else {
+            return nil
+        }
+        
+        let identifier = "student"
+        var view: MKMarkerAnnotationView
+        
+        if let dequedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+            dequedView.annotation = annotation
+            view = dequedView
+        } else {
+            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+        return view
+    }
 }
