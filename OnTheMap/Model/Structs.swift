@@ -11,7 +11,7 @@ import MapKit
 import Contacts
 
 // Student objects that have been cleaned
-class VerifiedStudent: NSObject, MKAnnotation {
+class VerifiedStudentPin: NSObject, MKAnnotation {
     
     let name: String
     // let mapString: String
@@ -23,7 +23,27 @@ class VerifiedStudent: NSObject, MKAnnotation {
         self.name = firstName + " " + lastName
         self.url = url
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        super.init()
     }
+    
+    var title: String? {
+        return name
+    }
+    
+    var subtitle: String? {
+        return "\(url)"
+    }
+    
+    func mapItem() -> MKMapItem {
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = name
+        return mapItem
+    }
+    
+    
+    
 }
 
 // These next two are junk structs.
@@ -77,7 +97,7 @@ class StudentLocation: Decodable {
 
 
 // Map Kit Item Generator
-func getMapItem(student: VerifiedStudent) -> MKMapItem {
+func getMapItem(student: VerifiedStudentPin) -> MKMapItem {
     let placemark = MKPlacemark(coordinate: student.coordinate)
     let mapItem = MKMapItem(placemark: placemark)
     mapItem.name = student.name

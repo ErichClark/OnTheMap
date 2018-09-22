@@ -1,5 +1,5 @@
 //
-//  MapView.swift
+//  PinView.swift
 //  OnTheMap
 //
 //  Created by Erich Clark on 9/4/18.
@@ -9,10 +9,24 @@
 import Foundation
 import MapKit
 
-class PinView: MKAnnotationView {
+class PinMarkerView: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
         willSet {
-            guard let student = newValue as? StudentLocation else {return}
+            guard let pin = newValue as? VerifiedStudentPin else {return}
+            canShowCallout = true
+            calloutOffset = CGPoint(x: -5, y: 5)
+            rightCalloutAccessoryView = UIButton(type: .custom)
+            markerTintColor = UIColor.cyan
+            
+        }
+    }
+}
+
+
+class PinAnnotationView: MKAnnotationView {
+    override var annotation: MKAnnotation? {
+        willSet {
+            guard let student = newValue as? VerifiedStudentPin else {return}
             canShowCallout = true
             calloutOffset = CGPoint(x: -5, y: 5)
             
@@ -24,7 +38,7 @@ class PinView: MKAnnotationView {
             let detailLabel = UILabel()
             detailLabel.numberOfLines = 0
             detailLabel.font = detailLabel.font.withSize(12)
-            detailLabel.text = student.mediaURL
+            detailLabel.text = "Link = \(student.url)"
             detailCalloutAccessoryView = detailLabel
         }
     }

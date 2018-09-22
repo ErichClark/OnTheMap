@@ -106,10 +106,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bv6-vd-z3Q" userLabel="activityIndicator">
+                            <activityIndicatorView opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bv6-vd-z3Q" userLabel="activityIndicator">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
+                            <textField opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="drh-06-Y64" userLabel="loadingTextField">
+                                <rect key="frame" x="10" y="372" width="355" height="17"/>
+                                <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcz-ba-JKA">
                                 <rect key="frame" x="0.0" y="21" width="375" height="44"/>
                                 <items>
@@ -173,11 +181,14 @@
                         <constraints>
                             <constraint firstItem="0m0-3J-VcA" firstAttribute="top" secondItem="lcz-ba-JKA" secondAttribute="bottom" id="96H-b9-NHh"/>
                             <constraint firstItem="lcz-ba-JKA" firstAttribute="leading" secondItem="0m0-3J-VcA" secondAttribute="leading" id="Cw0-lt-tjZ"/>
+                            <constraint firstItem="drh-06-Y64" firstAttribute="leading" secondItem="pA7-uI-1rD" secondAttribute="leading" constant="10" id="ETX-iM-mJX"/>
                             <constraint firstItem="bv6-vd-z3Q" firstAttribute="centerX" secondItem="gtV-E0-7SW" secondAttribute="centerX" id="FOd-BL-QNG"/>
                             <constraint firstItem="lcz-ba-JKA" firstAttribute="top" secondItem="pA7-uI-1rD" secondAttribute="top" constant="1" id="I9E-Yv-pR8"/>
                             <constraint firstItem="0m0-3J-VcA" firstAttribute="leading" secondItem="gtV-E0-7SW" secondAttribute="leading" id="Oza-eq-YU1"/>
                             <constraint firstItem="lcz-ba-JKA" firstAttribute="trailing" secondItem="0m0-3J-VcA" secondAttribute="trailing" id="cmZ-3K-YNi"/>
+                            <constraint firstItem="pA7-uI-1rD" firstAttribute="trailing" secondItem="drh-06-Y64" secondAttribute="trailing" constant="10" id="mbd-nT-7eN"/>
                             <constraint firstItem="pA7-uI-1rD" firstAttribute="bottom" secondItem="0m0-3J-VcA" secondAttribute="bottom" id="v60-Se-2uh"/>
+                            <constraint firstItem="drh-06-Y64" firstAttribute="top" secondItem="bv6-vd-z3Q" secondAttribute="bottom" constant="20" id="xTm-Lt-DR5"/>
                             <constraint firstItem="bv6-vd-z3Q" firstAttribute="centerY" secondItem="gtV-E0-7SW" secondAttribute="centerY" id="ytz-95-XG2"/>
                             <constraint firstAttribute="trailing" secondItem="0m0-3J-VcA" secondAttribute="trailing" id="zvU-uL-Aaj"/>
                         </constraints>
@@ -228,58 +239,29 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ero-2a-Gpl" userLabel="finishedButton">
-                                <rect key="frame" x="10" y="568" width="354" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="FINISHED">
-                                    <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="finished:" destination="OAd-yc-x3L" eventType="touchUpInside" id="sMs-0b-Er7"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gan-c0-4io">
-                                <rect key="frame" x="10" y="541" width="354" height="17"/>
-                                <nil key="textColor"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aB7-93-jQt">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                            <textField opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gDx-U4-B0l" userLabel="loadingTextField">
+                                <rect key="frame" x="10" y="374" width="355" height="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqr-oL-FW2" userLabel="loadingView">
-                                <rect key="frame" x="0.0" y="61" width="375" height="497"/>
-                                <subviews>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="aB7-93-jQt">
-                                        <rect key="frame" x="169" y="230" width="37" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </activityIndicatorView>
-                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gDx-U4-B0l" userLabel="loadingTextField">
-                                        <rect key="frame" x="95" y="278" width="183" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                        <color key="textColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="W0i-Kb-DHt" firstAttribute="trailing" secondItem="gDx-U4-B0l" secondAttribute="trailing" constant="10" id="0To-yE-yjX"/>
                             <constraint firstItem="IRQ-af-xXS" firstAttribute="leading" secondItem="rGT-d8-ucd" secondAttribute="leading" id="24R-Gz-y6i"/>
-                            <constraint firstItem="W0i-Kb-DHt" firstAttribute="trailing" secondItem="gan-c0-4io" secondAttribute="trailing" constant="11" id="2pR-YL-IcA"/>
+                            <constraint firstItem="gDx-U4-B0l" firstAttribute="top" secondItem="aB7-93-jQt" secondAttribute="bottom" constant="22" id="3p1-Ai-Xw1"/>
+                            <constraint firstItem="aB7-93-jQt" firstAttribute="centerY" secondItem="5Tr-A1-5hl" secondAttribute="centerY" id="84A-cU-767"/>
+                            <constraint firstItem="gDx-U4-B0l" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" constant="10" id="9vw-W6-bZI"/>
                             <constraint firstItem="rGT-d8-ucd" firstAttribute="top" secondItem="IRQ-af-xXS" secondAttribute="bottom" id="DaV-uH-qPh"/>
-                            <constraint firstItem="ero-2a-Gpl" firstAttribute="top" secondItem="gan-c0-4io" secondAttribute="bottom" constant="10" id="LzQ-Gt-1fv"/>
-                            <constraint firstItem="lqr-oL-FW2" firstAttribute="top" secondItem="IRQ-af-xXS" secondAttribute="bottom" id="SoA-hg-G9X"/>
-                            <constraint firstItem="ero-2a-Gpl" firstAttribute="top" secondItem="lqr-oL-FW2" secondAttribute="bottom" constant="10" id="UTM-Hb-PG7"/>
-                            <constraint firstItem="gan-c0-4io" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" constant="10" id="a2T-yc-Scf"/>
-                            <constraint firstAttribute="trailing" secondItem="lqr-oL-FW2" secondAttribute="trailing" id="bDD-Sd-TW0"/>
                             <constraint firstItem="rGT-d8-ucd" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" id="eQL-8x-G89"/>
-                            <constraint firstItem="ero-2a-Gpl" firstAttribute="leading" secondItem="W0i-Kb-DHt" secondAttribute="leading" constant="10" id="efK-Lx-DZS"/>
-                            <constraint firstItem="gan-c0-4io" firstAttribute="width" secondItem="ero-2a-Gpl" secondAttribute="width" id="efS-Yd-ftu"/>
                             <constraint firstItem="IRQ-af-xXS" firstAttribute="trailing" secondItem="rGT-d8-ucd" secondAttribute="trailing" id="gvu-Ek-ss5"/>
-                            <constraint firstItem="lqr-oL-FW2" firstAttribute="leading" secondItem="5Tr-A1-5hl" secondAttribute="leading" id="hEc-RH-355"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="bottom" secondItem="IRQ-af-xXS" secondAttribute="bottom" constant="557" id="hth-oz-Xy9"/>
-                            <constraint firstItem="W0i-Kb-DHt" firstAttribute="bottom" secondItem="ero-2a-Gpl" secondAttribute="bottom" constant="20" id="keb-NZ-WIP"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ero-2a-Gpl" secondAttribute="trailing" constant="11" id="ksW-bu-7sp"/>
+                            <constraint firstItem="aB7-93-jQt" firstAttribute="centerX" secondItem="5Tr-A1-5hl" secondAttribute="centerX" id="poV-fO-dlv"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="trailing" secondItem="rGT-d8-ucd" secondAttribute="trailing" id="qok-lh-End"/>
                             <constraint firstItem="W0i-Kb-DHt" firstAttribute="bottom" secondItem="rGT-d8-ucd" secondAttribute="bottom" id="r9m-Hh-1Nb"/>
                         </constraints>
@@ -289,7 +271,6 @@
                     <connections>
                         <outlet property="activityIndicator" destination="aB7-93-jQt" id="ir6-JC-GX6"/>
                         <outlet property="loadingTextField" destination="gDx-U4-B0l" id="T8b-hN-U9A"/>
-                        <outlet property="loadingView" destination="lqr-oL-FW2" id="KBl-na-36c"/>
                         <outlet property="lowerTabBar" destination="xnH-Xt-6T3" id="gPc-zc-Lvt"/>
                         <outlet property="mapView" destination="rGT-d8-ucd" id="wal-Hy-jLS"/>
                     </connections>

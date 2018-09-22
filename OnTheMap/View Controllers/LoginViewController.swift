@@ -32,34 +32,45 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
-        
-        performUIUpdatesOnMain {
-            self.activityIndicator.startAnimating()
-        }
-        
-        
-       // mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
-        mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
-            (success, sessionID, errorString) in
-
-            performUIUpdatesOnMain {
-                self.activityIndicator.stopAnimating()
-            }
+        if (emailField.text?.isEmpty)! {
+            self.displayTextOnUI("Please enter an email address.")
+        } else if (passwordField.text?.isEmpty)! {
+            self.displayTextOnUI("Please enter your password.")
+        } else {
             
             performUIUpdatesOnMain {
-                if success {
-                    self.loadStudentLocations()
-                } else {
-                    self.displayTextOnUI(errorString!)
+                self.activityIndicator.startAnimating()
+            }
+            
+            // MARK: - Login Convenience method with stored user/pswd
+            // For safe convenience while debugging, an untracked PrivateConstants file is kept locally on my development computer.
+            mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
+                (success, sessionID, errorString) in
+            
+            // MARK: Standard login method
+            // For a distributed build, the following code should be used instead:
+            // mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
+            // (success, sessionID, errorString) in
+            
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                }
+                
+                performUIUpdatesOnMain {
+                    if success {
+                        self.loadStudentLocations()
+                    } else {
+                        self.displayTextOnUI(errorString!)
+                    }
                 }
             }
+            //performSegue(withIdentifier: "loginComplete", sender: AnyObject.self)
+            //temporarySessionMethod()
         }
-        //performSegue(withIdentifier: "loginComplete", sender: AnyObject.self)
-        //temporarySessionMethod()
     }
     
     func loadStudentLocations() {
@@ -70,7 +81,7 @@ class LoginViewController: UIViewController {
         
         displayTextOnUI("Getting student locations...")
 //        temporaryGetStudentLocations()
-        mapClient.getAllValidStudentLocations() {
+        mapClient.get100ValidStudentLocations() {
             (success, allValidStudentLocations, errorString) in
 
             performUIUpdatesOnMain {

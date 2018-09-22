@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import MapKit
 
 extension MapClient {
     
     struct Constants {
-        static let DefaultMapZoom = 100000
+        static let DefaultMapZoom = CLLocationDistance(50000) // Max allowed, 50 km
         static let SearchLatRange = (-90.0, 90.0)
         static let SearchLonRange = (-180.0, 180.0)
         static let ValidLatitudeRange = (-90.000...90.000)
@@ -21,7 +22,7 @@ extension MapClient {
     // Addresses
     struct Addresses {
         static let UdacityAPIAddress = "https://www.udacity.com/api/session"
-        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation?limit=5000"
+        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation?limit=1000"
     }
     
     struct Headers {

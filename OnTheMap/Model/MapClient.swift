@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import MapKit
+import CoreLocation
 
 // MARK: - MapClient: NSObject
 
@@ -16,17 +18,12 @@ class MapClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    var allStudents: [VerifiedStudent]? = nil
+    var allStudents: [VerifiedStudentPin]? = nil
     var sessionID: String? = nil
     var accountKey: String? = nil
-    // Config?
-    //
+    var currentLocation: CLLocationCoordinate2D? = nil
     
-    // authentication states?
-    //
-    
-    // MARK: GET
-    
+    // MARK: GET Method
     func taskForGETMethod<T: Decodable>(_ address: String, optionalQueries: [String:String]?, completionHandlerForGET: @escaping (_ result: T?, _ errorString: String?) -> Void) {
         
         var errorInGETRequest: String? = nil
@@ -47,11 +44,6 @@ class MapClient: NSObject {
             
             errorInGETRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
             
-//            var dataToParse = data!
-//            let range = Range(5..<data!.count)
-//            let newData = data?.subdata(in: range)
-//            dataToParse = newData!
-            
             var jsonObject: T? = nil
             do {
                 print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data?.count))")
@@ -67,11 +59,10 @@ class MapClient: NSObject {
                 completionHandlerForGET(jsonObject, errorInGETRequest)
             }
         }
-        
         task.resume()
-    }
+    } // End of taskForGETMethod
     
-    // MARK: - taskForPOSTMethod
+    // MARK: - POST Method
     func taskForPOSTMethod<TResponse: Decodable, TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, completionHandlerForPOST: @escaping (_ result: TResponse?, _ nsError: String?) -> Void ) {
         
         var errorInPOSTRequest: String? = nil
@@ -128,16 +119,12 @@ class MapClient: NSObject {
                 errorInPOSTRequest = MapClient.parseUdacityError(data: dataToParse)
                 completionHandlerForPOST(nil, errorInPOSTRequest)
             }
-            
-            //completionHandlerForPOST(jsonObject, errorInPOSTRequest)
         }
-        
         task.resume()
-    }
+    } // End of taskForPOSTMethod
     
     
-    
-    // Build URL from parameters
+    // MARK: - Build URL from parameters
     class func URLFromParameters(address: String, optionalQueries: [String:String]?) -> URL {
         var components = URLComponents(string: address)
         
@@ -164,8 +151,8 @@ class MapClient: NSObject {
         catch { returnString = error as! String }
         return returnString
     }
-    // MARK: Shared Instance
     
+    // MARK: Shared Instance Singleton
     class func sharedInstance() -> MapClient {
         struct Singleton {
             static var sharedInstance = MapClient()

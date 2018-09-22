@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 class TableTabViewController: UITableViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var titleText: UILabel!
-    
-    @IBOutlet weak var subtitle: UILabel!
     var mapClient: MapClient!
-    var allStudents: [VerifiedStudent]? = nil
+    var mapCenter: CLLocationCoordinate2D? = nil
+    var allStudents: [VerifiedStudentPin]? = nil
+    
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,7 @@ class TableTabViewController: UITableViewController {
         mapClient = MapClient.sharedInstance()
         allStudents = mapClient.allStudents
         
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -60,7 +63,7 @@ class TableTabViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentTableCell", for: indexPath)
-        cell.textLabel?.text = allStudents![indexPath.row].name
+        cell.textLabel?.text = allStudents![indexPath.row].title
         let urlString = "\(allStudents![indexPath.row].url)"
         cell.detailTextLabel?.text = urlString
      

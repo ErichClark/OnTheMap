@@ -12,9 +12,8 @@ import MapKit
 class MapViewController: UIViewController {
 
     // Data Model objects
-    var allStudents: [VerifiedStudent]? = nil
-    let centralStudentPin: VerifiedStudent? = nil
-    let defaultZoomDistance = CLLocationDistance(MapClient.Constants.DefaultMapZoom)
+    var allStudents: [VerifiedStudentPin]? = nil
+    var centralCoordinate: CLLocationCoordinate2D? = nil
 
     // Location and map
     let locationManager = CLLocationManager()
@@ -26,7 +25,6 @@ class MapViewController: UIViewController {
     
     // Loading and status update outlets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var loadingTextField: UITextField!
     
     
@@ -36,6 +34,7 @@ class MapViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        // TODO: - Use Safe Area Inset?
         super.viewDidLoad()
         
         // get the Map client
@@ -43,14 +42,18 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         allStudents = mapClient.allStudents
         
-        // Center view on a kilometer radius of a student pin from TableTab ViewController, if provided
+        centerMap()
+        
+        mapView.addAnnotations(allStudents!)
+        
+        // Center view on a 500 kilometer radius of a student pin from TableTab ViewController, if provided
         //let initialLocation = CLLocation(latitude: centralStudentPin.latitude!, longitude: centralStudentPin.longitude!)
         // Do any additional setup after loading the view.
         //centerOnMapLocation(location: initialLocation)
         
         // Set the mapview delegate
         mapView.delegate = self
-        mapView.register(PinView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(PinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
     
     
@@ -64,9 +67,24 @@ class MapViewController: UIViewController {
     }
 
     // Map centering helper
-    func centerOnMapLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, defaultZoomDistance, defaultZoomDistance)
+    func centerMap() {
+//        if centralCoordinate == nil {
+//            let locationHelper = GetLocationHelper()
+//            locationHelper.returnOneLocation() {
+//                (currentLocation, errorString) in
+//
+//                if errorString != nil {
+//                    self.displayTextOnUI(errorString!)
+//                }
+//                self.centralCoordinate = currentLocation
+//            }
+//        } else {
+//
+//        }
+        if centralCoordinate != nil {
+            let coordinateRegion = MKCoordinateRegionMakeWithDistance(centralCoordinate!, MapClient.Constants.DefaultMapZoom, MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
+        }
     }
 
     // Debugger Textfield display
@@ -74,20 +92,15 @@ class MapViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func finished(_ sender: Any) {
-        self.dismiss(animated: true)
-    }
-    
     @IBAction func reload(_ sender: Any) {
         performUIUpdatesOnMain {
-            self.loadingView.isHidden = false
             
             self.activityIndicator.startAnimating()
         }
         
         print("Getting student locations...")
         //        temporaryGetStudentLocations()
-        mapClient.getAllValidStudentLocations() {
+        mapClient.get100ValidStudentLocations() {
             (success, allValidStudentLocations, errorString) in
             
             performUIUpdatesOnMain {
@@ -100,11 +113,9 @@ class MapViewController: UIViewController {
                     successMessage += "\(String(describing: allValidStudentLocations!.count)) students returned."
                     self.displayTextOnUI(successMessage)
                     self.activityIndicator.stopAnimating()
-                    self.fadeOutLoadingView(self.loadingView)
                 } else {
                     self.displayTextOnUI(errorString!)
                     self.activityIndicator.stopAnimating()
-                    self.fadeOutLoadingView(self.loadingView)
                     print(errorString!)
                 }
             }
@@ -115,6 +126,7 @@ class MapViewController: UIViewController {
     func displayTextOnUI(_ displayString: String) {
         loadingTextField.text = displayString
         loadingTextField.alpha = 1.0
+        fadeOutTextField(loadingTextField)
     }
     
     @IBAction func addPin(_ sender: Any) {
@@ -137,7 +149,7 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard  let annotation = annotation as? VerifiedStudent else {
+        guard  let annotation = annotation as? VerifiedStudentPin else {
             return nil
         }
         
@@ -151,8 +163,15 @@ extension MapViewController: MKMapViewDelegate {
             view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            view.rightCalloutAccessoryView = UIButton(type: .custom)
         }
         return view
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        let url = view.annotation as! VerifiedStudentPin
+        
+        print("\(url)")
     }
 }

@@ -45,7 +45,7 @@ extension MapClient {
         
     }
     
-    func getAllValidStudentLocations(_ completionHandlerForGetAllValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudent]?, _ errorString: String?) -> Void ) {
+    func get100ValidStudentLocations(_ completionHandlerForGetAllValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
         
         self.getAllStudentLocations() {
             (success, allStudentLocations, errorString) in
@@ -59,7 +59,11 @@ extension MapClient {
                     if success {
                         let filteredCount = verifiedStudents?.count
                         print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
-                        MapClient.sharedInstance().allStudents = verifiedStudents
+                        
+                        // MARK: - Take only 100 verified entries
+                        let slice = verifiedStudents![0..<100]
+                        let oneHundredStudents = Array(slice)
+                        MapClient.sharedInstance().allStudents = oneHundredStudents
                         completionHandlerForGetAllValidStudentLocations(true, verifiedStudents, nil)
                     }
                 
@@ -84,10 +88,10 @@ extension MapClient {
     
     
     // MARK: - Filter bad location data, duplicates
-    func filterInvalidLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudent]?, _ errorString: String?) -> Void ) {
+    func filterInvalidLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
         
         let potentialStudents: [StudentLocation] = allStudentLocations.results!
-        var filteredStudents = [VerifiedStudent]()
+        var filteredStudents = [VerifiedStudentPin]()
         var blackListedFirstNames: [String] = [""]
         for student in potentialStudents {
             guard student.objectId != nil  else {
@@ -130,7 +134,7 @@ extension MapClient {
                 continue
             }
             
-            let cleanStudent = VerifiedStudent(firstName: student.firstName!, lastName: student.lastName!, url: url, latitude: student.latitude!, longitude: student.longitude!)
+            let cleanStudent = VerifiedStudentPin(firstName: student.firstName!, lastName: student.lastName!, url: url, latitude: student.latitude!, longitude: student.longitude!)
             filteredStudents.append(cleanStudent)
             blackListedFirstNames.append(student.firstName!)
         }
