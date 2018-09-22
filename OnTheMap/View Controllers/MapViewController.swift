@@ -170,8 +170,11 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        let url = view.annotation as! VerifiedStudentPin
+        let pin = view.annotation as! VerifiedStudentPin
+        let url = pin.url
         
-        print("\(url)")
+        if UIApplication.shared.canOpenURL(pin.url) == true {
+            UIApplication.shared.open(url, options: [:], completionHandler: {(success) in print("Open \(url) \(success)")})        }
+        print("The url is \(pin.url)")
     }
 }
