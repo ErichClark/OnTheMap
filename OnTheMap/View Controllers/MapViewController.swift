@@ -82,7 +82,7 @@ class MapViewController: UIViewController {
 //
 //        }
         if centralCoordinate != nil {
-            let coordinateRegion = MKCoordinateRegionMakeWithDistance(centralCoordinate!, MapClient.Constants.DefaultMapZoom, MapClient.Constants.DefaultMapZoom)
+            let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
         }
     }

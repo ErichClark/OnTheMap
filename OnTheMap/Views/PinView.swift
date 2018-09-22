@@ -9,18 +9,20 @@
 import Foundation
 import MapKit
 
-class PinMarkerView: MKMarkerAnnotationView {
-    override var annotation: MKAnnotation? {
-        willSet {
-            guard let pin = newValue as? VerifiedStudentPin else {return}
-            canShowCallout = true
-            calloutOffset = CGPoint(x: -5, y: 5)
-            rightCalloutAccessoryView = UIButton(type: .custom)
-            markerTintColor = UIColor.cyan
-            
-        }
-    }
-}
+//class PinMarkerView: MKMarkerAnnotationView {
+//    override var annotation: MKAnnotation? {
+//        willSet {
+//            guard let pin = newValue as? VerifiedStudentPin else {return}
+//            canShowCallout = true
+//            calloutOffset = CGPoint(x: -5, y: 5)
+//            let
+//            rightCalloutAccessoryView = UIButton(type: .custom)
+//
+//            markerTintColor = UIColor.cyan
+//
+//        }
+//    }
+//}
 
 
 class PinAnnotationView: MKAnnotationView {
@@ -32,7 +34,7 @@ class PinAnnotationView: MKAnnotationView {
             
             // MARK: - Safari button
             let safariButton = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 30, height: 30)))
-            safariButton.setBackgroundImage(UIImage(named: "safari_icon"), for: UIControlState())
+            safariButton.setBackgroundImage(UIImage(named: "safari_icon"), for: UIControl.State())
             rightCalloutAccessoryView = safariButton
             
             let detailLabel = UILabel()
