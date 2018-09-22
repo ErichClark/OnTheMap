@@ -154,13 +154,13 @@ extension MapViewController: MKMapViewDelegate {
         }
         
         let identifier = "student"
-        var view: MKMarkerAnnotationView
+        var view: PinAnnotationView
         
-        if let dequedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+        if let dequedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? PinAnnotationView {
             dequedView.annotation = annotation
             view = dequedView
         } else {
-            view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view = PinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
             view.rightCalloutAccessoryView = UIButton(type: .custom)

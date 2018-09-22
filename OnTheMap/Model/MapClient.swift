@@ -97,7 +97,7 @@ class MapClient: NSObject {
             var dataToParse = data!
             // Remove Udacity security characters
             if address == MapClient.Addresses.UdacityAPIAddress {
-                let range = Range(5..<data!.count)
+                let range = (5..<data!.count)
                 let newData = data?.subdata(in: range)
                 dataToParse = newData!
             }
