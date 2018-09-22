@@ -149,12 +149,6 @@ extension MapClient {
         }
     }
     
-    func lookUpStudentURL(_ url: URL, completionHandlerForlookUpStudentURL: @escaping (_ success: Bool, _ errorString: String?) -> Void ) {
-        
-        UIApplication.shared.open(url, options: [:], completionHandler: {(success) in print("Open \(url) \(success)")})
-        
-    }
-    
     private func getSingleStudentLocation(_ completionHandlerForGetSingleLocation: @escaping (_ success: Bool, _ singleStudentLocation: StudentLocation?, _ errorString: String?) -> Void) {
         
     }
