@@ -200,6 +200,7 @@
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-selected" id="78p-Uy-1cu"/>
                     <connections>
                         <outlet property="activityIndicator" destination="bv6-vd-z3Q" id="ZJl-53-1lQ"/>
+                        <segue destination="OAd-yc-x3L" kind="show" identifier="newCenterForMap" id="Fj7-Wm-RVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="peg-Ps-8lb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -216,10 +217,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rGT-d8-ucd">
-                                <rect key="frame" x="0.0" y="61" width="375" height="557"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
                             </mapView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IRQ-af-xXS">
-                                <rect key="frame" x="0.0" y="20" width="375" height="41"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="90"/>
                                 <items>
                                     <navigationItem title="On the Map" id="Ptl-gV-nRJ">
                                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="YKH-Fa-qqP">
@@ -308,4 +309,7 @@
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Fj7-Wm-RVQ"/>
+    </inferredMetricsTieBreakers>
 </document>
