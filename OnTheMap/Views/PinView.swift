@@ -37,6 +37,8 @@ class PinAnnotationView: MKAnnotationView {
             safariButton.setBackgroundImage(UIImage(named: "safari_icon"), for: UIControl.State())
             rightCalloutAccessoryView = safariButton
             
+            image = UIImage(named: "icon_pin")
+            
             let detailLabel = UILabel()
             detailLabel.numberOfLines = 0
             detailLabel.font = detailLabel.font.withSize(12)
