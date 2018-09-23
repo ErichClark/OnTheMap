@@ -293,7 +293,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="DOh-rE-lNV">
                                 <rect key="frame" x="30" y="200" width="315" height="194"/>
                                 <subviews>
-                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Iw-Js-Y43" userLabel="spacer">
+                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Iw-Js-Y43" userLabel="bebugTextField">
                                         <rect key="frame" x="0.0" y="0.0" width="315" height="17"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -327,18 +327,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1D-ud-FfH">
                                 <rect key="frame" x="30" y="409" width="315" height="228"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-7M-10Y">
-                                        <rect key="frame" x="139" y="96" width="37" height="37"/>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-7M-10Y">
+                                        <rect key="frame" x="138" y="97" width="37" height="37"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="color" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="eOI-7M-10Y" secondAttribute="bottom" constant="95" id="GD3-zb-eOB"/>
-                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" constant="96" id="Guh-ih-gU8"/>
-                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" constant="139" id="NUw-DH-kEY"/>
-                                    <constraint firstAttribute="trailing" secondItem="eOI-7M-10Y" secondAttribute="trailing" constant="139" id="xnn-YI-3F4"/>
-                                </constraints>
                             </view>
                             <navigationBar contentMode="scaleToFill" backIndicatorImage="CANCEL" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-i0-tEe">
                                 <rect key="frame" x="0.0" y="25" width="375" height="44"/>
@@ -383,6 +378,8 @@
                         <viewLayoutGuide key="safeArea" id="JZm-B5-wJD"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="eOI-7M-10Y" id="zwC-3L-zFf"/>
+                        <outlet property="debugTextField" destination="7Iw-Js-Y43" id="Hq1-Zr-MKb"/>
                         <outlet property="geoSearchTextField" destination="M3z-L0-xbf" id="V9r-Lp-c1r"/>
                         <outlet property="urlTextField" destination="cce-e0-DMd" id="aIh-9N-PPH"/>
                     </connections>

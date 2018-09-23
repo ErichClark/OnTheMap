@@ -11,8 +11,10 @@ import MapKit
 
 class InformationPostingViewController: UIViewController {
 
+    @IBOutlet weak var debugTextField: UITextField!
     @IBOutlet weak var geoSearchTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // Data model objects
     let locationManager = CLLocationManager()
