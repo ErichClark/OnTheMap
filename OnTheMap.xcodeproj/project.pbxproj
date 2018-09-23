@@ -18,6 +18,7 @@
 		778D75D82139C249002AA868 /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D72139C249002AA868 /* MapClient.swift */; };
 		778D75DA213B8B8F002AA868 /* NetworkErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */; };
 		77C6F29F21582F6000627F19 /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C6F29E21582F6000627F19 /* InformationPostingViewController.swift */; };
+		77C6F2A121584B4500627F19 /* MapConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C6F2A021584B4500627F19 /* MapConfirmationViewController.swift */; };
 		77EC8E37213EE91C00EAAE9E /* TableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */; };
 		77EC8E39213EEAA100EAAE9E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E38213EEAA100EAAE9E /* MapViewController.swift */; };
 		77EC8E3C213F096300EAAE9E /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77EC8E3B213F096300EAAE9E /* PinView.swift */; };
@@ -43,6 +44,7 @@
 		778D75D72139C249002AA868 /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
 		778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkErrorHelper.swift; sourceTree = "<group>"; };
 		77C6F29E21582F6000627F19 /* InformationPostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
+		77C6F2A021584B4500627F19 /* MapConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapConfirmationViewController.swift; sourceTree = "<group>"; };
 		77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTabViewController.swift; sourceTree = "<group>"; };
 		77EC8E38213EEAA100EAAE9E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		77EC8E3B213F096300EAAE9E /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				77EC8E36213EE91C00EAAE9E /* TableTabViewController.swift */,
 				77EC8E38213EEAA100EAAE9E /* MapViewController.swift */,
 				77C6F29E21582F6000627F19 /* InformationPostingViewController.swift */,
+				77C6F2A021584B4500627F19 /* MapConfirmationViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				77F36CB921479785007BAFFF /* PrivateConstants.swift in Sources */,
 				778D75BE2138E700002AA868 /* LoginViewController.swift in Sources */,
 				77F36CBF215347AD007BAFFF /* GetLocationHelper.swift in Sources */,
+				77C6F2A121584B4500627F19 /* MapConfirmationViewController.swift in Sources */,
 				77F36CBB214AAE5B007BAFFF /* FadeOut.swift in Sources */,
 				778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */,
 				77C6F29F21582F6000627F19 /* InformationPostingViewController.swift in Sources */,

@@ -124,8 +124,8 @@ class MapViewController: UIViewController {
     
     func displayTextOnUI(_ displayString: String) {
         loadingTextField.text = displayString
-        loadingTextField.alpha = 1.0
-        fadeOutTextField(loadingTextField)
+        //loadingTextField.alpha = 1.0
+        //fadeOutTextField(loadingTextField)
     }
     
     @IBAction func addPin(_ sender: Any) {
