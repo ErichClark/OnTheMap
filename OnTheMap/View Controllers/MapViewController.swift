@@ -21,7 +21,6 @@ class MapViewController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var lowerTabBar: UITabBarItem!
     
     // Loading and status update outlets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -133,6 +132,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func logOut(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     /*

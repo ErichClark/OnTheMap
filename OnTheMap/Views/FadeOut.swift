@@ -11,9 +11,13 @@ import UIKit
 
 extension UIViewController {
     func fadeOutTextField(_ sender: UITextField) {
-        UIView.animate(withDuration: 1.5, delay: 5, options: .curveEaseOut, animations: {
+        sender.alpha = 1
+        
+        UIView.animate(withDuration: 50, delay: 10, options: .curveEaseOut, animations: {
             sender.alpha = 0.0
         })
+        sender.text = "faded"
+        sender.alpha = 1
     }
     func fadeInTextField(_ sender: UIView) {
         UIView.animate(withDuration: 1.5, delay: 0.1, options: .curveEaseIn, animations: {

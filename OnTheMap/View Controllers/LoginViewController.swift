@@ -24,8 +24,11 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // get the Map client
-        mapClient = MapClient.sharedInstance()
-        
+        mapClient = MapClient.sharedInstance()        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        displayTextOnUI("")
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,6 +106,7 @@ class LoginViewController: UIViewController {
     
     func displayTextOnUI(_ displayString: String) {
         errorTextfield.text = displayString
+        //fadeOutTextField(errorTextfield)
     }
     
     func temporaryGetStudentLocations() {
