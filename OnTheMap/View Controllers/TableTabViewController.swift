@@ -72,22 +72,12 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let studentLocation = allStudents![indexPath.row].coordinate
-        mapCenter = studentLocation
-        performSegue(withIdentifier: "newCenterForMap", sender: self)
-    }
-    
-    // TODO: - Navigation - segue with mapCenter cordinate as map center in MapView
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "newCenterForMap" {
-            let mapVC = segue.destination as! MapViewController
-            mapVC.centralCoordinate = mapCenter
+        let url = allStudents![indexPath.row].url
+        
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: {(success) in
+                print("Open \(url) \(success)")})
         }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
- 
 
 }

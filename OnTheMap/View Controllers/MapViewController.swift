@@ -173,8 +173,9 @@ extension MapViewController: MKMapViewDelegate {
         let pin = view.annotation as! VerifiedStudentPin
         let url = pin.url
         
-        if UIApplication.shared.canOpenURL(pin.url) == true {
-            UIApplication.shared.open(url, options: [:], completionHandler: {(success) in print("Open \(url) \(success)")})        }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: {(success) in print("Open \(url) \(success)")})
+        }
         print("The url is \(pin.url)")
     }
 }
