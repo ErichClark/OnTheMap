@@ -346,11 +346,11 @@
                                     <constraint firstItem="eOI-7M-10Y" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" constant="138" id="vTU-3G-rk8"/>
                                 </constraints>
                             </view>
-                            <navigationBar contentMode="scaleToFill" backIndicatorImage="CANCEL" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-i0-tEe">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-i0-tEe">
                                 <rect key="frame" x="0.0" y="25" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="Add Location" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="jbe-KZ-1Zy">
-                                        <barButtonItem key="backBarButtonItem" title="CANCEL" id="EnL-yU-GAC"/>
+                                    <navigationItem title="Add Location" largeTitleDisplayMode="always" id="jbe-KZ-1Zy">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6jr-aJ-DsV"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -411,8 +411,12 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sZk-8b-LYk">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="Add Location" leftItemsSupplementBackButton="YES" id="qea-yL-4N9">
-                                        <barButtonItem key="backBarButtonItem" title="Add Location" id="Kye-hf-1kZ"/>
+                                    <navigationItem title="Add Location" id="qea-yL-4N9">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="search" id="bm0-sf-yGr">
+                                            <connections>
+                                                <segue destination="sqj-7f-Zzp" kind="show" identifier="returnToSearch" id="SO5-jP-SWS"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -475,7 +479,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CANCEL" width="16" height="16"/>
         <image name="OnTheMapIcon_102px" width="102" height="102"/>
         <image name="icon-U-inverse-128" width="128" height="128"/>
         <image name="icon_listview-deselected" width="75" height="50"/>
@@ -485,6 +488,7 @@
         <image name="icon_pin" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="bin-us-su3"/>
+        <segue reference="nJU-Sv-KB2"/>
+        <segue reference="SO5-jP-SWS"/>
     </inferredMetricsTieBreakers>
 </document>

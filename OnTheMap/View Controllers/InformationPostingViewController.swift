@@ -30,7 +30,7 @@ class InformationPostingViewController: UIViewController {
     }
     
     @IBAction func findLocation(_ sender: Any) {
-        
+        performSegue(withIdentifier: "ConfirmLocation", sender: self)
     }
     
     func displayTextOnUI(_ displayString: String) {
