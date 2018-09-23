@@ -12,7 +12,7 @@ import MapKit
 extension MapClient {
     
     struct Constants {
-        static let DefaultMapZoom = CLLocationDistance(50000) // Max allowed, 50 km
+        static let DefaultMapZoom = CLLocationDistance(500000) // Max allowed, 50 km
         static let SearchLatRange = (-90.0, 90.0)
         static let SearchLonRange = (-180.0, 180.0)
         static let ValidLatitudeRange = (-90.000...90.000)
