@@ -282,12 +282,122 @@
             </objects>
             <point key="canvasLocation" x="1754.4000000000001" y="-294.60269865067471"/>
         </scene>
+        <!--Information Posting View Controller-->
+        <scene sceneID="QJw-SL-MXa">
+            <objects>
+                <viewController id="sqj-7f-Zzp" customClass="InformationPostingViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wNs-eU-ene">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="DOh-rE-lNV">
+                                <rect key="frame" x="30" y="200" width="315" height="194"/>
+                                <subviews>
+                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Iw-Js-Y43" userLabel="spacer">
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="17"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M3z-L0-xbf" userLabel="geoSearchTextField">
+                                        <rect key="frame" x="0.0" y="46" width="315" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cce-e0-DMd" userLabel="urlTextField">
+                                        <rect key="frame" x="0.0" y="105" width="315" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdJ-QM-cI4" userLabel="findLocation">
+                                        <rect key="frame" x="0.0" y="164" width="315" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.70588235290000001" blue="0.92156862750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <state key="normal" title="FIND LOCATION">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="findLocation:" destination="sqj-7f-Zzp" eventType="touchUpInside" id="sQv-af-wdb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1D-ud-FfH">
+                                <rect key="frame" x="30" y="409" width="315" height="228"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-7M-10Y">
+                                        <rect key="frame" x="139" y="96" width="37" height="37"/>
+                                        <color key="color" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="eOI-7M-10Y" secondAttribute="bottom" constant="95" id="GD3-zb-eOB"/>
+                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" constant="96" id="Guh-ih-gU8"/>
+                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" constant="139" id="NUw-DH-kEY"/>
+                                    <constraint firstAttribute="trailing" secondItem="eOI-7M-10Y" secondAttribute="trailing" constant="139" id="xnn-YI-3F4"/>
+                                </constraints>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" backIndicatorImage="CANCEL" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-i0-tEe">
+                                <rect key="frame" x="0.0" y="25" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Location" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="jbe-KZ-1Zy">
+                                        <barButtonItem key="backBarButtonItem" title="CANCEL" id="EnL-yU-GAC"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Qj-LI-ffe">
+                                <rect key="frame" x="30" y="82" width="315" height="146"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="OnTheMapIcon_102px" translatesAutoresizingMaskIntoConstraints="NO" id="dhU-CX-tKf">
+                                        <rect key="frame" x="120" y="37" width="72" height="75"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="146" id="Ynk-Ar-qhH"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="L1D-ud-FfH" firstAttribute="width" secondItem="DOh-rE-lNV" secondAttribute="width" id="8kq-OQ-gpw"/>
+                            <constraint firstItem="1Qj-LI-ffe" firstAttribute="top" secondItem="Z6N-i0-tEe" secondAttribute="bottom" constant="13" id="I2X-L2-rLe"/>
+                            <constraint firstItem="1Qj-LI-ffe" firstAttribute="width" secondItem="DOh-rE-lNV" secondAttribute="width" id="ISx-YI-3Wu"/>
+                            <constraint firstItem="1Qj-LI-ffe" firstAttribute="leading" secondItem="DOh-rE-lNV" secondAttribute="leading" id="JjH-dc-F7o"/>
+                            <constraint firstItem="L1D-ud-FfH" firstAttribute="leading" secondItem="JZm-B5-wJD" secondAttribute="leading" constant="30" id="Mj4-tR-cnz"/>
+                            <constraint firstItem="JZm-B5-wJD" firstAttribute="trailing" secondItem="DOh-rE-lNV" secondAttribute="trailing" constant="30" id="Vsb-nQ-SGt"/>
+                            <constraint firstItem="JZm-B5-wJD" firstAttribute="trailing" secondItem="Z6N-i0-tEe" secondAttribute="trailing" id="X3Q-TC-lhD"/>
+                            <constraint firstItem="DOh-rE-lNV" firstAttribute="top" secondItem="JZm-B5-wJD" secondAttribute="top" constant="180" id="XR0-VA-Ynf"/>
+                            <constraint firstItem="Z6N-i0-tEe" firstAttribute="top" secondItem="JZm-B5-wJD" secondAttribute="top" constant="5" id="ZUo-qc-eV1"/>
+                            <constraint firstItem="DOh-rE-lNV" firstAttribute="centerX" secondItem="wNs-eU-ene" secondAttribute="centerX" id="ajG-QV-0eB"/>
+                            <constraint firstItem="JZm-B5-wJD" firstAttribute="bottom" secondItem="L1D-ud-FfH" secondAttribute="bottom" constant="30" id="eXs-rI-oIJ"/>
+                            <constraint firstItem="JZm-B5-wJD" firstAttribute="trailing" secondItem="L1D-ud-FfH" secondAttribute="trailing" constant="30" id="hD6-w8-hx8"/>
+                            <constraint firstItem="Z6N-i0-tEe" firstAttribute="leading" secondItem="wNs-eU-ene" secondAttribute="leading" id="kQp-oo-nAR"/>
+                            <constraint firstItem="DOh-rE-lNV" firstAttribute="leading" secondItem="JZm-B5-wJD" secondAttribute="leading" constant="30" id="xro-OZ-Asq"/>
+                            <constraint firstItem="L1D-ud-FfH" firstAttribute="top" secondItem="DOh-rE-lNV" secondAttribute="bottom" constant="15" id="zTY-ge-vw6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="JZm-B5-wJD"/>
+                    </view>
+                    <connections>
+                        <outlet property="geoSearchTextField" destination="M3z-L0-xbf" id="V9r-Lp-c1r"/>
+                        <outlet property="urlTextField" destination="cce-e0-DMd" id="aIh-9N-PPH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ms6-3l-odL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2776.8000000000002" y="-294.60269865067471"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Upc-ZB-5XD">
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="w9P-7f-eqn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="A3g-Lj-5ln">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -302,6 +412,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CANCEL" width="16" height="16"/>
+        <image name="OnTheMapIcon_102px" width="102" height="102"/>
         <image name="icon-U-inverse-128" width="128" height="128"/>
         <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_listview-selected" width="75" height="50"/>
