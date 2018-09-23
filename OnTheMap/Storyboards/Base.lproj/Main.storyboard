@@ -141,9 +141,6 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="78p-Uy-1cu"/>
-                    <connections>
-                        <segue destination="OAd-yc-x3L" kind="show" identifier="newCenterForMap" id="Fj7-Wm-RVQ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="peg-Ps-8lb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -260,7 +257,4 @@
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Fj7-Wm-RVQ"/>
-    </inferredMetricsTieBreakers>
 </document>
