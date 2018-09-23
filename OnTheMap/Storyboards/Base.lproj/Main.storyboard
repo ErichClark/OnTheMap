@@ -140,7 +140,7 @@
                             <outlet property="delegate" destination="vzK-nJ-cel" id="td6-g4-SuV"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="" image="icon_listview-selected" id="78p-Uy-1cu"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="78p-Uy-1cu"/>
                     <connections>
                         <segue destination="OAd-yc-x3L" kind="show" identifier="newCenterForMap" id="Fj7-Wm-RVQ"/>
                     </connections>
@@ -220,7 +220,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="W0i-Kb-DHt"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" selectedImage="icon_mapview-selected" id="bpl-Zg-UUa"/>
+                    <tabBarItem key="tabBarItem" title="" image="icon_mapview-deselected" selectedImage="icon_mapview-selected" id="bpl-Zg-UUa"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="aB7-93-jQt" id="ir6-JC-GX6"/>
@@ -254,7 +254,9 @@
     </scenes>
     <resources>
         <image name="icon-U-inverse-128" width="128" height="128"/>
+        <image name="icon_listview-deselected" width="75" height="50"/>
         <image name="icon_listview-selected" width="75" height="50"/>
+        <image name="icon_mapview-deselected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
     </resources>
