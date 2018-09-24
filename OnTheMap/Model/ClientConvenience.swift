@@ -195,13 +195,30 @@ extension MapClient {
         }
     }
 
-    func getCoordinatesFromStringQuery(queryString: String, region: MKCoordinateRegion, completionHandlerForgetCoordinatesFromStringQuery: @escaping (_ success: Bool?, _ coordinate: CLLocationCoordinate2D?, _ errorString: String?) -> Void) {
+    func getResultsFromStringQuery(queryString: String, region: MKCoordinateRegion, completionHandlerForGetResultsFromStringQuery: @escaping (_ success: Bool?, _ results: [MKMapItem]?, _ errorString: String?) -> Void) {
         
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = queryString
         request.region = region
-        
-        
+        let search = MKLocalSearch(request: request)
+        search.start() { (response, error) in
+            
+            guard let response = response else {
+                let errorString = "There was an error searching for: \(String(describing: request.naturalLanguageQuery)) error: \(String(describing: error))"
+                completionHandlerForGetResultsFromStringQuery(false, nil, errorString)
+                return
+            }
+            
+            // Verbose printing
+            for item in response.mapItems {
+                // Verbose printing
+                let itemDetails = "** \(String(describing: item.name)) at \(item.placemark.coordinate.latitude) latitude and \(item.placemark.coordinate.longitude)"
+                print(itemDetails)
+                // Display the received items
+            }
+            
+            completionHandlerForGetResultsFromStringQuery(true, response.mapItems, nil)
+        }
     }
     
 }

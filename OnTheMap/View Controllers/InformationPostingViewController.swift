@@ -15,6 +15,7 @@ class InformationPostingViewController: UIViewController {
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var debuggingTextField: UITextField!
+    @IBOutlet weak var resultsTableView: UITableView!
     
     
     // Data model objects
@@ -23,12 +24,11 @@ class InformationPostingViewController: UIViewController {
     var region: MKCoordinateRegion? = nil
     
     // Parameters to bundle into Segue for pin posting
-    var centralCoordinate: CLLocationCoordinate2D? = nil
+    var resultForMapConfirmation: MKMapItem? = nil
     var urlToBundle: String? = nil
-    var mapStringToBundle: String? = nil
+    
+    var resultsFromSearch: [MKMapItem]? = nil
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -50,7 +50,7 @@ class InformationPostingViewController: UIViewController {
             let queryText = geoSearchTextField.text
             let queryRegion = region ?? MapClient.sharedInstance().defaultRegion!
             
-            mapClient.getCoordinatesFromStringQuery(queryString: queryText!, region: queryRegion) { (success, returnedCoordinate, errorString) in
+            mapClient.getResultsFromStringQuery(queryString: queryText!, region: queryRegion) { (success, returnedResults, errorString) in
                 
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
@@ -58,10 +58,10 @@ class InformationPostingViewController: UIViewController {
                 
                 performUIUpdatesOnMain {
                     if success! {
-                        var successMessage = "** Success! "
-                        successMessage += "Map point matched at \(returnedCoordinate!.latitude) latitude and \(returnedCoordinate!.longitude) longitude."
+                        let successMessage = "** Success! Match(es) found."
                         print(successMessage)
-                        self.ConfirmLocation(returnedCoordinate!)
+                        self.resultsFromSearch = returnedResults
+                        self.resultsTableView.reloadData()
                     } else {
                         self.displayTextOnUI(errorString!)
                     }
@@ -76,11 +76,10 @@ class InformationPostingViewController: UIViewController {
     
     
     // MARK: - Confirm Location Function
-    func ConfirmLocation(_ mapPointToCheck: CLLocationCoordinate2D) {
-        centralCoordinate = mapPointToCheck
+    func ConfirmLocation(_ mapPointToCheck: MKMapItem) {
+        resultForMapConfirmation = mapPointToCheck
         urlToBundle = urlTextField.text
-        
-        
+
         performSegue(withIdentifier: "ConfirmLocation", sender: self)
     }
     
@@ -95,8 +94,31 @@ class InformationPostingViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ConfirmLocation" {
             let mapConfirmationVC = segue.destination as? MapConfirmationViewController
-            mapConfirmationVC?.centralCoordinate = centralCoordinate
+            mapConfirmationVC?.resultForMapConfirmation = resultForMapConfirmation
+            mapConfirmationVC?.urlFromSegue = urlToBundle
         }
     }
 
+}
+
+extension InformationPostingViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if resultsFromSearch == nil {
+            return 0
+        }
+        return resultsFromSearch!.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "returnedMapItemCell", for: indexPath)
+        cell.textLabel?.text = resultsFromSearch![indexPath.row].name
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        resultForMapConfirmation = resultsFromSearch![indexPath.row]
+        print("selected \(String(describing: resultForMapConfirmation?.name))")
+        ConfirmLocation(resultForMapConfirmation!)
+    }
 }

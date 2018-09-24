@@ -338,11 +338,42 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="z50-q9-pc5" userLabel="resultsTableView">
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="228"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="returnedMapItemCell" textLabel="kVY-nb-XYu" style="IBUITableViewCellStyleDefault" id="ehm-pZ-MtO">
+                                                <rect key="frame" x="0.0" y="28" width="315" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ehm-pZ-MtO" id="Nc5-yM-Xe9">
+                                                    <rect key="frame" x="0.0" y="0.0" width="315" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kVY-nb-XYu">
+                                                            <rect key="frame" x="15" y="0.0" width="285" height="43.5"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="sqj-7f-Zzp" id="ZFf-ib-aUf"/>
+                                            <outlet property="delegate" destination="sqj-7f-Zzp" id="WtJ-RU-WQp"/>
+                                        </connections>
+                                    </tableView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="tu9-Gd-HAS" secondAttribute="trailing" id="5Tv-ua-XE3"/>
+                                    <constraint firstItem="z50-q9-pc5" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" id="HAN-PM-GQk"/>
+                                    <constraint firstAttribute="bottom" secondItem="z50-q9-pc5" secondAttribute="bottom" id="JLh-4k-Xjm"/>
+                                    <constraint firstItem="z50-q9-pc5" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" id="SuS-2c-Rk1"/>
                                     <constraint firstItem="eOI-7M-10Y" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" constant="97" id="edz-tX-jHo"/>
                                     <constraint firstItem="tu9-Gd-HAS" firstAttribute="top" secondItem="eOI-7M-10Y" secondAttribute="bottom" constant="3" id="fh8-9I-hGS"/>
+                                    <constraint firstAttribute="trailing" secondItem="z50-q9-pc5" secondAttribute="trailing" id="pkU-4T-iOd"/>
                                     <constraint firstItem="tu9-Gd-HAS" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" id="sdx-Mm-2gB"/>
                                     <constraint firstItem="eOI-7M-10Y" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" constant="138" id="vTU-3G-rk8"/>
                                 </constraints>
@@ -397,13 +428,14 @@
                         <outlet property="activityIndicator" destination="eOI-7M-10Y" id="zwC-3L-zFf"/>
                         <outlet property="debuggingTextField" destination="tu9-Gd-HAS" id="OcX-B6-a6I"/>
                         <outlet property="geoSearchTextField" destination="M3z-L0-xbf" id="V9r-Lp-c1r"/>
+                        <outlet property="resultsTableView" destination="z50-q9-pc5" id="ZRb-Ya-Yot"/>
                         <outlet property="urlTextField" destination="cce-e0-DMd" id="aIh-9N-PPH"/>
                         <segue destination="Z4b-dU-g5g" kind="show" identifier="ConfirmLocation" id="nJU-Sv-KB2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ms6-3l-odL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1806" y="209"/>
+            <point key="canvasLocation" x="1805.5999999999999" y="208.24587706146929"/>
         </scene>
         <!--Map Confirmation View Controller-->
         <scene sceneID="1YA-n9-ZNr">

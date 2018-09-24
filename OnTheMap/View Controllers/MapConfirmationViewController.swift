@@ -14,9 +14,11 @@ class MapConfirmationViewController: UIViewController {
     var mapClient: MapClient!
     
     // Input from segue
-    var centralCoordinate: CLLocationCoordinate2D? = nil
+    var resultForMapConfirmation: MKMapItem? = nil
     var urlFromSegue: String? = nil
-    var mapStringFromSegue: String? = nil
+    
+    // For segue to original MapViewController
+    var centralCoordinate: CLLocationCoordinate2D? = nil
     
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -36,8 +38,8 @@ class MapConfirmationViewController: UIViewController {
     }
     
     func centerMap() {
-        
-        let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+        let coordinate = resultForMapConfirmation?.placemark.coordinate
+        let coordinateRegion = MKCoordinateRegion.init(center: coordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
         
     }
@@ -55,7 +57,16 @@ class MapConfirmationViewController: UIViewController {
         }
         
         displayTextOnUI("Posting your location to Udacity...")
-        mapClient.postStudentLocation(mediaURL: urlFromSegue ?? MapClient.DummyUserData.MediaURLValue, mapString: mapStringFromSegue!, latitude: (centralCoordinate?.latitude)!, longitude: (centralCoordinate?.longitude)!) { (success, response, errorString) in
+        
+        let coordinateLat = resultForMapConfirmation?.placemark.coordinate.latitude
+        let coordinateLong = resultForMapConfirmation?.placemark.coordinate.longitude
+        let mapString = resultForMapConfirmation?.name
+        
+        // Sets a coordinate for segue to initial Map VC
+        centralCoordinate = CLLocationCoordinate2D(latitude: coordinateLat!, longitude: coordinateLong!)
+        
+        // Sends information to pin posting method
+        mapClient.postStudentLocation(mediaURL: urlFromSegue ?? MapClient.DummyUserData.MediaURLValue, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!) { (success, response, errorString) in
             
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()
