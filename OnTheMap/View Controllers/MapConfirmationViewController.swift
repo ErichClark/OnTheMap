@@ -38,9 +38,15 @@ class MapConfirmationViewController: UIViewController {
     }
     
     func centerMap() {
+        
         let coordinate = resultForMapConfirmation?.placemark.coordinate
         let coordinateRegion = MKCoordinateRegion.init(center: coordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
+        
+        let pin = MKPointAnnotation()
+        pin.title = resultForMapConfirmation?.name
+        pin.coordinate = coordinate!
+        mapView.addAnnotation(pin)
         
     }
 
@@ -103,5 +109,14 @@ class MapConfirmationViewController: UIViewController {
 }
 
 extension MapConfirmationViewController: MKMapViewDelegate {
-    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "Annotation"
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        annotationView!.canShowCallout = true
+
+        return annotationView
+    }
 }

@@ -209,6 +209,11 @@ extension MapClient {
                 return
             }
             
+            if response.mapItems.count == 0 {
+                let errorString = "No results found."
+                completionHandlerForGetResultsFromStringQuery(false, nil, errorString)
+            }
+            
             // Verbose printing
             for item in response.mapItems {
                 // Verbose printing

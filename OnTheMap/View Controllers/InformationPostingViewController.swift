@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class InformationPostingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class InformationPostingViewController: UIViewController {
 
     @IBOutlet weak var geoSearchTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
@@ -98,7 +98,9 @@ class InformationPostingViewController: UIViewController, UITableViewDelegate, U
             mapConfirmationVC?.urlFromSegue = urlToBundle
         }
     }
-    
+}
+
+extension InformationPostingViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if resultsFromSearch == nil {
             return 0
