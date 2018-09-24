@@ -46,7 +46,7 @@ extension MapClient {
         
     }
     
-    func get100ValidStudentLocations(_ completionHandlerForGetAllValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
+    func get100ValidStudentLocations(_ completionHandlerForGet100ValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
         
         self.getAllStudentLocations() {
             (success, allStudentLocations, errorString) in
@@ -65,7 +65,7 @@ extension MapClient {
                         let slice = verifiedStudents![0..<100]
                         let oneHundredStudents = Array(slice)
                         MapClient.sharedInstance().allStudents = oneHundredStudents
-                        completionHandlerForGetAllValidStudentLocations(true, verifiedStudents, nil)
+                        completionHandlerForGet100ValidStudentLocations(true, verifiedStudents, nil)
                     }
                 
                 }
@@ -195,7 +195,7 @@ extension MapClient {
         }
     }
 
-    func getCoordinatesFromStringQuery(queryString: String, region: MKCoordinateRegion, completionHandlerForgetCoordinatesFromStringQuery: @escaping (_ success: Bool, _ coordinate: MKMapPoint, _ errorString: String) -> Void) {
+    func getCoordinatesFromStringQuery(queryString: String, region: MKCoordinateRegion, completionHandlerForgetCoordinatesFromStringQuery: @escaping (_ success: Bool?, _ coordinate: CLLocationCoordinate2D?, _ errorString: String?) -> Void) {
         
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = queryString

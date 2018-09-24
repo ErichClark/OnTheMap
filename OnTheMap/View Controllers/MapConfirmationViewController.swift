@@ -11,10 +11,12 @@ import MapKit
 
 class MapConfirmationViewController: UIViewController {
 
-    var url: String? = nil
-    var mapString: String? = nil
-    var centralCoordinate: CLLocationCoordinate2D? = nil
     var mapClient: MapClient!
+    
+    // Input from segue
+    var centralCoordinate: CLLocationCoordinate2D? = nil
+    var urlFromSegue: String? = nil
+    var mapStringFromSegue: String? = nil
     
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -34,10 +36,10 @@ class MapConfirmationViewController: UIViewController {
     }
     
     func centerMap() {
-        if centralCoordinate != nil {
-            let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+        
+        let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
-        }
+        
     }
 
     func displayTextOnUI(_ displayString: String) {
@@ -53,7 +55,7 @@ class MapConfirmationViewController: UIViewController {
         }
         
         displayTextOnUI("Posting your location to Udacity...")
-        mapClient.postStudentLocation(mediaURL: url ?? MapClient.DummyUserData.MediaURLValue, mapString: mapString!, latitude: (centralCoordinate?.latitude)!, longitude: (centralCoordinate?.longitude)!) { (success, response, errorString) in
+        mapClient.postStudentLocation(mediaURL: urlFromSegue ?? MapClient.DummyUserData.MediaURLValue, mapString: mapStringFromSegue!, latitude: (centralCoordinate?.latitude)!, longitude: (centralCoordinate?.longitude)!) { (success, response, errorString) in
             
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()

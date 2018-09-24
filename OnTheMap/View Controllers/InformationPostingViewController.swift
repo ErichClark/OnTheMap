@@ -20,8 +20,13 @@ class InformationPostingViewController: UIViewController {
     // Data model objects
     let locationManager = CLLocationManager()
     var mapClient: MapClient!
-    var centralCoordinate: CLLocationCoordinate2D? = nil
     var region: MKCoordinateRegion? = nil
+    
+    // Parameters to bundle into Segue for pin posting
+    var centralCoordinate: CLLocationCoordinate2D? = nil
+    var urlToBundle: String? = nil
+    var mapStringToBundle: String? = nil
+
     
     
     override func viewDidLoad() {
@@ -29,7 +34,7 @@ class InformationPostingViewController: UIViewController {
 
         // Get the mapClient
         mapClient = MapClient.sharedInstance()
-
+        urlTextField.text = MapClient.DummyUserData.MediaURLValue
     }
     
     @IBAction func findLocation(_ sender: Any) {
@@ -37,14 +42,30 @@ class InformationPostingViewController: UIViewController {
             displayTextOnUI("Please enter a location to search.")
         } else {
             
+            performUIUpdatesOnMain {
+                self.activityIndicator.startAnimating()
+                self.displayTextOnUI("Searching for a location match...")
+            }
+            
             let queryText = geoSearchTextField.text
             let queryRegion = region ?? MapClient.sharedInstance().defaultRegion!
             
-            MapClient.sharedInstance().getCoordinatesFromStringQuery(queryString: queryText!, region: queryRegion) { (success, mapPoint, errorString) in
+            mapClient.getCoordinatesFromStringQuery(queryString: queryText!, region: queryRegion) { (success, returnedCoordinate, errorString) in
                 
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                }
                 
-                
-                
+                performUIUpdatesOnMain {
+                    if success! {
+                        var successMessage = "** Success! "
+                        successMessage += "Map point matched at \(returnedCoordinate!.latitude) latitude and \(returnedCoordinate!.longitude) longitude."
+                        print(successMessage)
+                        self.ConfirmLocation(returnedCoordinate!)
+                    } else {
+                        self.displayTextOnUI(errorString!)
+                    }
+                }
             }
         }
     }
@@ -55,7 +76,11 @@ class InformationPostingViewController: UIViewController {
     
     
     // MARK: - Confirm Location Function
-    func ConfirmLocation() {
+    func ConfirmLocation(_ mapPointToCheck: CLLocationCoordinate2D) {
+        centralCoordinate = mapPointToCheck
+        urlToBundle = urlTextField.text
+        
+        
         performSegue(withIdentifier: "ConfirmLocation", sender: self)
     }
     
@@ -69,8 +94,8 @@ class InformationPostingViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ConfirmLocation" {
-            let mapVC = segue.destination as? MapViewController
-            mapVC?.centralCoordinate = centralCoordinate
+            let mapConfirmationVC = segue.destination as? MapConfirmationViewController
+            mapConfirmationVC?.centralCoordinate = centralCoordinate
         }
     }
 

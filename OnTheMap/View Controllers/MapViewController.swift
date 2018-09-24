@@ -56,7 +56,7 @@ class MapViewController: UIViewController {
     }
     
     
-    // MARK: -Check for Location when in use permissions
+    // MARK: - Check for Location when in use permissions
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             mapView.showsUserLocation = true
@@ -80,6 +80,7 @@ class MapViewController: UIViewController {
 //        } else {
 //
 //        }
+        // MARK: - Center initial map and set default region
         if centralCoordinate != nil {
             let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
