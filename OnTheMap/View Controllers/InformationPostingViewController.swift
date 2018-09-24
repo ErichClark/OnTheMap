@@ -16,6 +16,7 @@ class InformationPostingViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var debuggingTextField: UITextField!
     
+    
     // Data model objects
     let locationManager = CLLocationManager()
     var mapClient: MapClient!
@@ -27,20 +28,36 @@ class InformationPostingViewController: UIViewController {
 
         // Get the mapClient
         mapClient = MapClient.sharedInstance()
+
     }
     
     @IBAction func findLocation(_ sender: Any) {
+        if geoSearchTextField.text == "" {
+            displayTextOnUI("Please enter a location to search.")
+        } 
+
+    }
+    
+    @IBAction func cancel(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Confirm Location Function
+    func ConfirmLocation() {
         performSegue(withIdentifier: "ConfirmLocation", sender: self)
     }
     
+    
     func displayTextOnUI(_ displayString: String) {
+        debuggingTextField.alpha = 1.0
         debuggingTextField.text = displayString
         //fadeOutTextField(errorTextfield)
     }
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "lookUpCoordinates" {
+        if segue.identifier == "ConfirmLocation" {
             let mapVC = segue.destination as? MapViewController
             mapVC?.centralCoordinate = centralCoordinate
         }

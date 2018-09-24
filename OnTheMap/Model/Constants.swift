@@ -22,7 +22,8 @@ extension MapClient {
     // Addresses
     struct Addresses {
         static let UdacityAPIAddress = "https://www.udacity.com/api/session"
-        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation?limit=1000"
+        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation?limit=500"
+        static let ParseServerPostAddress = "https://parse.udacity.com/parse/classes/StudentLocation"
     }
     
     struct Headers {

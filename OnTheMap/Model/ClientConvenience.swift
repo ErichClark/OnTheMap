@@ -97,6 +97,9 @@ extension MapClient {
             guard student.objectId != nil  else {
                 continue
             }
+//            guard student.uniqueKey != MapClient.sharedInstance().accountKey! else {
+//                continue
+//            }
             guard student.uniqueKey != nil  else {
                 continue
             }
@@ -153,8 +156,38 @@ extension MapClient {
         
     }
     
-    private func postStudentLocation(_ completionHandlerForPostStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTSessionResponseJSON?, _ errorString: String?) -> Void) {
+    private func postStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPostStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
         
+        // Build the post object
+        let postStudentLocationJSON = POSTorPUTStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude, objectId: nil)
+        
+        var jsonBody: Data? = nil
+        // Encode the object as a JSON
+        do {
+            let jsonEncoder = JSONEncoder()
+            jsonBody = try jsonEncoder.encode(postStudentLocationJSON)
+        }
+        catch {
+            let errorString = "** Could not encode JSON for posting student location: \(error)"
+            completionHandlerForPostStudentLocation(false, nil, errorString)
+        }
+        
+        let parameters: [String:String] = [:]
+        let address = MapClient.Addresses.ParseServerPostAddress
+        let _ = taskForPOSTMethod(address, optionalQueries: parameters, postObject: jsonBody) { (results:POSTStudentLocationResponseJSON?, errorString:String?) in
+            
+            //MapClient.sharedInstance().userObjectId = results.objectId
+            
+            if errorString != nil {
+                completionHandlerForPostStudentLocation(false, nil, errorString)
+            } else {
+                print("** SUCCESS! You have posted your location successfully.")
+                // Verbose printing:
+                print("Your objectId is \(String(describing: results?.objectId)) created at \(String(describing: results?.createdAt))")
+                completionHandlerForPostStudentLocation(true, results, nil)
+            }
+            
+        }
     }
     
     private func changeStudentLocation(_ completionHandlerForChangeLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTSessionResponseJSON?, _ errorString: String?) -> Void) {

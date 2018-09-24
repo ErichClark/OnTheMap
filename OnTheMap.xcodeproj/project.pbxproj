@@ -27,7 +27,6 @@
 		77F36CB921479785007BAFFF /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F36CB821479785007BAFFF /* PrivateConstants.swift */; };
 		77F36CBB214AAE5B007BAFFF /* FadeOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F36CBA214AAE5B007BAFFF /* FadeOut.swift */; };
 		77F36CBD21533A95007BAFFF /* CountryInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 77F36CBC21533A95007BAFFF /* CountryInfo.json */; };
-		77F36CBF215347AD007BAFFF /* GetLocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F36CBE215347AD007BAFFF /* GetLocationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +52,6 @@
 		77F36CB821479785007BAFFF /* PrivateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
 		77F36CBA214AAE5B007BAFFF /* FadeOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeOut.swift; sourceTree = "<group>"; };
 		77F36CBC21533A95007BAFFF /* CountryInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CountryInfo.json; sourceTree = "<group>"; };
-		77F36CBE215347AD007BAFFF /* GetLocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +136,6 @@
 				778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */,
 				77EC8E3F213F547400EAAE9E /* ClientConvenience.swift */,
 				77F36CB821479785007BAFFF /* PrivateConstants.swift */,
-				77F36CBE215347AD007BAFFF /* GetLocationHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -229,7 +226,6 @@
 				778D75D02138E9B2002AA868 /* Structs.swift in Sources */,
 				77F36CB921479785007BAFFF /* PrivateConstants.swift in Sources */,
 				778D75BE2138E700002AA868 /* LoginViewController.swift in Sources */,
-				77F36CBF215347AD007BAFFF /* GetLocationHelper.swift in Sources */,
 				77C6F2A121584B4500627F19 /* MapConfirmationViewController.swift in Sources */,
 				77F36CBB214AAE5B007BAFFF /* FadeOut.swift in Sources */,
 				778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */,

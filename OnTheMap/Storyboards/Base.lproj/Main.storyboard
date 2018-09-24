@@ -323,21 +323,20 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1D-ud-FfH" userLabel="Loading View">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1D-ud-FfH" userLabel="Loading View">
                                 <rect key="frame" x="30" y="409" width="315" height="228"/>
                                 <subviews>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-7M-10Y">
                                         <rect key="frame" x="138" y="97" width="37" height="37"/>
-                                        <color key="color" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </activityIndicatorView>
-                                    <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tu9-Gd-HAS" userLabel="debuggingTextField">
+                                    <textField userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tu9-Gd-HAS" userLabel="debuggingTextField">
                                         <rect key="frame" x="0.0" y="137" width="315" height="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="tu9-Gd-HAS" secondAttribute="trailing" id="5Tv-ua-XE3"/>
                                     <constraint firstItem="eOI-7M-10Y" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" constant="97" id="edz-tX-jHo"/>
@@ -350,7 +349,11 @@
                                 <rect key="frame" x="0.0" y="25" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Add Location" largeTitleDisplayMode="always" id="jbe-KZ-1Zy">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6jr-aJ-DsV"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6jr-aJ-DsV">
+                                            <connections>
+                                                <action selector="cancel:" destination="sqj-7f-Zzp" id="HCf-n0-ZoI"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -390,7 +393,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="eOI-7M-10Y" id="zwC-3L-zFf"/>
-                        <outlet property="debuggingTextField" destination="tu9-Gd-HAS" id="QhV-0J-vZZ"/>
+                        <outlet property="debuggingTextField" destination="tu9-Gd-HAS" id="OcX-B6-a6I"/>
                         <outlet property="geoSearchTextField" destination="M3z-L0-xbf" id="V9r-Lp-c1r"/>
                         <outlet property="urlTextField" destination="cce-e0-DMd" id="aIh-9N-PPH"/>
                         <segue destination="Z4b-dU-g5g" kind="show" identifier="ConfirmLocation" id="nJU-Sv-KB2"/>
@@ -488,6 +491,7 @@
         <image name="icon_pin" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="nJU-Sv-KB2"/>
         <segue reference="SO5-jP-SWS"/>
     </inferredMetricsTieBreakers>
 </document>
