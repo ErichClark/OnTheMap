@@ -439,25 +439,42 @@
                                     <action selector="confirmMapLocation:" destination="Z4b-dU-g5g" eventType="touchUpInside" id="B6M-38-ti9"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="I8F-gS-SwO">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DgJ-sF-mSC" userLabel="debuggingTextField">
+                                <rect key="frame" x="20" y="362" width="335" height="17"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="xFr-7b-Th9" firstAttribute="trailing" secondItem="kf3-Qn-Hqk" secondAttribute="trailing" constant="18" id="4tJ-Jy-UNg"/>
                             <constraint firstItem="sZk-8b-LYk" firstAttribute="leading" secondItem="xFr-7b-Th9" secondAttribute="leading" id="5Bz-fc-C38"/>
+                            <constraint firstItem="DgJ-sF-mSC" firstAttribute="leading" secondItem="xFr-7b-Th9" secondAttribute="leading" constant="20" id="6gs-Bd-5qb"/>
                             <constraint firstItem="cTH-Jm-mbw" firstAttribute="top" secondItem="sZk-8b-LYk" secondAttribute="bottom" constant="4" id="D2G-EM-LDy"/>
                             <constraint firstItem="xFr-7b-Th9" firstAttribute="bottom" secondItem="kf3-Qn-Hqk" secondAttribute="bottom" constant="37" id="MDb-KD-slS"/>
+                            <constraint firstItem="DgJ-sF-mSC" firstAttribute="top" secondItem="I8F-gS-SwO" secondAttribute="bottom" constant="10" id="NFo-9u-FHP"/>
                             <constraint firstAttribute="trailing" secondItem="sZk-8b-LYk" secondAttribute="trailing" id="Srm-Vd-ZEZ"/>
+                            <constraint firstItem="xFr-7b-Th9" firstAttribute="trailing" secondItem="DgJ-sF-mSC" secondAttribute="trailing" constant="20" id="VcO-tF-99D"/>
                             <constraint firstItem="kf3-Qn-Hqk" firstAttribute="leading" secondItem="xFr-7b-Th9" secondAttribute="leading" constant="24" id="dhB-jC-gMb"/>
                             <constraint firstItem="sZk-8b-LYk" firstAttribute="top" secondItem="xFr-7b-Th9" secondAttribute="top" id="exw-kC-8vl"/>
                             <constraint firstAttribute="trailing" secondItem="cTH-Jm-mbw" secondAttribute="trailing" id="jyQ-Yq-pAS"/>
+                            <constraint firstItem="I8F-gS-SwO" firstAttribute="centerX" secondItem="FUd-UY-GDO" secondAttribute="centerX" id="pgW-BK-HGP"/>
+                            <constraint firstItem="I8F-gS-SwO" firstAttribute="centerY" secondItem="FUd-UY-GDO" secondAttribute="centerY" id="q1Q-c9-ZfP"/>
                             <constraint firstItem="cTH-Jm-mbw" firstAttribute="leading" secondItem="FUd-UY-GDO" secondAttribute="leading" id="xmC-xd-tYV"/>
                             <constraint firstAttribute="bottom" secondItem="cTH-Jm-mbw" secondAttribute="bottom" id="zl4-S0-GEo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xFr-7b-Th9"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="I8F-gS-SwO" id="2Fm-g2-sz1"/>
+                        <outlet property="debuggingTextField" destination="DgJ-sF-mSC" id="1Bx-Z8-7Hb"/>
                         <outlet property="mapView" destination="cTH-Jm-mbw" id="Baw-vr-Qc0"/>
-                        <segue destination="w9P-7f-eqn" kind="show" identifier="successfulPost" id="QpS-Bb-dkH"/>
+                        <segue destination="OAd-yc-x3L" kind="show" identifier="successfulPost" id="kHL-ye-anv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pbm-Sv-TS1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -494,7 +511,8 @@
         <image name="icon_pin" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QpS-Bb-dkH"/>
-        <segue reference="BhG-JY-Wqv"/>
+        <segue reference="nJU-Sv-KB2"/>
+        <segue reference="7y8-9p-2ef"/>
+        <segue reference="kHL-ye-anv"/>
     </inferredMetricsTieBreakers>
 </document>

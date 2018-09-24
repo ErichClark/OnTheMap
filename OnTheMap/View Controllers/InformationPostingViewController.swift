@@ -36,6 +36,7 @@ class InformationPostingViewController: UIViewController {
             displayTextOnUI("Please enter a location to search.")
         } 
 
+        
     }
     
     @IBAction func cancel(_ sender: Any) {
