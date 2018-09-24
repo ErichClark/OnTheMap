@@ -21,6 +21,7 @@ class InformationPostingViewController: UIViewController {
     let locationManager = CLLocationManager()
     var mapClient: MapClient!
     var centralCoordinate: CLLocationCoordinate2D? = nil
+    var region: MKCoordinateRegion? = nil
     
     
     override func viewDidLoad() {
@@ -34,9 +35,18 @@ class InformationPostingViewController: UIViewController {
     @IBAction func findLocation(_ sender: Any) {
         if geoSearchTextField.text == "" {
             displayTextOnUI("Please enter a location to search.")
-        } 
-
-        
+        } else {
+            
+            let queryText = geoSearchTextField.text
+            let queryRegion = region ?? MapClient.sharedInstance().defaultRegion!
+            
+            MapClient.sharedInstance().getCoordinatesFromStringQuery(queryString: queryText!, region: queryRegion) { (success, mapPoint, errorString) in
+                
+                
+                
+                
+            }
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {

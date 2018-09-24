@@ -14,7 +14,7 @@ class MapViewController: UIViewController {
     // Data Model objects
     var allStudents: [VerifiedStudentPin]? = nil
     var centralCoordinate: CLLocationCoordinate2D? = nil
-
+    
     // Location and map
     let locationManager = CLLocationManager()
     var mapClient: MapClient!
@@ -83,6 +83,7 @@ class MapViewController: UIViewController {
         if centralCoordinate != nil {
             let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
             mapView.setRegion(coordinateRegion, animated: true)
+            MapClient.sharedInstance().defaultRegion = coordinateRegion
         }
     }
 
@@ -178,5 +179,12 @@ extension MapViewController: MKMapViewDelegate {
             UIApplication.shared.open(url, options: [:], completionHandler: {(success) in print("Open \(url) \(success)")})
         }
         print("The url is \(pin.url)")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addPin" {
+            let infoPostingVC = segue.destination as! InformationPostingViewController
+            infoPostingVC.region = mapView.region
+        }
     }
 }

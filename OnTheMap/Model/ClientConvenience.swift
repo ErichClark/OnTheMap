@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MapKit
 
 // MARK: - Client Convenience Methods
 
@@ -193,8 +194,13 @@ extension MapClient {
             
         }
     }
-    
-    private func changeStudentLocation(_ completionHandlerForChangeLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTSessionResponseJSON?, _ errorString: String?) -> Void) {
+
+    func getCoordinatesFromStringQuery(queryString: String, region: MKCoordinateRegion, completionHandlerForgetCoordinatesFromStringQuery: @escaping (_ success: Bool, _ coordinate: MKMapPoint, _ errorString: String) -> Void) {
+        
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = queryString
+        request.region = region
+        
         
     }
     
