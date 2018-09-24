@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class InformationPostingViewController: UIViewController {
+class InformationPostingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var geoSearchTextField: UITextField!
     @IBOutlet weak var urlTextField: UITextField!
@@ -98,10 +98,7 @@ class InformationPostingViewController: UIViewController {
             mapConfirmationVC?.urlFromSegue = urlToBundle
         }
     }
-
-}
-
-extension InformationPostingViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if resultsFromSearch == nil {
             return 0
@@ -112,7 +109,7 @@ extension InformationPostingViewController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "returnedMapItemCell", for: indexPath)
         cell.textLabel?.text = resultsFromSearch![indexPath.row].name
-        
+        cell.isUserInteractionEnabled = true
         return cell
     }
     
