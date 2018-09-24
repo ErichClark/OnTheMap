@@ -124,7 +124,7 @@
                                                 <rightBarButtonItems>
                                                     <barButtonItem systemItem="add" id="ZcX-eM-Icv">
                                                         <connections>
-                                                            <segue destination="sqj-7f-Zzp" kind="show" id="bin-us-su3"/>
+                                                            <action selector="addPin:" destination="05e-YZ-2GJ" id="mu5-yE-ppl"/>
                                                         </connections>
                                                     </barButtonItem>
                                                     <barButtonItem systemItem="refresh" id="nEd-ud-RlA">
@@ -193,11 +193,12 @@
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-deselected" selectedImage="icon_listview-selected" id="HYI-H4-dyG"/>
                     <connections>
                         <outlet property="activityIndicator" destination="rwZ-CH-VcG" id="OSg-qK-3ks"/>
+                        <segue destination="sqj-7f-Zzp" kind="show" identifier="addPin" id="BhG-JY-Wqv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hcr-xT-4Wl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1778" y="431"/>
+            <point key="canvasLocation" x="946" y="754"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="bvc-cd-Od9">
@@ -222,7 +223,7 @@
                                                 <rightBarButtonItems>
                                                     <barButtonItem systemItem="add" id="9BO-kU-opJ">
                                                         <connections>
-                                                            <segue destination="sqj-7f-Zzp" kind="show" id="HWR-5u-Pmi"/>
+                                                            <action selector="addPin:" destination="OAd-yc-x3L" id="waW-zB-zoo"/>
                                                         </connections>
                                                     </barButtonItem>
                                                     <barButtonItem systemItem="refresh" id="t9F-8J-s4j">
@@ -275,11 +276,12 @@
                         <outlet property="activityIndicator" destination="aB7-93-jQt" id="ir6-JC-GX6"/>
                         <outlet property="loadingTextField" destination="gDx-U4-B0l" id="T8b-hN-U9A"/>
                         <outlet property="mapView" destination="rGT-d8-ucd" id="wal-Hy-jLS"/>
+                        <segue destination="sqj-7f-Zzp" kind="show" identifier="addPin" id="7y8-9p-2ef"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evI-OX-LGh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1754.4000000000001" y="-294.60269865067471"/>
+            <point key="canvasLocation" x="1004" y="-759"/>
         </scene>
         <!--Information Posting View Controller-->
         <scene sceneID="QJw-SL-MXa">
@@ -401,7 +403,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ms6-3l-odL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2776.8000000000002" y="-294.60269865067471"/>
+            <point key="canvasLocation" x="1806" y="209"/>
         </scene>
         <!--Map Confirmation View Controller-->
         <scene sceneID="1YA-n9-ZNr">
@@ -417,7 +419,7 @@
                                     <navigationItem title="Add Location" id="qea-yL-4N9">
                                         <barButtonItem key="leftBarButtonItem" systemItem="search" id="bm0-sf-yGr">
                                             <connections>
-                                                <segue destination="sqj-7f-Zzp" kind="show" identifier="returnToSearch" id="SO5-jP-SWS"/>
+                                                <action selector="backToTextSearch:" destination="Z4b-dU-g5g" id="PBD-E4-USV"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -455,11 +457,12 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="cTH-Jm-mbw" id="Baw-vr-Qc0"/>
+                        <segue destination="w9P-7f-eqn" kind="show" identifier="successfulPost" id="QpS-Bb-dkH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pbm-Sv-TS1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3556" y="-291.00449775112446"/>
+            <point key="canvasLocation" x="2714" y="-758"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Upc-ZB-5XD">
@@ -478,7 +481,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tal-25-bjd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="815.20000000000005" y="51.724137931034484"/>
+            <point key="canvasLocation" x="158" y="-19"/>
         </scene>
     </scenes>
     <resources>
@@ -491,7 +494,7 @@
         <image name="icon_pin" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nJU-Sv-KB2"/>
-        <segue reference="SO5-jP-SWS"/>
+        <segue reference="QpS-Bb-dkH"/>
+        <segue reference="BhG-JY-Wqv"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -92,21 +92,18 @@ extension MapClient {
         
         let potentialStudents: [StudentLocation] = allStudentLocations.results!
         var filteredStudents = [VerifiedStudentPin]()
-        var blackListedFirstNames: [String] = [""]
+        var BlacklistedUniqueKeys: [String] = [""]
         for student in potentialStudents {
             guard student.objectId != nil  else {
                 continue
             }
-//            guard student.uniqueKey != MapClient.sharedInstance().accountKey! else {
-//                continue
-//            }
             guard student.uniqueKey != nil  else {
                 continue
             }
-            guard student.firstName != nil  else {
+            guard !BlacklistedUniqueKeys.contains(student.uniqueKey!) else {
                 continue
             }
-            guard !blackListedFirstNames.contains(student.firstName!) else {
+            guard student.firstName != nil  else {
                 continue
             }
             guard student.lastName != nil  else {
@@ -139,7 +136,14 @@ extension MapClient {
             
             let cleanStudent = VerifiedStudentPin(firstName: student.firstName!, lastName: student.lastName!, url: url, latitude: student.latitude!, longitude: student.longitude!)
             filteredStudents.append(cleanStudent)
-            blackListedFirstNames.append(student.firstName!)
+            BlacklistedUniqueKeys.append(student.uniqueKey!)
+            
+            // Captures our own objectId if we find our match and it has been lost locally.
+            if student.uniqueKey == MapClient.sharedInstance().accountKey! {
+                if MapClient.sharedInstance().userObjectId == nil {
+                    MapClient.sharedInstance().userObjectId = student.objectId
+                }
+            }
         }
         
         let filteredCount = filteredStudents.count
@@ -159,7 +163,7 @@ extension MapClient {
     private func postStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPostStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
         
         // Build the post object
-        let postStudentLocationJSON = POSTorPUTStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude, objectId: nil)
+        let postStudentLocationJSON = POSTorPUTStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude, objectId: MapClient.sharedInstance().userObjectId)
         
         var jsonBody: Data? = nil
         // Encode the object as a JSON

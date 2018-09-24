@@ -42,12 +42,14 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: - Actions
     @IBAction func logOut(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func reload(_ sender: Any) {
     }
     
-    @IBAction func addEntry(_ sender: Any) {
+    @IBAction func addPin(_ sender: Any) {
+        performSegue(withIdentifier: "addPin", sender: self)
     }
     
     // MARK: - Table view data source

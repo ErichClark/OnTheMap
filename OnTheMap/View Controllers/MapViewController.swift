@@ -129,6 +129,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func addPin(_ sender: Any) {
+        performSegue(withIdentifier: "addPin", sender: self)
     }
     
     @IBAction func logOut(_ sender: Any) {

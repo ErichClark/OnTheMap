@@ -11,7 +11,8 @@ import MapKit
 
 class MapConfirmationViewController: UIViewController {
 
-    
+    var url: String? = nil
+    var mapString: String? = nil
     var centralCoordinate: CLLocationCoordinate2D? = nil
     var mapClient: MapClient!
     
@@ -28,6 +29,7 @@ class MapConfirmationViewController: UIViewController {
         mapClient = MapClient.sharedInstance()
         mapView.delegate = self
         
+        centerMap()
     }
     
     func centerMap() {
@@ -40,8 +42,13 @@ class MapConfirmationViewController: UIViewController {
     
     // MARK: - Actions
     @IBAction func confirmMapLocation(_ sender: Any) {
+    
+    
     }
     
+    @IBAction func backToTextSearch(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     /*
     // MARK: - Navigation
