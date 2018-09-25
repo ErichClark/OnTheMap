@@ -41,21 +41,18 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         allStudents = mapClient.allStudents
         
-        centerMap()
-        
         mapView.addAnnotations(allStudents!)
-        
-        // Center view on a 500 kilometer radius of a student pin from TableTab ViewController, if provided
-        //let initialLocation = CLLocation(latitude: centralStudentPin.latitude!, longitude: centralStudentPin.longitude!)
-        // Do any additional setup after loading the view.
-        //centerOnMapLocation(location: initialLocation)
         
         // Set the mapview delegate
         mapView.delegate = self
         mapView.register(PinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        centerMap()
+    }
     // MARK: - Check for Location when in use permissions
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -67,25 +64,15 @@ class MapViewController: UIViewController {
 
     // Map centering helper
     func centerMap() {
-//        if centralCoordinate == nil {
-//            let locationHelper = GetLocationHelper()
-//            locationHelper.returnOneLocation() {
-//                (currentLocation, errorString) in
-//
-//                if errorString != nil {
-//                    self.displayTextOnUI(errorString!)
-//                }
-//                self.centralCoordinate = currentLocation
-//            }
-//        } else {
-//
-//        }
         // MARK: - Center initial map and set default region
-        if centralCoordinate != nil {
-            let coordinateRegion = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
-            mapView.setRegion(coordinateRegion, animated: true)
-            MapClient.sharedInstance().defaultRegion = coordinateRegion
+        var region: MKCoordinateRegion? = nil
+        if centralCoordinate == nil {
+            region = MKCoordinateRegion.init(center: MapClient.Constants.DefaultMapCenterUSA, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+        } else if centralCoordinate != nil {
+            region = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
         }
+        mapView.setRegion(region!, animated: true)
+        MapClient.sharedInstance().defaultRegion = region
     }
 
     // Debugger Textfield display
@@ -137,17 +124,6 @@ class MapViewController: UIViewController {
     @IBAction func logOut(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension MapViewController: MKMapViewDelegate {

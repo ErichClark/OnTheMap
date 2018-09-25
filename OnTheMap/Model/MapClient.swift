@@ -111,7 +111,7 @@ class MapClient: NSObject {
             do {
                 print("** MapClient is attempting to parse the following as a \(TResponse.self) : \(dataToParse)")
 //              Verbose printing
-//                print(String(data: data!, encoding: .utf8)!)
+                print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(dataToParse)
                 jsonObject = try jsonDecoder.decode(TResponse.self, from: jsonData)
@@ -148,9 +148,9 @@ class MapClient: NSObject {
             let jsonDecoder = JSONDecoder()
             let jsonData = Data(data)
             let errorObject = try jsonDecoder.decode(UdacityError.self, from: jsonData)
-            returnString = "Error \(errorObject.status): \(errorObject.error)"
+            returnString = "** Error \(String(describing: errorObject.status)): \(String(describing: errorObject.error))"
         }
-        catch { returnString = error as! String }
+        catch {print(error)}
         return returnString
     }
     

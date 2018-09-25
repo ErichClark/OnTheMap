@@ -105,7 +105,7 @@ func getMapItem(student: VerifiedStudentPin) -> MKMapItem {
     return mapItem
 }
 
-struct POSTorPUTStudentLocationJSON: Encodable {
+struct POSTStudentLocationJSON: Encodable {
     let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
     let firstName: String = MapClient.DummyUserData.FirstNameValue
     let lastName: String  = MapClient.DummyUserData.LastNameValue
@@ -114,11 +114,21 @@ struct POSTorPUTStudentLocationJSON: Encodable {
     let mapString: String // plain text for geocoding student location- "Mountain View, CA"
     let latitude: Double // (ranges from -90 to 90)
     let longitude: Double // (ranges from -180 to 180)
-    // TODO: - Can a POST request be made if the objectId=nil value is sent?
-    // The only difference between PUT and POST is this key:value
-    let objectId: String? // For PUT auto-generated id/key by Parse, uniquely identifies StudentLocation
-    //{\"uniqueKey\": \"1234\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}
 }
+
+struct PUTStudentLocationJSON: Encodable {
+    let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
+    let firstName: String = MapClient.DummyUserData.FirstNameValue
+    let lastName: String  = MapClient.DummyUserData.LastNameValue
+    var mediaURL:String = MapClient.DummyUserData.MediaURLValue // URL provided by the student
+    
+    let mapString: String // plain text for geocoding student location- "Mountain View, CA"
+    let latitude: Double // (ranges from -90 to 90)
+    let longitude: Double // (ranges from -180 to 180)
+    let objectId: String? // For PUT auto-generated id/key by Parse, uniquely identifies StudentLocation
+}
+
+
 
 struct MapErrorJSON {
     // TODO: -
@@ -165,10 +175,10 @@ struct POSTStudentLocationResponseJSON: Decodable {
 }
 
 struct PUTStudentLocationResponseJSON: Decodable {
-    var vupdatedAt: Date
+    var updatedAt: Date
 }
 
 struct UdacityError: Decodable {
-    var status: Int
-    var error: String
+    var status: Int?
+    var error: String?
 }
