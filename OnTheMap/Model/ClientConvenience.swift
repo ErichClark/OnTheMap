@@ -21,22 +21,28 @@ extension MapClient {
         
         let parameters: [String:String] = [:]
         let address = MapClient.Addresses.UdacityAPIAddress
-        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postBody, requestType: requestType) { (results:POSTSessionResponseJSON?, errorString:String?) in
+        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postBody, requestType: requestType) { (results:Data?, errorString:String?) in
             
-            MapClient.sharedInstance().accountKey = results?.account.key
-            MapClient.sharedInstance().sessionID = results?.session.id
+            var accountResult: POSTSessionResponseJSON? = nil
+            
+            accountResult = self.decodeJSONResponse(data: results, object: accountResult)
+            
+            let key = accountResult?.account.key
+            let id = accountResult?.session.id
+            MapClient.sharedInstance().accountKey = key
+            MapClient.sharedInstance().sessionID = id
             
             if errorString != nil {
                 completionHandlerForloginToUdacity(false, nil, errorString)
-            } else if results?.account.key == nil {
+            } else if key == nil {
                 let errorString = "No account key was returned from Udacity."
                 completionHandlerForloginToUdacity(false, nil, errorString)
-            } else if results?.session.id == nil {
+            } else if id == nil {
                 let errorString = "No session ID was returned from Udacity."
                 completionHandlerForloginToUdacity(false, nil, errorString)
             } else {
-                let sessionID = results?.session.id
-                print("** SUCCESS! Session ID is \(String(describing: sessionID)), for user account key \(String(describing: results?.account.key))")
+                let sessionID = id
+                print("** SUCCESS! Session ID is \(String(describing: sessionID)), for user account key \(String(describing: key))")
                 completionHandlerForloginToUdacity(true, sessionID, nil)
             }
         }
@@ -49,7 +55,7 @@ extension MapClient {
     
     // MARK: - POST or PUT ?
     
-    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postOrPUTStudentLocationResponseJSON: POSTOrPUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
+    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
         
         let mediaURL = newMediaURL ?? MapClient.DummyUserData.MediaURLValue
         let objectId = MapClient.sharedInstance().userObjectId
@@ -57,16 +63,18 @@ extension MapClient {
         var requestType = ""
         if objectId == nil {
             requestType = "POST"
+            
         } else {
             requestType = "PUT"
             address.append("/" + objectId!)
         }
         
-        self.requestHTTPStudentLocationPin(address: address, requestType: requestType, mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude) {  (success, postOrPUTStudentLocationResponseJSON, errorString) in
+
+        self.requestHTTPStudentLocationPin(address: address, requestType: requestType, mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude) {  (success, successMessage, errorString) in
             
             if success {
                 print("** Success! Location \(requestType) request was accepted.")
-                completionHandlerForPutStudentLocation(true, postOrPUTStudentLocationResponseJSON, nil)
+                completionHandlerForPutStudentLocation(true, successMessage, nil)
             } else {
                 let errorMessage = "** Your \(requestType) was rejected because: \(String(describing: errorString))"
                 completionHandlerForPutStudentLocation(false, nil, errorMessage)
@@ -74,18 +82,22 @@ extension MapClient {
         }
     }
     
-    func requestHTTPStudentLocationPin(address: String, requestType: String, mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postOrPUTStudentLocationResponseJSON: POSTOrPUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
+    func requestHTTPStudentLocationPin(address: String, requestType: String, mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
         
         let parameters: [String:String] = [:]
         
         let putStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
-        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON, requestType: requestType) { (results:POSTOrPUTStudentLocationResponseJSON?, errorString:String?) in
+        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON, requestType: requestType) { (results:Data?, errorString:String?) in
             
             if errorString != nil {
                 completionHandlerForPutStudentLocation(false, nil, errorString)
-            } else {
-                print("** SUCCESS! You have moved your location successfully.")
-                completionHandlerForPutStudentLocation(true, results, nil)
+            } else if requestType == "POST" {
+                var postResponse: POSTStudentLocationResponseJSON? = nil
+                postResponse = self.decodeJSONResponse(data: results!, object: postResponse)
+                var successMessage = "** SUCCESS! Your location has been set with "
+                successMessage += "objectId \(String(describing: postResponse?.objectId)), "
+                successMessage += "created at \(String(describing: postResponse?.createdAt))."
+                completionHandlerForPutStudentLocation(true, successMessage, nil)
             }
         }
     }
@@ -122,4 +134,34 @@ extension MapClient {
         }
     }
     
+    func decodeJSONResponse<T: Decodable>(data: Data?, object: T?) -> T? {
+        // Verbose printing
+
+        print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data))")
+        var jsonObject: T? = nil
+        var errorMessage = ""
+        var dataToParse: Data? = nil
+        
+        guard let data = data else {
+            return jsonObject
+        }
+        
+        if T.self ==  POSTSessionResponseJSON.self || T.self == DeleteSessionResponseJSON.self {
+            let range = (5..<data.count)
+            let newData = data.subdata(in: range)
+            dataToParse = newData
+        }
+        
+        do {
+            print(String(data: dataToParse!, encoding: .utf8)!)
+            let jsonDecoder = JSONDecoder()
+            let jsonData = Data(dataToParse!)
+            jsonObject = try jsonDecoder.decode(T.self, from: jsonData)
+        } catch {
+            errorMessage = "** Could not parse JSON as \(T.self)"
+            errorMessage += MapClient.parseUdacityError(data: data)
+            print(errorMessage)
+        }
+        return jsonObject
+    }
 }

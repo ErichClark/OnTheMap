@@ -65,7 +65,7 @@ class MapClient: NSObject {
     } // End of taskForGETMethod
     
     // MARK: - POST Method
-    func taskForPOSTOrPUTMethod<TResponse: Decodable, TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, requestType: String, completionHandlerForPOST: @escaping (_ result: TResponse?, _ nsError: String?) -> Void ) {
+    func taskForPOSTOrPUTMethod<TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, requestType: String, completionHandlerForPOST: @escaping (_ result: Data?, _ nsError: String?) -> Void ) {
         
         var errorInPOSTRequest: String? = nil
         
@@ -98,29 +98,12 @@ class MapClient: NSObject {
             
             var dataToParse = data!
             // Remove Udacity security characters
-            if address == MapClient.Addresses.UdacityAPIAddress {
-                let range = (5..<data!.count)
-                let newData = data?.subdata(in: range)
-                dataToParse = newData!
-            }
+            
 //            Verbose Printing
 //            print("** dataToParse = ")
 //            print(String(data: dataToParse, encoding: .utf8)!)
             
-            var jsonObject: TResponse? = nil
-            do {
-                print("** MapClient is attempting to parse the following as a \(TResponse.self) : \(dataToParse)")
-//              Verbose printing
-                print(String(data: data!, encoding: .utf8)!)
-                let jsonDecoder = JSONDecoder()
-                let jsonData = Data(dataToParse)
-                jsonObject = try jsonDecoder.decode(TResponse.self, from: jsonData)
-                completionHandlerForPOST(jsonObject, nil)
-            } catch {
-                errorInPOSTRequest = "** Could not parse JSON as \(TResponse.self)"
-                errorInPOSTRequest = MapClient.parseUdacityError(data: dataToParse)
-                completionHandlerForPOST(nil, errorInPOSTRequest)
-            }
+            
         }
         task.resume()
     } // End of taskForPOSTMethod
