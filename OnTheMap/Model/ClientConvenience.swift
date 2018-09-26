@@ -98,6 +98,12 @@ extension MapClient {
                 successMessage += "objectId \(String(describing: postResponse?.objectId)), "
                 successMessage += "created at \(String(describing: postResponse?.createdAt))."
                 completionHandlerForPutStudentLocation(true, successMessage, nil)
+            }  else if requestType == "PUT" {
+                var postResponse: PUTStudentLocationResponseJSON? = nil
+                postResponse = self.decodeJSONResponse(data: results!, object: postResponse)
+                var successMessage = "** SUCCESS! Your location has been updated "
+                successMessage += "at \(String(describing: postResponse?.updatedAt))."
+                completionHandlerForPutStudentLocation(true, successMessage, nil)
             }
         }
     }
