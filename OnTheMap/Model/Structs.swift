@@ -105,7 +105,7 @@ func getMapItem(student: VerifiedStudentPin) -> MKMapItem {
     return mapItem
 }
 
-struct POSTStudentLocationJSON: Encodable {
+struct POSTOrPutStudentLocationJSON: Encodable {
     let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
     let firstName: String = MapClient.DummyUserData.FirstNameValue
     let lastName: String  = MapClient.DummyUserData.LastNameValue
@@ -115,20 +115,6 @@ struct POSTStudentLocationJSON: Encodable {
     let latitude: Double // (ranges from -90 to 90)
     let longitude: Double // (ranges from -180 to 180)
 }
-
-struct PUTStudentLocationJSON: Encodable {
-    let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
-    let firstName: String = MapClient.DummyUserData.FirstNameValue
-    let lastName: String  = MapClient.DummyUserData.LastNameValue
-    var mediaURL:String = MapClient.DummyUserData.MediaURLValue // URL provided by the student
-    
-    let mapString: String // plain text for geocoding student location- "Mountain View, CA"
-    let latitude: Double // (ranges from -90 to 90)
-    let longitude: Double // (ranges from -180 to 180)
-    let objectId: String? // For PUT auto-generated id/key by Parse, uniquely identifies StudentLocation
-}
-
-
 
 struct MapErrorJSON {
     // TODO: -

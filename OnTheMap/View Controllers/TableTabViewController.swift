@@ -13,6 +13,8 @@ import CoreLocation
 class TableTabViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var feedbackTextField: UITextField!
+    @IBOutlet weak var studentTable: UITableView!
     
     var mapClient: MapClient!
     var mapCenter: CLLocationCoordinate2D? = nil
@@ -26,18 +28,6 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         // get the Map client
         mapClient = MapClient.sharedInstance()
         allStudents = mapClient.allStudents
-        
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Actions
@@ -45,7 +35,34 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func reload(_ sender: Any) {
+    @IBAction func reload(_ sender: Any)  {
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+        }
+        
+        displayTextOnUI("Getting student locations...")
+        mapClient.get100ValidStudentLocations() {
+            (success, allValidStudentLocations, errorString) in
+            
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
+            
+            performUIUpdatesOnMain {
+                if success {
+                    self.displayTextOnUI("** Successful data refresh.")
+                    self.studentTable.reloadData()                } else {
+                    self.displayTextOnUI(errorString!)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Display Text
+    func displayTextOnUI(_ text: String){
+        feedbackTextField.text = text
+        
     }
     
     @IBAction func addPin(_ sender: Any) {

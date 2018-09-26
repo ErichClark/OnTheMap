@@ -65,7 +65,7 @@ class MapClient: NSObject {
     } // End of taskForGETMethod
     
     // MARK: - POST Method
-    func taskForPOSTMethod<TResponse: Decodable, TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, completionHandlerForPOST: @escaping (_ result: TResponse?, _ nsError: String?) -> Void ) {
+    func taskForPOSTOrPUTMethod<TResponse: Decodable, TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, requestType: String, completionHandlerForPOST: @escaping (_ result: TResponse?, _ nsError: String?) -> Void ) {
         
         var errorInPOSTRequest: String? = nil
         
@@ -88,7 +88,7 @@ class MapClient: NSObject {
         }
         catch{print(error)}
         
-        urlRequest.httpMethod = "POST"
+        urlRequest.httpMethod = requestType
         urlRequest.httpBody = postBody
         
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in

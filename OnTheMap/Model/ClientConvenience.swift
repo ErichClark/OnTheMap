@@ -17,10 +17,11 @@ extension MapClient {
     func loginToUdacity(username: String, password: String, _ completionHandlerForloginToUdacity: @escaping (_ success: Bool, _ sessionId: String?, _ errorString: String?) -> Void) {
         
         let postBody = SessionPOSTBody(udacity: Udacity(username: username, password: password))
+        let requestType = "POST"
         
         let parameters: [String:String] = [:]
         let address = MapClient.Addresses.UdacityAPIAddress
-        let _ = taskForPOSTMethod(address, optionalQueries: parameters, postObject: postBody) { (results:POSTSessionResponseJSON?, errorString:String?) in
+        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postBody, requestType: requestType) { (results:POSTSessionResponseJSON?, errorString:String?) in
             
             MapClient.sharedInstance().accountKey = results?.account.key
             MapClient.sharedInstance().sessionID = results?.session.id
@@ -49,14 +50,15 @@ extension MapClient {
     // MARK: - POST or PUT ?
     func postStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPostStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
         
+        let requestType = "POST"
         let parameters: [String:String] = [:]
-        let address = MapClient.Addresses.ParseServerPostAddress
+        var address = MapClient.Addresses.ParseServerPostAddress
         
         // Either build a POST object
         if MapClient.sharedInstance().userObjectId == nil {
-            let postStudentLocationJSON = POSTStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
+            let postStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
             
-            let _ = taskForPOSTMethod(address, optionalQueries: parameters, postObject: postStudentLocationJSON) { (results:POSTStudentLocationResponseJSON?, errorString:String?) in
+            let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postStudentLocationJSON, requestType: requestType) { (results:POSTStudentLocationResponseJSON?, errorString:String?) in
                 
                 if errorString != nil {
                     completionHandlerForPostStudentLocation(false, nil, errorString)
@@ -70,13 +72,15 @@ extension MapClient {
         }
     }
     
-    func putStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: PUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
+    func putStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, objectId: String, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: PUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
         
+        let requestType = "PUT"
         let parameters: [String:String] = [:]
-        let address = MapClient.Addresses.ParseServerPostAddress
+        var address = MapClient.Addresses.ParseServerPostAddress
+        address.append("/" + objectId)
         
-        let putStudentLocationJSON = PUTStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude, objectId: MapClient.sharedInstance().userObjectId)
-        let _ = taskForPOSTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON) { (results:PUTStudentLocationResponseJSON?, errorString:String?) in
+        let putStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
+        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON, requestType: requestType) { (results:PUTStudentLocationResponseJSON?, errorString:String?) in
             
             if errorString != nil {
                 completionHandlerForPutStudentLocation(false, nil, errorString)

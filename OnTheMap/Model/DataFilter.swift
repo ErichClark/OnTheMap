@@ -63,6 +63,13 @@ extension MapClient {
             guard student.uniqueKey != nil  else {
                 continue
             }
+            // Captures our own objectId if we find our match and it has been lost locally.
+            if student.uniqueKey == MapClient.sharedInstance().accountKey! {
+                print("** Your unique key was found on the Udacity server.")
+                if MapClient.sharedInstance().userObjectId == nil {
+                    MapClient.sharedInstance().userObjectId = student.objectId
+                }
+            }
             guard !BlacklistedUniqueKeys.contains(student.uniqueKey!) else {
                 continue
             }
@@ -100,14 +107,6 @@ extension MapClient {
             let cleanStudent = VerifiedStudentPin(firstName: student.firstName!, lastName: student.lastName!, url: url, latitude: student.latitude!, longitude: student.longitude!)
             filteredStudents.append(cleanStudent)
             BlacklistedUniqueKeys.append(student.uniqueKey!)
-            
-            // Captures our own objectId if we find our match and it has been lost locally.
-            if student.uniqueKey == MapClient.sharedInstance().accountKey! {
-                print("** Your unique key was found on the Udacity server.")
-                if MapClient.sharedInstance().userObjectId == nil {
-                    MapClient.sharedInstance().userObjectId = student.objectId
-                }
-            }
         }
         
         let filteredCount = filteredStudents.count
