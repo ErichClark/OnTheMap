@@ -48,39 +48,38 @@ extension MapClient {
     }
     
     // MARK: - POST or PUT ?
-    func postStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPostStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: POSTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
+    
+    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postOrPUTStudentLocationResponseJSON: POSTOrPUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
         
-        let requestType = "POST"
-        let parameters: [String:String] = [:]
+        let mediaURL = newMediaURL ?? MapClient.DummyUserData.MediaURLValue
+        let objectId = MapClient.sharedInstance().userObjectId
         var address = MapClient.Addresses.ParseServerPostAddress
+        var requestType = ""
+        if objectId == nil {
+            requestType = "POST"
+        } else {
+            requestType = "PUT"
+            address.append("/" + objectId!)
+        }
         
-        // Either build a POST object
-        if MapClient.sharedInstance().userObjectId == nil {
-            let postStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
+        self.requestHTTPStudentLocationPin(address: address, requestType: requestType, mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude) {  (success, postOrPUTStudentLocationResponseJSON, errorString) in
             
-            let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postStudentLocationJSON, requestType: requestType) { (results:POSTStudentLocationResponseJSON?, errorString:String?) in
-                
-                if errorString != nil {
-                    completionHandlerForPostStudentLocation(false, nil, errorString)
-                } else {
-                    print("** SUCCESS! You have posted your location successfully.")
-                    // Verbose printing:
-                    print("Your objectId is \(String(describing: results?.objectId)) created at \(String(describing: results?.createdAt))")
-                    completionHandlerForPostStudentLocation(true, results, nil)
-                }
+            if success {
+                print("** Success! Location \(requestType) request was accepted.")
+                completionHandlerForPutStudentLocation(true, postOrPUTStudentLocationResponseJSON, nil)
+            } else {
+                let errorMessage = "** Your \(requestType) was rejected because: \(String(describing: errorString))"
+                completionHandlerForPutStudentLocation(false, nil, errorMessage)
             }
         }
     }
     
-    func putStudentLocation(mediaURL: String, mapString: String, latitude: Double, longitude: Double, objectId: String, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postSessionResponseJSON: PUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
+    func requestHTTPStudentLocationPin(address: String, requestType: String, mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ postOrPUTStudentLocationResponseJSON: POSTOrPUTStudentLocationResponseJSON?, _ errorString: String?) -> Void) {
         
-        let requestType = "PUT"
         let parameters: [String:String] = [:]
-        var address = MapClient.Addresses.ParseServerPostAddress
-        address.append("/" + objectId)
         
         let putStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
-        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON, requestType: requestType) { (results:PUTStudentLocationResponseJSON?, errorString:String?) in
+        let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON, requestType: requestType) { (results:POSTOrPUTStudentLocationResponseJSON?, errorString:String?) in
             
             if errorString != nil {
                 completionHandlerForPutStudentLocation(false, nil, errorString)

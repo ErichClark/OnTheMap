@@ -36,15 +36,15 @@ extension MapClient {
         }
     }
     
-    func getAllStudentLocations(_ completionHandlerForGetLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
+    func getAllStudentLocations(_ completionHandlerForGetAllLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
         let address = MapClient.Addresses.ParseServerAddress
         let _ = taskForGETMethod(address, optionalQueries: nil) { (results:AllStudentLocations?, errorString:String?) in
             
             if results != nil {
-                completionHandlerForGetLocations(true, results, nil)
+                completionHandlerForGetAllLocations(true, results, nil)
             } else {
-                completionHandlerForGetLocations(false, nil, errorString)
+                completionHandlerForGetAllLocations(false, nil, errorString)
             }
         }
     }

@@ -60,10 +60,34 @@ class MapConfirmationViewController: UIViewController {
     // Decides between POST or PUT requests
     // Based on whether the user has been isssued a valid object ID
     @IBAction func confirmMapLocation(_ sender: Any) {
-        if MapClient.sharedInstance().userObjectId == nil {
-            POSTStudentLocation()
-        } else {
-            PUTStudentLocation()
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+        }
+        
+        displayTextOnUI("Posting your location to Udacity...")
+        
+        let coordinateLat = resultForMapConfirmation?.placemark.coordinate.latitude
+        let coordinateLong = resultForMapConfirmation?.placemark.coordinate.longitude
+        let mapString = resultForMapConfirmation?.name
+        
+        // Sets a coordinate for segue to initial Map VC
+        centralCoordinate = CLLocationCoordinate2D(latitude: coordinateLat!, longitude: coordinateLong!)
+        
+        // Sends information to pin posting method
+        mapClient.placeStudentLocationPin(newMediaURL: urlFromSegue!, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!) { (success, response, errorString) in
+            
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
+            
+            performUIUpdatesOnMain {
+                if success {
+                    var successMessage = "** Success! "
+                    successMessage += "Your object ID is \(String(describing: response?.objectId))"
+                    self.displayTextOnUI(successMessage)
+                    self.performSegue(withIdentifier: "successfulPost", sender: self)
+                }
+            }
         }
     }
     
@@ -81,72 +105,6 @@ class MapConfirmationViewController: UIViewController {
         }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-    }
-
-    // MARK: - POST Location
-    func POSTStudentLocation() {
-        performUIUpdatesOnMain {
-            self.activityIndicator.startAnimating()
-        }
-        
-        displayTextOnUI("Posting your location to Udacity...")
-        
-        let coordinateLat = resultForMapConfirmation?.placemark.coordinate.latitude
-        let coordinateLong = resultForMapConfirmation?.placemark.coordinate.longitude
-        let mapString = resultForMapConfirmation?.name
-        
-        // Sets a coordinate for segue to initial Map VC
-        centralCoordinate = CLLocationCoordinate2D(latitude: coordinateLat!, longitude: coordinateLong!)
-        
-        // Sends information to pin posting method
-        mapClient.postStudentLocation(mediaURL: urlFromSegue ?? MapClient.DummyUserData.MediaURLValue, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!) { (success, response, errorString) in
-            
-            performUIUpdatesOnMain {
-                self.activityIndicator.stopAnimating()
-            }
-            
-            performUIUpdatesOnMain {
-                if success {
-                    var successMessage = "** Success! "
-                    successMessage += "Your object ID is \(String(describing: response?.objectId))"
-                    self.displayTextOnUI(successMessage)
-                    self.performSegue(withIdentifier: "successfulPost", sender: self)
-                }
-            }
-        }
-    }
-    
-    // MARK: - PUT Location
-    func PUTStudentLocation() {
-        performUIUpdatesOnMain {
-            self.activityIndicator.startAnimating()
-        }
-        
-        displayTextOnUI("Updating your location to Udacity...")
-        
-        let coordinateLat = resultForMapConfirmation?.placemark.coordinate.latitude
-        let coordinateLong = resultForMapConfirmation?.placemark.coordinate.longitude
-        let mapString = resultForMapConfirmation?.name
-        
-        // Sets a coordinate for segue to initial Map VC
-        centralCoordinate = CLLocationCoordinate2D(latitude: coordinateLat!, longitude: coordinateLong!)
-        
-        // Sends information to pin posting method
-        mapClient.putStudentLocation(mediaURL: urlFromSegue ?? MapClient.DummyUserData.MediaURLValue, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!, objectId: MapClient.sharedInstance().userObjectId!) { (success, response, errorString) in
-            
-            performUIUpdatesOnMain {
-                self.activityIndicator.stopAnimating()
-            }
-            
-            performUIUpdatesOnMain {
-                if success {
-                    var successMessage = "** Success! "
-                    successMessage += "Your location was updated at \(String(describing: response?.updatedAt))"
-                    self.displayTextOnUI(successMessage)
-                    self.performSegue(withIdentifier: "successfulPost", sender: self)
-                }
-            }
-        }
     }
 }
 

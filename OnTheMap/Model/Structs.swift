@@ -155,13 +155,24 @@ struct Session: Decodable {
     var expiration: String
 }
 
-struct POSTStudentLocationResponseJSON: Decodable {
+class POSTOrPUTStudentLocationResponseJSON: Decodable {
     var createdAt: Date
     var objectId: String
-}
-
-struct PUTStudentLocationResponseJSON: Decodable {
     var updatedAt: Date
+    
+    enum UserResponseKeys: String, CodingKey {
+        case createdAt = "createdAt"
+        case objectId = "objectId"
+        case updatedAt = "updatedAt"
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: UserResponseKeys.self)
+        
+        self.createdAt = try (container.decodeIfPresent(Date.self, forKey: .createdAt) ?? nil)!
+        self.objectId = try (container.decodeIfPresent(String.self, forKey: .objectId) ?? nil)!
+        self.updatedAt = try (container.decodeIfPresent(Date.self, forKey: .updatedAt) ?? nil)!
+    }
 }
 
 struct UdacityError: Decodable {
