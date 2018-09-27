@@ -74,7 +74,7 @@ class MapConfirmationViewController: UIViewController {
         centralCoordinate = CLLocationCoordinate2D(latitude: coordinateLat!, longitude: coordinateLong!)
         
         // Sends information to pin posting method
-        mapClient.placeStudentLocationPin(newMediaURL: urlFromSegue!, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!) { (success, response, errorString) in
+        mapClient.placeStudentLocationPin(newMediaURL: urlFromSegue!, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!) { (success, successMessage, errorString) in
             
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()
@@ -82,10 +82,10 @@ class MapConfirmationViewController: UIViewController {
             
             performUIUpdatesOnMain {
                 if success {
-                    var successMessage = "** Success! "
-                    successMessage += "Your object ID is \(String(describing: response?.objectId))"
-                    self.displayTextOnUI(successMessage)
+                    self.displayTextOnUI(successMessage!)
                     self.performSegue(withIdentifier: "successfulPost", sender: self)
+                } else {
+                    self.displayTextOnUI(errorString!)
                 }
             }
         }

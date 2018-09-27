@@ -23,9 +23,18 @@ extension MapClient {
         let address = MapClient.Addresses.UdacityAPIAddress
         let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postBody, requestType: requestType) { (results:Data?, errorString:String?) in
             
-            var accountResult: POSTSessionResponseJSON? = nil
+            if errorString != nil {
+                completionHandlerForloginToUdacity(false, nil, errorString)
+            }
+
+            if results == nil {
+                let error = "No error was returned, but no data was returned either."
+                completionHandlerForloginToUdacity(false, nil, error)
+            }
             
-            accountResult = self.decodeJSONResponse(data: results, object: accountResult)
+            var accountResult: POSTSessionResponseJSON? = nil
+
+            accountResult = self.decodeJSONResponse(data: results!, object: accountResult)
             
             let key = accountResult?.account.key
             let id = accountResult?.session.id
@@ -140,15 +149,16 @@ extension MapClient {
         }
     }
     
-    func decodeJSONResponse<T: Decodable>(data: Data?, object: T?) -> T? {
+    func decodeJSONResponse<T: Decodable>(data: Data, object: T?) -> T? {
         // Verbose printing
 
         print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data))")
+        print(String(data: data, encoding: .utf8)!)
         var jsonObject: T? = nil
         var errorMessage = ""
-        var dataToParse: Data? = nil
+        var dataToParse = data
         
-        guard let data = data else {
+        if dataToParse == nil {
             return jsonObject
         }
         
@@ -159,9 +169,9 @@ extension MapClient {
         }
         
         do {
-            print(String(data: dataToParse!, encoding: .utf8)!)
+            print(String(data: dataToParse, encoding: .utf8)!)
             let jsonDecoder = JSONDecoder()
-            let jsonData = Data(dataToParse!)
+            let jsonData = Data(dataToParse)
             jsonObject = try jsonDecoder.decode(T.self, from: jsonData)
         } catch {
             errorMessage = "** Could not parse JSON as \(T.self)"

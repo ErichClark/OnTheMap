@@ -65,7 +65,7 @@ class MapClient: NSObject {
     } // End of taskForGETMethod
     
     // MARK: - POST Method
-    func taskForPOSTOrPUTMethod<TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, requestType: String, completionHandlerForPOST: @escaping (_ result: Data?, _ nsError: String?) -> Void ) {
+    func taskForPOSTOrPUTMethod<TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, requestType: String, completionHandlerForPOST: @escaping (_ result: Data?, _ errorString: String?) -> Void ) {
         
         var errorInPOSTRequest: String? = nil
         
@@ -84,9 +84,12 @@ class MapClient: NSObject {
             postBody = try jsonEncoder.encode(postObject)
             print("** postBody = \(String(describing: postBody))")
             // Verbose printing
-            // print(String(data: postBody!, encoding: .utf8)!)
+            print(String(data: postBody!, encoding: .utf8)!)
         }
-        catch{print(error)}
+        catch{
+            errorInPOSTRequest = "Json POST encoding error - \(error)"
+            completionHandlerForPOST(nil, errorInPOSTRequest)
+        }
         
         urlRequest.httpMethod = requestType
         urlRequest.httpBody = postBody
@@ -96,12 +99,13 @@ class MapClient: NSObject {
             errorInPOSTRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
             print("**POST task started -")
             
-            var dataToParse = data!
-            // Remove Udacity security characters
             
-//            Verbose Printing
-//            print("** dataToParse = ")
-//            print(String(data: dataToParse, encoding: .utf8)!)
+            if error != nil {
+                errorInPOSTRequest = "\(String(describing: error)) - \(String(describing: httpURLResponse))"
+                completionHandlerForPOST(nil, errorInPOSTRequest)
+            } else {
+                completionHandlerForPOST(data, nil)
+            }
             
             
         }

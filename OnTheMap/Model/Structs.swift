@@ -160,12 +160,12 @@ struct Session: Decodable {
 }
 
 struct POSTStudentLocationResponseJSON: Decodable {
-    var createdAt: Date
+    var createdAt: String
     var objectId: String
 }
 
 struct PUTStudentLocationResponseJSON: Decodable {
-    var updatedAt: Date
+    var updatedAt: String
 }
 
 struct UdacityError: Decodable {
