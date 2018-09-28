@@ -33,7 +33,6 @@ extension MapClient {
             }
             
             var accountResult: POSTSessionResponseJSON? = nil
-
             accountResult = self.decodeJSONResponse(data: results!, object: accountResult)
             
             let key = accountResult?.account.key
@@ -60,7 +59,25 @@ extension MapClient {
     // TODO: - implement Log Out
     func logOutOfUdacity(_ completionHandlerForLogOutOfUdacity: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
         
+        var xrsfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xrsfCookie = cookie }
+        }
         
+        let _ = taskForDELETEMethod(xrsfCookie!) {(results, errorString) in
+            if errorString != nil {
+                completionHandlerForLogOutOfUdacity(false, nil, errorString)
+            } else {
+                var deleteResponse: Session? = nil
+                deleteResponse = self.decodeJSONResponse(data: results!, object: deleteResponse)
+
+                let expiration = deleteResponse?.id
+                
+                let successMessage = "Successful logout at \(String(describing: expiration))."
+                completionHandlerForLogOutOfUdacity(true, successMessage, nil)
+            }
+        }
     }
     
     private func getSingleStudentLocation(_ completionHandlerForGetSingleLocation: @escaping (_ success: Bool, _ singleStudentLocation: StudentLocation?, _ errorString: String?) -> Void) {
