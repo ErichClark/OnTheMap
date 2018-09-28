@@ -112,6 +112,35 @@ class MapClient: NSObject {
         task.resume()
     } // End of taskForPOSTMethod
     
+    // MARK: - Task for DELETE
+    func taskForDELETEMethod(_ cookie: HTTPCookie, completionHandlerForDELETE: @escaping (_ result: Data?, _ errorString: String?) -> Void) {
+        
+        var errorInDELETERequest: String? = nil
+        
+        let urlAddress = MapClient.Addresses.UdacityAPIAddress
+        let url = MapClient.URLFromParameters(address: urlAddress, optionalQueries: nil)
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.addValue(cookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        
+        print("** URL for DELETE method = \(urlRequest)")
+        
+        let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
+            
+            errorInDELETERequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
+            if errorInDELETERequest != nil {
+                completionHandlerForDELETE(nil, errorInDELETERequest)
+            }
+            
+            if error != nil {
+                errorInDELETERequest = "** DELETE request error - \(String(describing: error)) - \(String(describing: httpURLResponse))"
+                completionHandlerForDELETE(nil, errorInDELETERequest)
+            } else {
+                completionHandlerForDELETE(data, nil)
+            }
+        }
+        task.resume()
+    }
     
     // MARK: - Build URL from parameters
     class func URLFromParameters(address: String, optionalQueries: [String:String]?) -> URL {

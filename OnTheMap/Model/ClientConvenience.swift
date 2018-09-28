@@ -55,6 +55,11 @@ extension MapClient {
                 completionHandlerForloginToUdacity(true, sessionID, nil)
             }
         }
+    }
+    
+    // TODO: - implement Log Out
+    func logOutOfUdacity(_ completionHandlerForLogOutOfUdacity: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
+        
         
     }
     
