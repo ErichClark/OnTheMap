@@ -19,6 +19,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     var mapClient: MapClient!
     var mapCenter: CLLocationCoordinate2D? = nil
     var allStudents: [VerifiedStudentPin]? = nil
+    var logoutMessage: String? = nil
     
     var locationManager = CLLocationManager()
     
@@ -30,9 +31,40 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         allStudents = mapClient.allStudents
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        // MARK: - on a first run tableview does not exist yet, so comparing them will crash the app
+        // This method checks if there re visible cells, then compares the visible cells with the
+        // allStudents table in the data model.
+        if studentTable.visibleCells.count != 0 {
+            if studentTable.visibleCells[0] != MapClient.sharedInstance().allStudents![0] {
+                reload(self)
+            }
+        }
+    }
+    
     // MARK: - Actions
     @IBAction func logOut(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+        }
+        
+        displayTextOnUI("Logging out of Udacity...")
+        mapClient.logOutOfUdacity() { (success, successMessage, errorMessage) in
+            
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
+            performUIUpdatesOnMain {
+                if success {
+                    print(successMessage!)
+                } else {
+                    print(errorMessage!)
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @IBAction func reload(_ sender: Any)  {
@@ -83,7 +115,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentTableCell", for: indexPath)
         cell.textLabel?.text = allStudents![indexPath.row].name
-        let urlString = "\(allStudents![indexPath.row].url)"
+        let urlString = "\(allStudents![indexPath.row].mediaURL)"
         cell.detailTextLabel?.text = urlString
         cell.imageView?.image = UIImage(named: "icon_pin")
      
@@ -91,7 +123,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let url = allStudents![indexPath.row].url
+        let url = URL(fileURLWithPath: String(allStudents![indexPath.row].mediaURL))
         
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: {(success) in

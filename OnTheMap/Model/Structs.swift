@@ -14,15 +14,18 @@ import Contacts
 class VerifiedStudentPin: NSObject, MKAnnotation {
     
     let name: String
-    // let mapString: String
-    let url: URL
+    let mapString: String
+    let mediaURL: String
     let coordinate: CLLocationCoordinate2D
+    let uniqueKey: String?
     
-    init(firstName: String, lastName: String, url: URL, latitude: Double, longitude: Double) {
+    init(firstName: String, lastName: String, mapString: String, mediaURL: String, latitude: Double, longitude: Double, uniqueKey: String?) {
         
         self.name = firstName + " " + lastName
-        self.url = url
+        self.mediaURL = mediaURL
+        self.mapString = mapString
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        self.uniqueKey = uniqueKey
         
         super.init()
     }
@@ -32,7 +35,7 @@ class VerifiedStudentPin: NSObject, MKAnnotation {
     }
     
     var subtitle: String? {
-        return "\(url)"
+        return mediaURL
     }
     
     func mapItem() -> MKMapItem {
@@ -101,7 +104,9 @@ func getMapItem(student: VerifiedStudentPin) -> MKMapItem {
     let placemark = MKPlacemark(coordinate: student.coordinate)
     let mapItem = MKMapItem(placemark: placemark)
     mapItem.name = student.name
-    mapItem.url = student.url
+    
+    let url = URL(fileURLWithPath: student.mediaURL)
+    mapItem.url = url
     return mapItem
 }
 

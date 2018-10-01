@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
         mapClient = MapClient.sharedInstance()        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         displayTextOnUI("")
     }
 
@@ -72,6 +72,10 @@ class LoginViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func signUp(_ sender: Any) {
+        // TODO: - implement online sign up
     }
     
     func loadStudentLocations() {

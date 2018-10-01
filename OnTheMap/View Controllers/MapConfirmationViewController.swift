@@ -82,11 +82,11 @@ class MapConfirmationViewController: UIViewController {
             
             performUIUpdatesOnMain {
                 if success {
-                    self.displayTextOnUI(successMessage!)
-                    self.performSegue(withIdentifier: "successfulPost", sender: self)
+                    print(successMessage!)
                 } else {
-                    self.displayTextOnUI(errorString!)
+                    print(errorString!)
                 }
+                self.dismiss(animated: true)
             }
         }
     }

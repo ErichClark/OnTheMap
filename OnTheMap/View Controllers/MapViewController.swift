@@ -33,7 +33,6 @@ class MapViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        // TODO: - Use Safe Area Inset?
         super.viewDidLoad()
         
         // get the Map client
@@ -122,7 +121,25 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func logOut(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        performUIUpdatesOnMain {
+            self.activityIndicator.startAnimating()
+        }
+        
+        displayTextOnUI("Logging out of Udacity...")
+        mapClient.logOutOfUdacity() { (success, successMessage, errorMessage) in
+            
+            performUIUpdatesOnMain {
+                self.activityIndicator.stopAnimating()
+            }
+            performUIUpdatesOnMain {
+                if success {
+                    print(successMessage!)
+                } else {
+                    print(errorMessage!)
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
 }
 
@@ -150,12 +167,12 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         let pin = view.annotation as! VerifiedStudentPin
-        let url = pin.url
+        let url = URL(fileURLWithPath: String(pin.mediaURL))
         
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: {(success) in print("Open \(url) \(success)")})
         }
-        print("The url is \(pin.url)")
+        print("The url is \(pin.mediaURL)")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

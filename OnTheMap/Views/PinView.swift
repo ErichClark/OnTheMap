@@ -42,7 +42,7 @@ class PinAnnotationView: MKAnnotationView {
             let detailLabel = UILabel()
             detailLabel.numberOfLines = 0
             detailLabel.font = detailLabel.font.withSize(12)
-            detailLabel.text = "\(student.url)"
+            detailLabel.text = "\(student.mediaURL)"
             detailCalloutAccessoryView = detailLabel
         }
     }

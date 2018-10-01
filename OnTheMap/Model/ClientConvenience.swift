@@ -35,9 +35,11 @@ extension MapClient {
             var accountResult: POSTSessionResponseJSON? = nil
             accountResult = self.decodeJSONResponse(data: results!, object: accountResult)
             
+            // MARK: - Captures user's accountKey (elsewhere a uniqueKey)
             let key = accountResult?.account.key
-            let id = accountResult?.session.id
             MapClient.sharedInstance().accountKey = key
+            
+            let id = accountResult?.session.id
             MapClient.sharedInstance().sessionID = id
             
             if errorString != nil {
@@ -56,7 +58,7 @@ extension MapClient {
         }
     }
     
-    // TODO: - implement Log Out
+    // MARK: - Log Out
     func logOutOfUdacity(_ completionHandlerForLogOutOfUdacity: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
         
         var xrsfCookie: HTTPCookie? = nil
@@ -69,10 +71,10 @@ extension MapClient {
             if errorString != nil {
                 completionHandlerForLogOutOfUdacity(false, nil, errorString)
             } else {
-                var deleteResponse: Session? = nil
+                var deleteResponse: DeleteSessionResponseJSON? = nil
                 deleteResponse = self.decodeJSONResponse(data: results!, object: deleteResponse)
 
-                let expiration = deleteResponse?.id
+                let expiration = deleteResponse?.session.expiration
                 
                 let successMessage = "Successful logout at \(String(describing: expiration))."
                 completionHandlerForLogOutOfUdacity(true, successMessage, nil)
@@ -80,32 +82,62 @@ extension MapClient {
         }
     }
     
-    private func getSingleStudentLocation(_ completionHandlerForGetSingleLocation: @escaping (_ success: Bool, _ singleStudentLocation: StudentLocation?, _ errorString: String?) -> Void) {
+    private func updateArrayWithNewLocation(_ newLocation: VerifiedStudentPin) {
         
+        let userUniqueKey = MapClient.sharedInstance().accountKey
+
+        let oldArray = MapClient.sharedInstance().allStudents
+        var newArray: [VerifiedStudentPin] = [newLocation]
+        var index = 0
+        for student in oldArray! {
+            if student.uniqueKey != userUniqueKey {
+                newArray.append(student)
+            } else {
+                print("Old user location removed at index \(index)")
+            }
+            index += 1
+        }
+        
+        MapClient.sharedInstance().allStudents = newArray
+        
+        // remove element at old location
+        // insert new element at first position
+        // return new array
     }
     
     // MARK: - POST or PUT ?
     
-    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
+    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ newPin: VerifiedStudentPin?, _ errorString: String?) -> Void) {
         
         let mediaURL = newMediaURL ?? MapClient.DummyUserData.MediaURLValue
+        
+        let newPin = VerifiedStudentPin(
+            firstName: MapClient.DummyUserData.FirstNameValue,
+            lastName: MapClient.DummyUserData.LastNameValue,
+            mapString: mapString,
+            mediaURL: mediaURL,
+            latitude: latitude,
+            longitude: longitude,
+            uniqueKey: MapClient.sharedInstance().accountKey)
+        
+        
         let objectId = MapClient.sharedInstance().userObjectId
         var address = MapClient.Addresses.ParseServerPostAddress
         var requestType = ""
         if objectId == nil {
             requestType = "POST"
-            
         } else {
             requestType = "PUT"
             address.append("/" + objectId!)
         }
         
 
-        self.requestHTTPStudentLocationPin(address: address, requestType: requestType, mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude) {  (success, successMessage, errorString) in
+        self.requestHTTPStudentLocationPin(newPin: newPin, address: address, requestType: requestType) {  (success, newPin, errorString) in
             
             if success {
                 print("** Success! Location \(requestType) request was accepted.")
-                completionHandlerForPutStudentLocation(true, successMessage, nil)
+                self.updateArrayWithNewLocation(newPin!)
+                completionHandlerForPutStudentLocation(true, newPin, nil)
             } else {
                 let errorMessage = "** Your \(requestType) was rejected because: \(String(describing: errorString))"
                 completionHandlerForPutStudentLocation(false, nil, errorMessage)
@@ -113,11 +145,11 @@ extension MapClient {
         }
     }
     
-    func requestHTTPStudentLocationPin(address: String, requestType: String, mediaURL: String, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ successMessage: String?, _ errorString: String?) -> Void) {
+    func requestHTTPStudentLocationPin(newPin: VerifiedStudentPin, address: String, requestType: String, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ newPin: VerifiedStudentPin?, _ errorString: String?) -> Void) {
         
         let parameters: [String:String] = [:]
         
-        let putStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: mediaURL, mapString: mapString, latitude: latitude, longitude: longitude)
+        let putStudentLocationJSON = POSTOrPutStudentLocationJSON(mediaURL: newPin.mediaURL, mapString: newPin.mapString, latitude: newPin.coordinate.latitude, longitude: newPin.coordinate.longitude)
         let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: putStudentLocationJSON, requestType: requestType) { (results:Data?, errorString:String?) in
             
             if errorString != nil {
@@ -128,13 +160,15 @@ extension MapClient {
                 var successMessage = "** SUCCESS! Your location has been set with "
                 successMessage += "objectId \(String(describing: postResponse?.objectId)), "
                 successMessage += "created at \(String(describing: postResponse?.createdAt))."
-                completionHandlerForPutStudentLocation(true, successMessage, nil)
+                print(successMessage)
+                completionHandlerForPutStudentLocation(true, newPin, nil)
             }  else if requestType == "PUT" {
                 var postResponse: PUTStudentLocationResponseJSON? = nil
                 postResponse = self.decodeJSONResponse(data: results!, object: postResponse)
                 var successMessage = "** SUCCESS! Your location has been updated "
                 successMessage += "at \(String(describing: postResponse?.updatedAt))."
-                completionHandlerForPutStudentLocation(true, successMessage, nil)
+                print(successMessage)
+                completionHandlerForPutStudentLocation(true, newPin, nil)
             }
         }
     }
@@ -179,10 +213,6 @@ extension MapClient {
         var jsonObject: T? = nil
         var errorMessage = ""
         var dataToParse = data
-        
-        if dataToParse == nil {
-            return jsonObject
-        }
         
         if T.self ==  POSTSessionResponseJSON.self || T.self == DeleteSessionResponseJSON.self {
             let range = (5..<data.count)

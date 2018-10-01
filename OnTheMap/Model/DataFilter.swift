@@ -64,11 +64,9 @@ extension MapClient {
                 continue
             }
             // Captures our own objectId if we find our match and it has been lost locally.
-            if student.uniqueKey == MapClient.sharedInstance().accountKey! {
-                print("** Your unique key was found on the Udacity server.")
-                if MapClient.sharedInstance().userObjectId == nil {
-                    MapClient.sharedInstance().userObjectId = student.objectId
-                }
+            if student.uniqueKey == MapClient.sharedInstance().accountKey {
+                print("** Your location was found on the Udacity server at \(String(describing: student.mapString)).")
+                MapClient.sharedInstance().userObjectId = student.objectId
             }
             guard !BlacklistedUniqueKeys.contains(student.uniqueKey!) else {
                 continue
@@ -83,9 +81,6 @@ extension MapClient {
                 continue
             }
             guard student.mediaURL != nil else {
-                continue
-            }
-            guard let url = URL(string: student.mediaURL!) else {
                 continue
             }
             guard student.latitude != nil  else {
@@ -104,7 +99,14 @@ extension MapClient {
                 continue
             }
             
-            let cleanStudent = VerifiedStudentPin(firstName: student.firstName!, lastName: student.lastName!, url: url, latitude: student.latitude!, longitude: student.longitude!)
+            let cleanStudent = VerifiedStudentPin(
+                firstName: student.firstName!,
+                lastName: student.lastName!,
+                mapString: student.mapString!,
+                mediaURL: student.mediaURL!,
+                latitude: student.latitude!,
+                longitude: student.longitude!,
+                uniqueKey: student.uniqueKey!)
             filteredStudents.append(cleanStudent)
             BlacklistedUniqueKeys.append(student.uniqueKey!)
         }
