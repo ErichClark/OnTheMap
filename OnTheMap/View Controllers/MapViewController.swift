@@ -40,6 +40,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         allStudents = mapClient.allStudents
         
+        loadingTextField.isHidden = true
         mapView.addAnnotations(allStudents!)
         
         // Set the mapview delegate
@@ -52,6 +53,7 @@ class MapViewController: UIViewController {
         
         centerMap()
     }
+    
     // MARK: - Check for Location when in use permissions
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -66,39 +68,33 @@ class MapViewController: UIViewController {
         // MARK: - Center initial map and set default region
         var region: MKCoordinateRegion? = nil
         if centralCoordinate == nil {
-            region = MKCoordinateRegion.init(center: MapClient.Constants.DefaultMapCenterUSA, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+            region = MKCoordinateRegion.init(
+                center: MapClient.Constants.DefaultMapCenterUSA,
+                latitudinalMeters: MapClient.Constants.DefaultMapZoom,
+                longitudinalMeters: MapClient.Constants.DefaultMapZoom)
         } else if centralCoordinate != nil {
-            region = MKCoordinateRegion.init(center: centralCoordinate!, latitudinalMeters: MapClient.Constants.DefaultMapZoom, longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+            region = MKCoordinateRegion.init(
+                center: centralCoordinate!,
+                latitudinalMeters: MapClient.Constants.DefaultMapZoom,
+                longitudinalMeters: MapClient.Constants.DefaultMapZoom)
         }
         mapView.setRegion(region!, animated: true)
         MapClient.sharedInstance().defaultRegion = region
     }
 
-    // Debugger Textfield display
-    
-    
     // MARK: - Actions
-    
     @IBAction func reload(_ sender: Any) {
         performUIUpdatesOnMain {
-            
             self.activityIndicator.startAnimating()
+            self.displayTextOnUI("Getting student locations...")
         }
         
-        print("Getting student locations...")
-        //        temporaryGetStudentLocations()
         mapClient.get100ValidStudentLocations() {
             (success, allValidStudentLocations, errorString) in
             
             performUIUpdatesOnMain {
-                self.activityIndicator.stopAnimating()
-            }
-            
-            performUIUpdatesOnMain {
                 if success {
-                    var successMessage = "Success! "
-                    successMessage += "\(String(describing: allValidStudentLocations!.count)) students returned."
-                    self.displayTextOnUI(successMessage)
+                    self.loadingTextField.isHidden = true
                     self.activityIndicator.stopAnimating()
                 } else {
                     self.displayTextOnUI(errorString!)
@@ -111,9 +107,8 @@ class MapViewController: UIViewController {
     }
     
     func displayTextOnUI(_ displayString: String) {
+        loadingTextField.isHidden = false
         loadingTextField.text = displayString
-        //loadingTextField.alpha = 1.0
-        //fadeOutTextField(loadingTextField)
     }
     
     @IBAction func addPin(_ sender: Any) {
@@ -173,9 +168,9 @@ extension MapViewController: MKMapViewDelegate {
             UIApplication.shared.open(url!, options: [:], completionHandler: {(success) in
                 print("Open \(String(describing: url)) \(success)")})
         }
-        print("The url is \(pin.mediaURL)")
     }
     
+    // Includes map region in segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addPin" {
             let infoPostingVC = segue.destination as! InformationPostingViewController

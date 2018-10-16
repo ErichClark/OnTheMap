@@ -24,7 +24,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // get the Map client
-        mapClient = MapClient.sharedInstance()        
+        mapClient = MapClient.sharedInstance()
+        errorTextfield.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +57,7 @@ class LoginViewController: UIViewController {
             
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
+                    self.errorTextfield.isHidden = true
                 }
                 
                 performUIUpdatesOnMain {
@@ -70,7 +72,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signUp(_ sender: Any) {
-        // TODO: - implement online sign up
+        // Udacity online sign up
         let url = URL(string: String(MapClient.Addresses.UdacitySignupAddress))
         if UIApplication.shared.canOpenURL(url!) {
             UIApplication.shared.open(url!, options: [:], completionHandler: {(success) in
@@ -94,9 +96,7 @@ class LoginViewController: UIViewController {
             
             performUIUpdatesOnMain {
                 if success {
-                    var successMessage = "Success! "
-                    successMessage += "\(String(describing: allValidStudentLocations!.count)) students returned."
-                    self.displayTextOnUI(successMessage)
+                    self.errorTextfield.isHidden = true
                     self.performSegue(withIdentifier: "loginComplete", sender: self)
                 } else {
                     self.displayTextOnUI(errorString!)
@@ -106,8 +106,8 @@ class LoginViewController: UIViewController {
     }
     
     func displayTextOnUI(_ displayString: String) {
+        errorTextfield.isHidden = false
         errorTextfield.text = displayString
-        //fadeOutTextField(errorTextfield)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

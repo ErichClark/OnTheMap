@@ -39,22 +39,25 @@ class MapClient: NSObject {
         
         urlRequest.httpMethod = "GET"
         
-        print("** URL Request for \(address) = \(urlRequest)")
+        // Verbose printing
+        // print("** URL for GET request = \(urlRequest)")
         
         // Make the request
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
             errorInGETRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
+            if errorInGETRequest != nil {
+                completionHandlerForGET(nil, errorInGETRequest)
+            }
             
             var jsonObject: T? = nil
             do {
-                print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data?.count))")
                 // Verbose data printing
+                // print("** Attempting to parse \(T.self) with size: \(String(describing: data?.count))")
                 // print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(data!)
                 jsonObject = try jsonDecoder.decode(T.self, from: jsonData)
-                //print(jsonObject.debugDescription)
                 completionHandlerForGET(jsonObject, nil)
             } catch {
                 errorInGETRequest = "** Could not parse data response from GET request \(jsonObject.debugDescription)"
@@ -76,15 +79,16 @@ class MapClient: NSObject {
         urlRequest.addValue(Headers.RestAPIKeyValue, forHTTPHeaderField: Headers.RestApiKey)
         urlRequest.addValue(Headers.ParseApplicationIDValue, forHTTPHeaderField: Headers.ParseApplicationIDKey)
         
-        print("** URL request for \(address) = \(urlRequest)")
+        // Verbose data printing
+        // print("** URL \(requestType) request = \(urlRequest)")
         
         var postBody: Data? = nil
         do {
             let jsonEncoder = JSONEncoder()
             postBody = try jsonEncoder.encode(postObject)
-            print("** postBody = \(String(describing: postBody))")
             // Verbose printing
-            print(String(data: postBody!, encoding: .utf8)!)
+            // print("** postBody = \(String(describing: postBody))")
+            // print(String(data: postBody!, encoding: .utf8)!)
         }
         catch{
             errorInPOSTRequest = "Json POST encoding error - \(error)"
@@ -97,8 +101,9 @@ class MapClient: NSObject {
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
             errorInPOSTRequest = CheckForNetworkError(data: data, httpURLResponse: httpURLResponse as? HTTPURLResponse, error: error)
-            print("**POST task started -")
-            
+            if errorInPOSTRequest != nil {
+                completionHandlerForPOST(nil, errorInPOSTRequest)
+            }
             
             if error != nil {
                 errorInPOSTRequest = "\(String(describing: error)) - \(String(describing: httpURLResponse))"
@@ -123,7 +128,8 @@ class MapClient: NSObject {
         urlRequest.httpMethod = "DELETE"
         urlRequest.addValue(cookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         
-        print("** URL for DELETE method = \(urlRequest)")
+        // Verbose data printing
+        // print("** URL for DELETE method = \(urlRequest)")
         
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
@@ -154,7 +160,7 @@ class MapClient: NSObject {
             components?.queryItems = queryItems
         }
         // Verbose Components printing
-        //print(components.string!)
+        // print(components.string!)
         return (components?.url!)!
     }
     

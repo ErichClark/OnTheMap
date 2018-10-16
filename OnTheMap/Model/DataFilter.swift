@@ -16,9 +16,12 @@ extension MapClient {
         self.getAllStudentLocations() {
             (success, allStudentLocations, errorString) in
             
+            if allStudentLocations == nil {
+                completionHandlerForGet100ValidStudentLocations(false, nil, "No student locations returned.")
+            }
             if success {
                 print("** SUCCESS! Unfiltered location list parsed.")
-                self.filterInvalidLocations(allStudentLocations: allStudentLocations!) {
+                self.filterInvalidResults(allStudentLocations: allStudentLocations!) {
                     (success, verifiedStudents, errorString) in
                     
                     if success {
@@ -38,7 +41,9 @@ extension MapClient {
     
     func getAllStudentLocations(_ completionHandlerForGetAllLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
-        let address = MapClient.Addresses.ParseServerAddress
+        var address = MapClient.Addresses.ParseServerAddress
+        // Asks for a specific number of entries from Udacity. Number is large because most entries are junk.
+        address += "?limit=\(Constants.DefaultSampleSize)"
         let _ = taskForGETMethod(address, optionalQueries: nil) { (results:AllStudentLocations?, errorString:String?) in
             
             if results != nil {
@@ -51,7 +56,7 @@ extension MapClient {
     
     
     // MARK: - Filter bad location data, duplicates
-    func filterInvalidLocations(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
+    func filterInvalidResults(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
         
         let potentialStudents: [StudentLocation] = allStudentLocations.results!
         var filteredStudents = [VerifiedStudentPin]()
@@ -113,7 +118,7 @@ extension MapClient {
         
         let filteredCount = filteredStudents.count
         if  filteredCount > 0 {
-            print("** SUCCESS! \(filteredCount) valid locations were found.")
+            // print("** SUCCESS! \(filteredCount) valid locations were found.")
             completionHandlerForFilterInvalidLocations(true, filteredStudents, nil)
         } else {
             let errorMessage = "Could not return cleaned Students array."

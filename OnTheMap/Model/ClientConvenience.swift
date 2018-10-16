@@ -28,8 +28,8 @@ extension MapClient {
             }
 
             if results == nil {
-                let error = "No error was returned, but no data was returned either."
-                completionHandlerForloginToUdacity(false, nil, error)
+                let errorString = "No error was returned, but no data was returned either."
+                completionHandlerForloginToUdacity(false, nil, errorString)
             }
             
             var accountResult: POSTSessionResponseJSON? = nil
@@ -83,6 +83,9 @@ extension MapClient {
     }
     
     private func updateArrayWithNewLocation(_ newLocation: VerifiedStudentPin) {
+        // Removes student entry at old location
+        // Inserts new entry at first position
+        // Returns new array
         
         let userUniqueKey = MapClient.sharedInstance().accountKey
 
@@ -97,11 +100,7 @@ extension MapClient {
             }
             index += 1
         }
-        
         MapClient.sharedInstance().allStudents = newArray
-        // remove element at old location
-        // insert new element at first position
-        // return new array
     }
     
     // MARK: - POST or PUT ?
@@ -121,7 +120,7 @@ extension MapClient {
         
         
         let objectId = MapClient.sharedInstance().userObjectId
-        var address = MapClient.Addresses.ParseServerPostAddress
+        var address = MapClient.Addresses.ParseServerAddress
         var requestType = ""
         if objectId == nil {
             requestType = "POST"
@@ -134,11 +133,11 @@ extension MapClient {
         self.requestHTTPStudentLocationPin(newPin: newPin, address: address, requestType: requestType) {  (success, newPin, errorString) in
             
             if success {
-                print("** Success! Location \(requestType) request was accepted.")
+                print("** Success! Location \(requestType) request accepted.")
                 self.updateArrayWithNewLocation(newPin!)
                 completionHandlerForPlaceStudentLocationPin(true, newPin, nil)
             } else {
-                let errorMessage = "** Your \(requestType) was rejected because: \(String(describing: errorString))"
+                let errorMessage = "** Location \(requestType) rejected because: \(String(describing: errorString))"
                 completionHandlerForPlaceStudentLocationPin(false, nil, errorMessage)
             }
         }
@@ -193,12 +192,12 @@ extension MapClient {
             }
             
             // Verbose printing
-            for item in response.mapItems {
-                // Verbose printing
-                let itemDetails = "** \(String(describing: item.name)) at \(item.placemark.coordinate.latitude) latitude and \(item.placemark.coordinate.longitude)"
-                print(itemDetails)
-                // Display the received items
-            }
+//            for item in response.mapItems {
+//                // Verbose printing
+//                let itemDetails = "** \(String(describing: item.name)) at \(item.placemark.coordinate.latitude) latitude and \(item.placemark.coordinate.longitude)"
+//                print(itemDetails)
+//                // Display the received items
+//            }
             
             completionHandlerForGetResultsFromStringQuery(true, response.mapItems, nil)
         }
@@ -206,13 +205,14 @@ extension MapClient {
     
     func decodeJSONResponse<T: Decodable>(data: Data, object: T?) -> T? {
         // Verbose printing
-
-        print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data))")
-        print(String(data: data, encoding: .utf8)!)
+        // print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data))")
+        // print(String(data: data, encoding: .utf8)!)
         var jsonObject: T? = nil
         var errorMessage = ""
         var dataToParse = data
         
+        // Udacity prefixes 5 security characters
+        // This method removes them
         if T.self ==  POSTSessionResponseJSON.self || T.self == DeleteSessionResponseJSON.self {
             let range = (5..<data.count)
             let newData = data.subdata(in: range)
@@ -220,7 +220,8 @@ extension MapClient {
         }
         
         do {
-            print(String(data: dataToParse, encoding: .utf8)!)
+            // Verbose data printing
+            // print(String(data: dataToParse, encoding: .utf8)!)
             let jsonDecoder = JSONDecoder()
             let jsonData = Data(dataToParse)
             jsonObject = try jsonDecoder.decode(T.self, from: jsonData)

@@ -14,18 +14,20 @@ extension MapClient {
     struct Constants {
         static let DefaultMapCenterUSA = CLLocationCoordinate2D(latitude: 37.0902, longitude: -95.7129)
         static let DefaultMapZoom = CLLocationDistance(4000000) // Max allowed, 50 km
+        static let DefaultMapLookupZoom = CLLocationDistance(200000)
         static let SearchLatRange = (-90.0, 90.0)
         static let SearchLonRange = (-180.0, 180.0)
         static let ValidLatitudeRange = (-90.000...90.000)
         static let ValidLongitudeRange = (-180.000...180.000)
+        static let DefaultSampleSize = 1000 // "?limit=1000"
     }
     
     // Addresses
     struct Addresses {
         static let UdacityAPIAddress = "https://www.udacity.com/api/session"
         static let UdacitySignupAddress = "https://auth.udacity.com/sign-up"
-        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation?limit=1000"
-        static let ParseServerPostAddress = "https://parse.udacity.com/parse/classes/StudentLocation"
+        static let ParseServerAddress = "https://parse.udacity.com/parse/classes/StudentLocation"
+        static let ParseServerPostAddressBroken = "https://parse.udacity.com/parse/classes/StudentLocation?limit=1000"
     }
     
     struct Headers {

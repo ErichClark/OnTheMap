@@ -30,22 +30,3 @@ func CheckForNetworkError(data: Data?, httpURLResponse: HTTPURLResponse?, error:
     }
      return nil
 }
-
-func parseErrorFromReturnedJSON(methodDescription: String?, data: Data) -> String? {
-    var errorString: String? = nil
-    //
-    //        do {
-    //            let jsonDecoder = JSONDecoder()
-    //            let jsonData = Data(data)
-    //            let decodedError = try jsonDecoder.decode(TMDBError.self, from: jsonData)
-    //            if decodedError.status_code != nil {
-    //                var message = "* An errorString was returned from parseErrorFromTMDB"
-    //                message += "There was an error with your \(String(describing: methodDescription)) \n"
-    //                message += "Movie Database returned an error of code \(String(describing: decodedError.status_code)) \n"
-    //                message += "message reads \(String(describing: decodedError.status_message))"
-    //                errorString = message
-    //            }
-    //        }
-    //        catch {print(error)}
-    return errorString
-}

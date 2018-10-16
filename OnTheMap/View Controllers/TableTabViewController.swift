@@ -29,17 +29,20 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         // get the Map client
         mapClient = MapClient.sharedInstance()
         allStudents = mapClient.allStudents
+        feedbackTextField.isHidden = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         // MARK: - on a first run tableview does not exist yet, so comparing them will crash the app
-        // This method checks if there re visible cells, then compares the visible cells with the
-        // allStudents table in the data model.
+        // This method checks if there are visible cells, then compares the visible cells with the
+        // allStudents table in the data model. If not matching, reloads table.
         if studentTable.visibleCells.count != 0 {
             if studentTable.visibleCells[0] != MapClient.sharedInstance().allStudents![0] {
                 reload(self)
             }
+        } else {
+            displayTextOnUI("No students found.")
         }
     }
     
@@ -55,6 +58,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
             
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()
+                self.feedbackTextField.isHidden = true
             }
             performUIUpdatesOnMain {
                 if success {
@@ -71,9 +75,9 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         
         performUIUpdatesOnMain {
             self.activityIndicator.startAnimating()
+            self.displayTextOnUI("Getting student locations...")
         }
         
-        displayTextOnUI("Getting student locations...")
         mapClient.get100ValidStudentLocations() {
             (success, allValidStudentLocations, errorString) in
             
@@ -83,8 +87,9 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
             
             performUIUpdatesOnMain {
                 if success {
-                    self.displayTextOnUI("** Successful data refresh.")
-                    self.studentTable.reloadData()                } else {
+                    self.feedbackTextField.isHidden = true
+                    self.studentTable.reloadData()
+                } else {
                     self.displayTextOnUI(errorString!)
                 }
             }
@@ -93,8 +98,8 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Display Text
     func displayTextOnUI(_ text: String){
+        feedbackTextField.isHidden = false
         feedbackTextField.text = text
-        
     }
     
     @IBAction func addPin(_ sender: Any) {
@@ -110,7 +115,6 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allStudents!.count
     }
-
     
      func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "studentTableCell", for: indexPath)
@@ -122,6 +126,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
 
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let url = URL(string: String(allStudents![indexPath.row].mediaURL))
         

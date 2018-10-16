@@ -116,14 +116,11 @@ struct POSTOrPutStudentLocationJSON: Encodable {
     let lastName: String  = MapClient.DummyUserData.LastNameValue
     var mediaURL:String = MapClient.DummyUserData.MediaURLValue // URL provided by the student
     
-    let mapString: String // plain text for geocoding student location- "Mountain View, CA"
+    let mapString: String // plain text for geocoding student location
     let latitude: Double // (ranges from -90 to 90)
     let longitude: Double // (ranges from -180 to 180)
 }
 
-struct MapErrorJSON {
-    // TODO: -
-}
 
 struct SessionPOSTBody: Encodable {
     let udacity: Udacity

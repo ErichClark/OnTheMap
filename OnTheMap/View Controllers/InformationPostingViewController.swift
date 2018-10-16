@@ -36,6 +36,7 @@ class InformationPostingViewController: UIViewController {
         mapClient = MapClient.sharedInstance()
         self.geoSearchTextField.delegate = self as? UITextFieldDelegate
         urlTextField.text = MapClient.DummyUserData.MediaURLValue
+        displayTextOnUI("")
     }
     
     @IBAction func returnPressed(_ sender: Any) {
@@ -59,12 +60,12 @@ class InformationPostingViewController: UIViewController {
                 
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
+                    self.displayTextOnUI("")
                 }
                 
                 performUIUpdatesOnMain {
                     if success! {
-                        let successMessage = "** Success! Match(es) found."
-                        print(successMessage)
+                        print("** Success! Match(es) found.")
                         self.resultsFromSearch = returnedResults
                         self.resultsTableView.reloadData()
                         self.geoSearchTextField.resignFirstResponder()
@@ -91,9 +92,7 @@ class InformationPostingViewController: UIViewController {
     
     
     func displayTextOnUI(_ displayString: String) {
-        debuggingTextField.alpha = 1.0
         debuggingTextField.text = displayString
-        //fadeOutTextField(errorTextfield)
     }
     // MARK: - Navigation
 
