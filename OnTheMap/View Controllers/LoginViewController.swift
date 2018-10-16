@@ -30,12 +30,6 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         displayTextOnUI("")
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     // MARK: - Actions
     @IBAction func loginButton(_ sender: Any) {
@@ -47,17 +41,18 @@ class LoginViewController: UIViewController {
             
             performUIUpdatesOnMain {
                 self.activityIndicator.startAnimating()
+                self.resignFirstResponder()
             }
             
             // MARK: - Login Convenience method with stored user/pswd
             // For safe convenience while debugging, an untracked PrivateConstants file is kept locally on my development computer.
-            mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
-                (success, sessionID, errorString) in
+//            mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
+//                (success, sessionID, errorString) in
             
             // MARK: Standard login method
             // For a distributed build, the following code should be used instead:
-            // mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
-            // (success, sessionID, errorString) in
+             mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
+             (success, sessionID, errorString) in
             
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
@@ -76,6 +71,11 @@ class LoginViewController: UIViewController {
     
     @IBAction func signUp(_ sender: Any) {
         // TODO: - implement online sign up
+        let url = URL(string: String(MapClient.Addresses.UdacitySignupAddress))
+        if UIApplication.shared.canOpenURL(url!) {
+            UIApplication.shared.open(url!, options: [:], completionHandler: {(success) in
+                print("Open \(String(describing: url)) \(success)")})
+        }
     }
     
     func loadStudentLocations() {

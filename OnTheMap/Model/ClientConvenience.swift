@@ -99,7 +99,6 @@ extension MapClient {
         }
         
         MapClient.sharedInstance().allStudents = newArray
-        
         // remove element at old location
         // insert new element at first position
         // return new array
@@ -107,7 +106,7 @@ extension MapClient {
     
     // MARK: - POST or PUT ?
     
-    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPutStudentLocation: @escaping (_ success: Bool, _ newPin: VerifiedStudentPin?, _ errorString: String?) -> Void) {
+    func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPlaceStudentLocationPin: @escaping (_ success: Bool, _ newPin: VerifiedStudentPin?, _ errorString: String?) -> Void) {
         
         let mediaURL = newMediaURL ?? MapClient.DummyUserData.MediaURLValue
         
@@ -137,10 +136,10 @@ extension MapClient {
             if success {
                 print("** Success! Location \(requestType) request was accepted.")
                 self.updateArrayWithNewLocation(newPin!)
-                completionHandlerForPutStudentLocation(true, newPin, nil)
+                completionHandlerForPlaceStudentLocationPin(true, newPin, nil)
             } else {
                 let errorMessage = "** Your \(requestType) was rejected because: \(String(describing: errorString))"
-                completionHandlerForPutStudentLocation(false, nil, errorMessage)
+                completionHandlerForPlaceStudentLocationPin(false, nil, errorMessage)
             }
         }
     }

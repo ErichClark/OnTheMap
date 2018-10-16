@@ -34,7 +34,12 @@ class InformationPostingViewController: UIViewController {
 
         // Get the mapClient
         mapClient = MapClient.sharedInstance()
+        self.geoSearchTextField.delegate = self as? UITextFieldDelegate
         urlTextField.text = MapClient.DummyUserData.MediaURLValue
+    }
+    
+    @IBAction func returnPressed(_ sender: Any) {
+        findLocation(self)
     }
     
     @IBAction func findLocation(_ sender: Any) {
@@ -62,6 +67,7 @@ class InformationPostingViewController: UIViewController {
                         print(successMessage)
                         self.resultsFromSearch = returnedResults
                         self.resultsTableView.reloadData()
+                        self.geoSearchTextField.resignFirstResponder()
                     } else {
                         self.displayTextOnUI(errorString!)
                     }

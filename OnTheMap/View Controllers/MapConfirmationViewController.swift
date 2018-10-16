@@ -86,7 +86,11 @@ class MapConfirmationViewController: UIViewController {
                 } else {
                     print(errorString!)
                 }
-                self.dismiss(animated: true)
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+
+                //self.dismiss(animated: true)
+                //self.present(MapViewController, animated: true)
+                // popToViewController(ofClass: MapViewController.self)
             }
         }
     }

@@ -123,11 +123,11 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let url = URL(fileURLWithPath: String(allStudents![indexPath.row].mediaURL))
+        let url = URL(string: String(allStudents![indexPath.row].mediaURL))
         
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: {(success) in
-                print("Open \(url) \(success)")})
+        if UIApplication.shared.canOpenURL(url!) {
+            UIApplication.shared.open(url!, options: [:], completionHandler: {(success) in
+                print("Open \(String(describing: url)) \(success)")})
         }
     }
 
