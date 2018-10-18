@@ -80,7 +80,7 @@ class MapViewController: UIViewController {
                 longitudinalMeters: MapClient.Constants.DefaultMapZoom)
         }
         mapView.setRegion(region!, animated: true)
-        MapClient.sharedInstance().defaultRegion = region
+        DataSource.sharedInstance().defaultRegion = region
     }
 
     // MARK: - Actions

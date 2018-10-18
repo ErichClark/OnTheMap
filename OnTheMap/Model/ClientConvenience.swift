@@ -47,10 +47,10 @@ extension MapClient {
             }
             // MARK: - Captures user's accountKey (elsewhere a uniqueKey)
             let key = accountResult?.account.key
-            MapClient.sharedInstance().accountKey = key
+            DataSource.sharedInstance().accountKey = key
             
             let id = accountResult?.session.id
-            MapClient.sharedInstance().sessionID = id
+            DataSource.sharedInstance().sessionID = id
             
             if errorString != nil {
                 return completionHandlerForloginToUdacity(false, nil, errorString)
@@ -100,7 +100,7 @@ extension MapClient {
         // Inserts new entry at first position
         // Returns new array
         
-        let userUniqueKey = MapClient.sharedInstance().accountKey
+        let userUniqueKey = DataSource.sharedInstance().accountKey
 
         let oldArray = DataSource.sharedInstance().allStudents
         var newArray: [VerifiedStudentPin] = [newLocation]
@@ -129,10 +129,10 @@ extension MapClient {
             mediaURL: mediaURL,
             latitude: latitude,
             longitude: longitude,
-            uniqueKey: MapClient.sharedInstance().accountKey)
+            uniqueKey: DataSource.sharedInstance().accountKey)
         
         
-        let objectId = MapClient.sharedInstance().userObjectId
+        let objectId = DataSource.sharedInstance().userObjectId
         var address = MapClient.Addresses.ParseServerAddress
         var requestType = ""
         if objectId == nil {

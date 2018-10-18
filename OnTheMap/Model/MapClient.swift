@@ -18,11 +18,7 @@ class MapClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    var sessionID: String? = nil
-    var accountKey: String? = nil
-    var currentLocation: CLLocationCoordinate2D? = nil
-    var userObjectId: String? = nil
-    var defaultRegion: MKCoordinateRegion? = nil
+
     
     // MARK: GET Method
     func taskForGETMethod<T: Decodable>(_ address: String, optionalQueries: [String:String]?, completionHandlerForGET: @escaping (_ result: T?, _ errorString: String?) -> Void) {

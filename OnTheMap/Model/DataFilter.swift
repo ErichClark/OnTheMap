@@ -67,9 +67,9 @@ extension MapClient {
                 continue
             }
             // Captures our own objectId if we find our match and it has been lost locally.
-            if student.uniqueKey == MapClient.sharedInstance().accountKey {
+            if student.uniqueKey == DataSource.sharedInstance().accountKey {
                 print("** Your location was found on the Udacity server at \(String(describing: student.mapString)).")
-                MapClient.sharedInstance().userObjectId = student.objectId
+                DataSource.sharedInstance().userObjectId = student.objectId
             }
             guard !BlacklistedUniqueKeys.contains(student.uniqueKey!) else {
                 continue

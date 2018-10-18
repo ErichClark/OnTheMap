@@ -111,7 +111,7 @@ func getMapItem(student: VerifiedStudentPin) -> MKMapItem {
 }
 
 struct POSTOrPutStudentLocationJSON: Encodable {
-    let uniqueKey: String = MapClient.sharedInstance().accountKey! // Recommended as Udacity acc ID
+    let uniqueKey: String = DataSource.sharedInstance().accountKey! // Recommended as Udacity acc ID
     let firstName: String = MapClient.DummyUserData.FirstNameValue
     let lastName: String  = MapClient.DummyUserData.LastNameValue
     var mediaURL:String = MapClient.DummyUserData.MediaURLValue // URL provided by the student

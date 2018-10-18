@@ -54,7 +54,7 @@ class InformationPostingViewController: UIViewController {
             }
             
             let queryText = geoSearchTextField.text
-            let queryRegion = region ?? MapClient.sharedInstance().defaultRegion!
+            let queryRegion = region ?? DataSource.sharedInstance().defaultRegion!
             
             mapClient.getResultsFromStringQuery(queryString: queryText!, region: queryRegion) { (success, returnedResults, errorString) in
                 
