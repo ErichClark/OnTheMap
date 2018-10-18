@@ -28,9 +28,9 @@ class MapClient: NSObject {
         let url = MapClient.URLFromParameters(address: address, optionalQueries: optionalQueries)
         var urlRequest = URLRequest(url:url)
         
-        urlRequest.allHTTPHeaderFields = Headers.CharSetHeaderFields
-        urlRequest.addValue(Headers.RestAPIKeyValue, forHTTPHeaderField: Headers.RestApiKey)
-        urlRequest.addValue(Headers.ParseApplicationIDValue, forHTTPHeaderField: Headers.ParseApplicationIDKey)
+        urlRequest.allHTTPHeaderFields = DataSource.Headers.CharSetHeaderFields
+        urlRequest.addValue(DataSource.Headers.RestAPIKeyValue, forHTTPHeaderField: DataSource.Headers.RestApiKey)
+        urlRequest.addValue(DataSource.Headers.ParseApplicationIDValue, forHTTPHeaderField: DataSource.Headers.ParseApplicationIDKey)
         
         urlRequest.httpMethod = "GET"
         
@@ -70,9 +70,9 @@ class MapClient: NSObject {
         let url = MapClient.URLFromParameters(address: address, optionalQueries: optionalQueries)
         var urlRequest = URLRequest(url: url)
         
-        urlRequest.allHTTPHeaderFields = Headers.CharSetHeaderFields
-        urlRequest.addValue(Headers.RestAPIKeyValue, forHTTPHeaderField: Headers.RestApiKey)
-        urlRequest.addValue(Headers.ParseApplicationIDValue, forHTTPHeaderField: Headers.ParseApplicationIDKey)
+        urlRequest.allHTTPHeaderFields = DataSource.Headers.CharSetHeaderFields
+        urlRequest.addValue(DataSource.Headers.RestAPIKeyValue, forHTTPHeaderField: DataSource.Headers.RestApiKey)
+        urlRequest.addValue(DataSource.Headers.ParseApplicationIDValue, forHTTPHeaderField: DataSource.Headers.ParseApplicationIDKey)
         
         // Verbose data printing
         // print("** URL \(requestType) request = \(urlRequest)")
@@ -117,7 +117,7 @@ class MapClient: NSObject {
         
         var errorInDELETERequest: String? = nil
         
-        let urlAddress = MapClient.Addresses.UdacityAPIAddress
+        let urlAddress = DataSource.Addresses.UdacityAPIAddress
         let url = MapClient.URLFromParameters(address: urlAddress, optionalQueries: nil)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "DELETE"

@@ -70,14 +70,14 @@ class MapViewController: UIViewController {
         var region: MKCoordinateRegion? = nil
         if centralCoordinate == nil {
             region = MKCoordinateRegion.init(
-                center: MapClient.Constants.DefaultMapCenterUSA,
-                latitudinalMeters: MapClient.Constants.DefaultMapZoom,
-                longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+                center: DataSource.Constants.DefaultMapCenterUSA,
+                latitudinalMeters: DataSource.Constants.DefaultMapZoom,
+                longitudinalMeters: DataSource.Constants.DefaultMapZoom)
         } else if centralCoordinate != nil {
             region = MKCoordinateRegion.init(
                 center: centralCoordinate!,
-                latitudinalMeters: MapClient.Constants.DefaultMapZoom,
-                longitudinalMeters: MapClient.Constants.DefaultMapZoom)
+                latitudinalMeters: DataSource.Constants.DefaultMapZoom,
+                longitudinalMeters: DataSource.Constants.DefaultMapZoom)
         }
         mapView.setRegion(region!, animated: true)
         DataSource.sharedInstance().defaultRegion = region

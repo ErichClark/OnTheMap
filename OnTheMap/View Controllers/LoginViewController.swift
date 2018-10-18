@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func signUp(_ sender: Any) {
         // Udacity online sign up
-        let url = URL(string: String(MapClient.Addresses.UdacitySignupAddress))
+        let url = URL(string: String(DataSource.Addresses.UdacitySignupAddress))
         if UIApplication.shared.canOpenURL(url!) {
             UIApplication.shared.open(url!, options: [:], completionHandler: {(success) in
                 print("Open \(String(describing: url)) \(success)")})

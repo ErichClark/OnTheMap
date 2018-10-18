@@ -112,9 +112,9 @@ func getMapItem(student: VerifiedStudentPin) -> MKMapItem {
 
 struct POSTOrPutStudentLocationJSON: Encodable {
     let uniqueKey: String = DataSource.sharedInstance().accountKey! // Recommended as Udacity acc ID
-    let firstName: String = MapClient.DummyUserData.FirstNameValue
-    let lastName: String  = MapClient.DummyUserData.LastNameValue
-    var mediaURL:String = MapClient.DummyUserData.MediaURLValue // URL provided by the student
+    let firstName: String = DataSource.DummyUserData.FirstNameValue
+    let lastName: String  = DataSource.DummyUserData.LastNameValue
+    var mediaURL:String = DataSource.DummyUserData.MediaURLValue // URL provided by the student
     
     let mapString: String // plain text for geocoding student location
     let latitude: Double // (ranges from -90 to 90)

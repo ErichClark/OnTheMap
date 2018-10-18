@@ -35,7 +35,7 @@ class InformationPostingViewController: UIViewController {
         // Get the mapClient
         mapClient = MapClient.sharedInstance()
         self.geoSearchTextField.delegate = self as? UITextFieldDelegate
-        urlTextField.text = MapClient.DummyUserData.MediaURLValue
+        urlTextField.text = DataSource.DummyUserData.MediaURLValue
         displayTextOnUI("")
     }
     

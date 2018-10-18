@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-extension MapClient {
+extension DataSource {
     
     struct Constants {
         static let DefaultMapCenterUSA = CLLocationCoordinate2D(latitude: 37.0902, longitude: -95.7129)

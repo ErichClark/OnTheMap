@@ -39,9 +39,9 @@ extension MapClient {
     
     func get100StudentLocations(_ completionHandlerForGetAllLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
-        var address = MapClient.Addresses.ParseServerAddress
+        var address = DataSource.Addresses.ParseServerAddress
         // Asks for a specific number of entries from Udacity. Number is large because most entries are junk.
-        address += "?limit=\(Constants.DefaultSampleSize)"
+        address += "?limit=\(DataSource.Constants.DefaultSampleSize)"
         let _ = taskForGETMethod(address, optionalQueries: nil) { (results:AllStudentLocations?, errorString:String?) in
             
             if results != nil {
@@ -89,13 +89,13 @@ extension MapClient {
             guard student.latitude != nil  else {
                 continue
             }
-            guard Constants.ValidLatitudeRange.contains(student.latitude!) else {
+            guard DataSource.Constants.ValidLatitudeRange.contains(student.latitude!) else {
                 continue
             }
             guard student.longitude != nil  else {
                 continue
             }
-            guard Constants.ValidLongitudeRange.contains(student.longitude!) else {
+            guard DataSource.Constants.ValidLongitudeRange.contains(student.longitude!) else {
                 continue
             }
             guard student.createdAt != nil  else {

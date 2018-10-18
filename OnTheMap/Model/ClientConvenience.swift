@@ -20,7 +20,7 @@ extension MapClient {
         let requestType = "POST"
         
         let parameters: [String:String] = [:]
-        let address = MapClient.Addresses.UdacityAPIAddress
+        let address = DataSource.Addresses.UdacityAPIAddress
         let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postBody, requestType: requestType) { (results:Data?, errorString:String?) in
             
             if errorString != nil {
@@ -120,11 +120,11 @@ extension MapClient {
     
     func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPlaceStudentLocationPin: @escaping (_ success: Bool, _ newPin: VerifiedStudentPin?, _ errorString: String?) -> Void) {
         
-        let mediaURL = newMediaURL ?? MapClient.DummyUserData.MediaURLValue
+        let mediaURL = newMediaURL ?? DataSource.DummyUserData.MediaURLValue
         
         let newPin = VerifiedStudentPin(
-            firstName: MapClient.DummyUserData.FirstNameValue,
-            lastName: MapClient.DummyUserData.LastNameValue,
+            firstName: DataSource.DummyUserData.FirstNameValue,
+            lastName: DataSource.DummyUserData.LastNameValue,
             mapString: mapString,
             mediaURL: mediaURL,
             latitude: latitude,
@@ -133,7 +133,7 @@ extension MapClient {
         
         
         let objectId = DataSource.sharedInstance().userObjectId
-        var address = MapClient.Addresses.ParseServerAddress
+        var address = DataSource.Addresses.ParseServerAddress
         var requestType = ""
         if objectId == nil {
             requestType = "POST"

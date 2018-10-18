@@ -40,8 +40,8 @@ class MapConfirmationViewController: UIViewController {
         let coordinate = resultForMapConfirmation?.placemark.coordinate
         let coordinateRegion = MKCoordinateRegion.init(
             center: coordinate!,
-            latitudinalMeters: MapClient.Constants.DefaultMapLookupZoom,
-            longitudinalMeters: MapClient.Constants.DefaultMapLookupZoom)
+            latitudinalMeters: DataSource.Constants.DefaultMapLookupZoom,
+            longitudinalMeters: DataSource.Constants.DefaultMapLookupZoom)
             mapView.setRegion(coordinateRegion, animated: true)
         
         let pin = MKPointAnnotation()
