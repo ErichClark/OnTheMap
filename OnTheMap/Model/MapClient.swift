@@ -10,15 +10,10 @@ import Foundation
 import MapKit
 import CoreLocation
 
-// MARK: - MapClient: NSObject
-
 class MapClient: NSObject {
     
     // MARK: Properties
-    
-    // shared session
     var session = URLSession.shared
-
     
     // MARK: GET Method
     func taskForGETMethod<T: Decodable>(_ address: String, optionalQueries: [String:String]?, completionHandlerForGET: @escaping (_ result: T?, _ errorString: String?) -> Void) {
@@ -34,9 +29,6 @@ class MapClient: NSObject {
         
         urlRequest.httpMethod = "GET"
         
-        // Verbose printing
-        // print("** URL for GET request = \(urlRequest)")
-        
         // Make the request
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
@@ -47,9 +39,6 @@ class MapClient: NSObject {
             
             var jsonObject: T? = nil
             do {
-                // Verbose data printing
-                // print("** Attempting to parse \(T.self) with size: \(String(describing: data?.count))")
-                // print(String(data: data!, encoding: .utf8)!)
                 let jsonDecoder = JSONDecoder()
                 let jsonData = Data(data!)
                 jsonObject = try jsonDecoder.decode(T.self, from: jsonData)
@@ -60,7 +49,7 @@ class MapClient: NSObject {
             }
         }
         task.resume()
-    } // End of taskForGETMethod
+    }
     
     // MARK: - POST Method
     func taskForPOSTOrPUTMethod<TRequest: Encodable>(_ address: String, optionalQueries: [String:String], postObject: TRequest, requestType: String, completionHandlerForPOST: @escaping (_ result: Data?, _ errorString: String?) -> Void ) {
@@ -74,16 +63,10 @@ class MapClient: NSObject {
         urlRequest.addValue(DataSource.Headers.RestAPIKeyValue, forHTTPHeaderField: DataSource.Headers.RestApiKey)
         urlRequest.addValue(DataSource.Headers.ParseApplicationIDValue, forHTTPHeaderField: DataSource.Headers.ParseApplicationIDKey)
         
-        // Verbose data printing
-        // print("** URL \(requestType) request = \(urlRequest)")
-        
         var postBody: Data? = nil
         do {
             let jsonEncoder = JSONEncoder()
             postBody = try jsonEncoder.encode(postObject)
-            // Verbose printing
-            // print("** postBody = \(String(describing: postBody))")
-            // print(String(data: postBody!, encoding: .utf8)!)
         }
         catch{
             errorInPOSTRequest = "Json POST encoding error - \(error)"
@@ -106,11 +89,9 @@ class MapClient: NSObject {
             } else {
                 completionHandlerForPOST(data, nil)
             }
-            
-            
         }
         task.resume()
-    } // End of taskForPOSTMethod
+    }
     
     // MARK: - Task for DELETE
     func taskForDELETEMethod(_ cookie: HTTPCookie, completionHandlerForDELETE: @escaping (_ result: Data?, _ errorString: String?) -> Void) {
@@ -122,9 +103,6 @@ class MapClient: NSObject {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "DELETE"
         urlRequest.addValue(cookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-        
-        // Verbose data printing
-        // print("** URL for DELETE method = \(urlRequest)")
         
         let task = session.dataTask(with: urlRequest as URLRequest) { (data, httpURLResponse, error) in
             
@@ -154,8 +132,6 @@ class MapClient: NSObject {
             }
             components?.queryItems = queryItems
         }
-        // Verbose Components printing
-        // print(components.string!)
         return (components?.url!)!
     }
     

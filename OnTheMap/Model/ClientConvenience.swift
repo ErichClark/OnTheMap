@@ -116,8 +116,6 @@ extension MapClient {
         DataSource.sharedInstance().allStudents = newArray
     }
     
-    // MARK: - POST or PUT ?
-    
     func placeStudentLocationPin(newMediaURL: String?, mapString: String, latitude: Double, longitude: Double, _ completionHandlerForPlaceStudentLocationPin: @escaping (_ success: Bool, _ newPin: VerifiedStudentPin?, _ errorString: String?) -> Void) {
         
         let mediaURL = newMediaURL ?? DataSource.DummyUserData.MediaURLValue
@@ -204,22 +202,11 @@ extension MapClient {
                 completionHandlerForGetResultsFromStringQuery(false, nil, errorString)
             }
             
-            // Verbose printing
-//            for item in response.mapItems {
-//                // Verbose printing
-//                let itemDetails = "** \(String(describing: item.name)) at \(item.placemark.coordinate.latitude) latitude and \(item.placemark.coordinate.longitude)"
-//                print(itemDetails)
-//                // Display the received items
-//            }
-            
             completionHandlerForGetResultsFromStringQuery(true, response.mapItems, nil)
         }
     }
     
     func decodeJSONResponse<T: Decodable>(data: Data, object: T?) -> T? {
-        // Verbose printing
-        // print("** MapClient is attempting to parse the following as a \(T.self) : \(String(describing: data))")
-        // print(String(data: data, encoding: .utf8)!)
         var jsonObject: T? = nil
         var errorMessage = ""
         var dataToParse = data
@@ -233,8 +220,6 @@ extension MapClient {
         }
         
         do {
-            // Verbose data printing
-            // print(String(data: dataToParse, encoding: .utf8)!)
             let jsonDecoder = JSONDecoder()
             let jsonData = Data(dataToParse)
             jsonObject = try jsonDecoder.decode(T.self, from: jsonData)

@@ -47,11 +47,4 @@ extension DataSource {
         static let MediaURLValue = "https://en.wikipedia.org/wiki/Where%27s_Wally%3F"
     }
     
-    // MARK: Methods
-    struct OptionalParameters {
-        static let Limit = "limit=" // use with Int
-        static let Skip = "skip=" // use with Int
-        static let ReverseOrder = "-"
-    }
-    
 }

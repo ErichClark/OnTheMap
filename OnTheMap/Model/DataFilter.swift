@@ -28,8 +28,6 @@ extension MapClient {
                         let filteredCount = verifiedStudents?.count
                         print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
                         
-                        
-                        // MARK: - Take only 100 verified entries
                         DataSource.sharedInstance().allStudents = verifiedStudents
                         completionHandlerForGet100ValidStudentLocations(true, verifiedStudents, nil)
                     }
@@ -41,7 +39,7 @@ extension MapClient {
     func get100StudentLocations(_ completionHandlerForGetAllLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
         var address = DataSource.Addresses.ParseServerAddress
-        // Asks for a specific number of entries from Udacity. Number is large because most entries are junk.
+        // Asks for a specific number of entries from Udacity.
         address += "?limit=\(DataSource.Constants.DefaultSampleSize)"
         let _ = taskForGETMethod(address, optionalQueries: nil) { (results:AllStudentLocations?, errorString:String?) in
             
@@ -53,8 +51,7 @@ extension MapClient {
         }
     }
     
-    
-    // MARK: - Filter bad location data, duplicates
+    // MARK: - Filter bad location data, duplicates, and order by date updated
     func filterInvalidResults(allStudentLocations: AllStudentLocations, _ completionHandlerForFilterInvalidLocations: @escaping (_ success: Bool, _ cleanedStudentLocations: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
         
         let potentialStudents: [StudentLocation] = allStudentLocations.results!
