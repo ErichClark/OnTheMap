@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+class DataSource: NSObject {
+    
+    
+    
+    // MARK: Shared Instance Singleton
+    class func sharedInstance() -> DataSource {
+        struct Singleton {
+            static var sharedInstance = DataSource()
+        }
+        return Singleton.sharedInstance
+    }
+}
