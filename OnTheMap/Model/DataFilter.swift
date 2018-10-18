@@ -11,9 +11,9 @@ import MapKit
 
 extension MapClient {
     
-    func get100ValidStudentLocations(_ completionHandlerForGet100ValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
+    func getStudentLocations(_ completionHandlerForGet100ValidStudentLocations: @escaping (_ success: Bool, _ verifiedSudents: [VerifiedStudentPin]?, _ errorString: String?) -> Void ) {
         
-        self.getAllStudentLocations() {
+        self.get100StudentLocations() {
             (success, allStudentLocations, errorString) in
             
             if allStudentLocations == nil {
@@ -29,9 +29,7 @@ extension MapClient {
                         print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
                         
                         // MARK: - Take only 100 verified entries
-                        let slice = verifiedStudents![0..<100]
-                        let oneHundredStudents = Array(slice)
-                        MapClient.sharedInstance().allStudents = oneHundredStudents
+                        MapClient.sharedInstance().allStudents = verifiedStudents
                         completionHandlerForGet100ValidStudentLocations(true, verifiedStudents, nil)
                     }
                 }
@@ -39,7 +37,7 @@ extension MapClient {
         }
     }
     
-    func getAllStudentLocations(_ completionHandlerForGetAllLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
+    func get100StudentLocations(_ completionHandlerForGetAllLocations: @escaping (_ success: Bool, _ allStudentLocations: AllStudentLocations?, _ errorString: String?) -> Void) {
         
         var address = MapClient.Addresses.ParseServerAddress
         // Asks for a specific number of entries from Udacity. Number is large because most entries are junk.

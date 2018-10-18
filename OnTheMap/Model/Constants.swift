@@ -19,7 +19,7 @@ extension MapClient {
         static let SearchLonRange = (-180.0, 180.0)
         static let ValidLatitudeRange = (-90.000...90.000)
         static let ValidLongitudeRange = (-180.000...180.000)
-        static let DefaultSampleSize = 1000 // "?limit=1000"
+        static let DefaultSampleSize = 100 // "?limit=100"
     }
     
     // Addresses

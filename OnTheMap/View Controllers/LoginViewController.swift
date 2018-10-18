@@ -87,7 +87,7 @@ class LoginViewController: UIViewController {
         }
         
         displayTextOnUI("Getting student locations...")
-        mapClient.get100ValidStudentLocations() {
+        mapClient.getStudentLocations() {
             (success, allValidStudentLocations, errorString) in
 
             performUIUpdatesOnMain {

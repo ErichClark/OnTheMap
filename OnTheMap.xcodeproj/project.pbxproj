@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		77396F542159E2F400A38EFE /* DataFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77396F532159E2F400A38EFE /* DataFilter.swift */; };
+		778AE6382178285000F367E6 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778AE6372178285000F367E6 /* DataSource.swift */; };
 		778D75BC2138E700002AA868 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75BB2138E700002AA868 /* AppDelegate.swift */; };
 		778D75BE2138E700002AA868 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778D75BD2138E700002AA868 /* LoginViewController.swift */; };
 		778D75C12138E700002AA868 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 778D75BF2138E700002AA868 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		77396F532159E2F400A38EFE /* DataFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFilter.swift; sourceTree = "<group>"; };
+		778AE6372178285000F367E6 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		778D75B82138E700002AA868 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		778D75BB2138E700002AA868 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		778D75BD2138E700002AA868 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				778D75D9213B8B8F002AA868 /* NetworkErrorHelper.swift */,
 				77EC8E3F213F547400EAAE9E /* ClientConvenience.swift */,
 				77396F532159E2F400A38EFE /* DataFilter.swift */,
+				778AE6372178285000F367E6 /* DataSource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				778D75D02138E9B2002AA868 /* Structs.swift in Sources */,
 				778D75BE2138E700002AA868 /* LoginViewController.swift in Sources */,
 				77C6F2A121584B4500627F19 /* MapConfirmationViewController.swift in Sources */,
+				778AE6382178285000F367E6 /* DataSource.swift in Sources */,
 				778D75D62139C1AB002AA868 /* GCDBlackbox.swift in Sources */,
 				77C6F29F21582F6000627F19 /* InformationPostingViewController.swift in Sources */,
 				778D75BC2138E700002AA868 /* AppDelegate.swift in Sources */,

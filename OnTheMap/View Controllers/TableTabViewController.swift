@@ -41,9 +41,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
             if studentTable.visibleCells[0] != MapClient.sharedInstance().allStudents![0] {
                 reload(self)
             }
-        } else {
-            displayTextOnUI("No students found.")
-        }
+        } 
     }
     
     // MARK: - Actions
@@ -78,7 +76,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
             self.displayTextOnUI("Getting student locations...")
         }
         
-        mapClient.get100ValidStudentLocations() {
+        mapClient.getStudentLocations() {
             (success, allValidStudentLocations, errorString) in
             
             performUIUpdatesOnMain {
