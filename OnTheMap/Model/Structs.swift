@@ -18,14 +18,18 @@ class VerifiedStudentPin: NSObject, MKAnnotation {
     let mediaURL: String
     let coordinate: CLLocationCoordinate2D
     let uniqueKey: String?
+    let createdAt: String?
+    let updatedAt: String?
     
-    init(firstName: String, lastName: String, mapString: String, mediaURL: String, latitude: Double, longitude: Double, uniqueKey: String?) {
+    init(firstName: String, lastName: String, mapString: String, mediaURL: String, latitude: Double, longitude: Double, uniqueKey: String?, createdAt: String?, updatedAt: String?) {
         
         self.name = firstName + " " + lastName
         self.mediaURL = mediaURL
         self.mapString = mapString
         self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.uniqueKey = uniqueKey
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
         
         super.init()
     }

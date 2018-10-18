@@ -28,6 +28,7 @@ extension MapClient {
                         let filteredCount = verifiedStudents?.count
                         print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
                         
+                        
                         // MARK: - Take only 100 verified entries
                         DataSource.sharedInstance().allStudents = verifiedStudents
                         completionHandlerForGet100ValidStudentLocations(true, verifiedStudents, nil)
@@ -109,15 +110,19 @@ extension MapClient {
                 mediaURL: student.mediaURL!,
                 latitude: student.latitude!,
                 longitude: student.longitude!,
-                uniqueKey: student.uniqueKey!)
+                uniqueKey: student.uniqueKey!,
+                createdAt: student.createdAt!,
+                updatedAt: student.updatedAt)
             filteredStudents.append(cleanStudent)
             BlacklistedUniqueKeys.append(student.uniqueKey!)
         }
         
         let filteredCount = filteredStudents.count
         if  filteredCount > 0 {
-            // print("** SUCCESS! \(filteredCount) valid locations were found.")
-            completionHandlerForFilterInvalidLocations(true, filteredStudents, nil)
+            // Sorts by date created, then updated
+            let orderedStudents = filteredStudents.sorted(by: {($0.createdAt!) > ($1.createdAt!)})
+            let furtherOrderedStudents = orderedStudents.sorted(by: {($0.updatedAt!) > ($1.updatedAt!)})
+            completionHandlerForFilterInvalidLocations(true, furtherOrderedStudents, nil)
         } else {
             let errorMessage = "Could not return cleaned Students array."
             completionHandlerForFilterInvalidLocations(false, nil, errorMessage)

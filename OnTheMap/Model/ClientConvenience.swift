@@ -129,7 +129,7 @@ extension MapClient {
             mediaURL: mediaURL,
             latitude: latitude,
             longitude: longitude,
-            uniqueKey: DataSource.sharedInstance().accountKey)
+            uniqueKey: DataSource.sharedInstance().accountKey, createdAt: nil, updatedAt: nil)
         
         
         let objectId = DataSource.sharedInstance().userObjectId
