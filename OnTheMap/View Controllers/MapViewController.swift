@@ -53,16 +53,11 @@ class MapViewController: UIViewController {
         super.viewWillAppear(true)
         
         centerMap()
+        
+        // Forces pin refresh when on return,
+        // Not expensive, in order to make sure user's pin is current.
         if mapView.annotations.count != 0 {
-            let lastPin = mapView.annotations.last
-            let pinName = lastPin?.title
-            let firstPinNameInDataModel = DataSource.sharedInstance().allStudents![0].name
-            if pinName != firstPinNameInDataModel {
-                print("\(String(describing: pinName)) != \(firstPinNameInDataModel)")
-                mapView.removeAnnotations(allStudents!)
-                allStudents = DataSource.sharedInstance().allStudents
-                mapView.addAnnotations(allStudents!)
-           }
+            refreshPins()
         }
     }
     
@@ -92,6 +87,12 @@ class MapViewController: UIViewController {
         }
         mapView.setRegion(region!, animated: true)
         DataSource.sharedInstance().defaultRegion = region
+    }
+    
+    func refreshPins() {
+        mapView.removeAnnotations(allStudents!)
+        allStudents = DataSource.sharedInstance().allStudents
+        mapView.addAnnotations(allStudents!)
     }
 
     // MARK: - Actions
