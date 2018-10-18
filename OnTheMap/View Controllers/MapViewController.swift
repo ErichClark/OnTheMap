@@ -53,6 +53,17 @@ class MapViewController: UIViewController {
         super.viewWillAppear(true)
         
         centerMap()
+        if mapView.annotations.count != 0 {
+            let lastPin = mapView.annotations.last
+            let pinName = lastPin?.title
+            let firstPinNameInDataModel = DataSource.sharedInstance().allStudents![0].name
+            if pinName != firstPinNameInDataModel {
+                print("\(String(describing: pinName)) != \(firstPinNameInDataModel)")
+                mapView.removeAnnotations(allStudents!)
+                allStudents = DataSource.sharedInstance().allStudents
+                mapView.addAnnotations(allStudents!)
+           }
+        }
     }
     
     // MARK: - Check for Location when in use permissions
