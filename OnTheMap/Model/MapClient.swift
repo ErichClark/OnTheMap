@@ -18,7 +18,6 @@ class MapClient: NSObject {
     
     // shared session
     var session = URLSession.shared
-    var allStudents: [VerifiedStudentPin]? = nil
     var sessionID: String? = nil
     var accountKey: String? = nil
     var currentLocation: CLLocationCoordinate2D? = nil

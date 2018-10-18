@@ -18,6 +18,7 @@ class MapViewController: UIViewController {
     // Location and map
     let locationManager = CLLocationManager()
     var mapClient: MapClient!
+    var dataSource: DataSource!
     
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -38,7 +39,7 @@ class MapViewController: UIViewController {
         // get the Map client
         mapClient = MapClient.sharedInstance()
         mapView.delegate = self
-        allStudents = mapClient.allStudents
+        allStudents = DataSource.sharedInstance().allStudents
         
         loadingTextField.isHidden = true
         mapView.addAnnotations(allStudents!)

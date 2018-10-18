@@ -17,6 +17,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var studentTable: UITableView!
     
     var mapClient: MapClient!
+    var dataSource: DataSource!
     var mapCenter: CLLocationCoordinate2D? = nil
     var allStudents: [VerifiedStudentPin]? = nil
     var logoutMessage: String? = nil
@@ -28,7 +29,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
 
         // get the Map client
         mapClient = MapClient.sharedInstance()
-        allStudents = mapClient.allStudents
+        allStudents = DataSource.sharedInstance().allStudents
         feedbackTextField.isHidden = true
     }
 
@@ -38,7 +39,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         // This method checks if there are visible cells, then compares the visible cells with the
         // allStudents table in the data model. If not matching, reloads table.
         if studentTable.visibleCells.count != 0 {
-            if studentTable.visibleCells[0] != MapClient.sharedInstance().allStudents![0] {
+            if studentTable.visibleCells[0] != DataSource.sharedInstance().allStudents![0] {
                 reload(self)
             }
         } 

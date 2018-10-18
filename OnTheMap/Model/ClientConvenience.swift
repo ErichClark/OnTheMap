@@ -102,7 +102,7 @@ extension MapClient {
         
         let userUniqueKey = MapClient.sharedInstance().accountKey
 
-        let oldArray = MapClient.sharedInstance().allStudents
+        let oldArray = DataSource.sharedInstance().allStudents
         var newArray: [VerifiedStudentPin] = [newLocation]
         var index = 0
         for student in oldArray! {
@@ -113,7 +113,7 @@ extension MapClient {
             }
             index += 1
         }
-        MapClient.sharedInstance().allStudents = newArray
+        DataSource.sharedInstance().allStudents = newArray
     }
     
     // MARK: - POST or PUT ?

@@ -29,7 +29,7 @@ extension MapClient {
                         print("** SUCCESS! \(String(describing: filteredCount)) valid students were found.")
                         
                         // MARK: - Take only 100 verified entries
-                        MapClient.sharedInstance().allStudents = verifiedStudents
+                        DataSource.sharedInstance().allStudents = verifiedStudents
                         completionHandlerForGet100ValidStudentLocations(true, verifiedStudents, nil)
                     }
                 }

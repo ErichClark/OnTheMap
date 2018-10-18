@@ -9,7 +9,8 @@
 import Foundation
 
 class DataSource: NSObject {
-    
+    var allStudents: [VerifiedStudentPin]? = nil
+
     
     
     // MARK: Shared Instance Singleton
