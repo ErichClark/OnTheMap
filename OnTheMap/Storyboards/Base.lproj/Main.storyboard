@@ -368,10 +368,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1D-ud-FfH" userLabel="Loading View">
                                 <rect key="frame" x="30" y="409" width="315" height="228"/>
                                 <subviews>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-7M-10Y">
-                                        <rect key="frame" x="138" y="97" width="37" height="37"/>
-                                        <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </activityIndicatorView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="z50-q9-pc5" userLabel="resultsTableView">
                                         <rect key="frame" x="0.0" y="0.0" width="315" height="228"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -404,9 +400,7 @@
                                     <constraint firstItem="z50-q9-pc5" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" id="HAN-PM-GQk"/>
                                     <constraint firstAttribute="bottom" secondItem="z50-q9-pc5" secondAttribute="bottom" id="JLh-4k-Xjm"/>
                                     <constraint firstItem="z50-q9-pc5" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" id="SuS-2c-Rk1"/>
-                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="top" secondItem="L1D-ud-FfH" secondAttribute="top" constant="97" id="edz-tX-jHo"/>
                                     <constraint firstAttribute="trailing" secondItem="z50-q9-pc5" secondAttribute="trailing" id="pkU-4T-iOd"/>
-                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="leading" secondItem="L1D-ud-FfH" secondAttribute="leading" constant="138" id="vTU-3G-rk8"/>
                                 </constraints>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6N-i0-tEe">
@@ -428,10 +422,17 @@
                                         <rect key="frame" x="120" y="31" width="72" height="63"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-7M-10Y">
+                                        <rect key="frame" x="139" y="51" width="37" height="37"/>
+                                        <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="top" secondItem="1Qj-LI-ffe" secondAttribute="top" constant="51" id="HFb-na-9Og"/>
+                                    <constraint firstAttribute="bottom" secondItem="eOI-7M-10Y" secondAttribute="bottom" constant="34" id="YcC-UO-i1l"/>
                                     <constraint firstAttribute="height" constant="122" id="Ynk-Ar-qhH"/>
+                                    <constraint firstItem="eOI-7M-10Y" firstAttribute="centerX" secondItem="1Qj-LI-ffe" secondAttribute="centerX" id="u8o-da-FzJ"/>
                                 </constraints>
                             </view>
                         </subviews>

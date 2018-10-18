@@ -44,9 +44,6 @@ class VerifiedStudentPin: NSObject, MKAnnotation {
         mapItem.name = name
         return mapItem
     }
-    
-    
-    
 }
 
 // These next two are junk structs.
