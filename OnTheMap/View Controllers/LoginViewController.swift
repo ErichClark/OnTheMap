@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
             }
             
             // MARK: - Login Convenience method with stored user/pswd
-            // For safe convenience while debugging, an untracked PrivateConstants file is kept locally on my development computer.
+            // For safe convenience while debugging, an untracked PrivateConstants.swift file is kept locally on my development computer. It has been removed for distribution.
 //            mapClient.loginToUdacity(username: PrivateConstants.username, password: PrivateConstants.password) {
 //                (success, sessionID, errorString) in
             

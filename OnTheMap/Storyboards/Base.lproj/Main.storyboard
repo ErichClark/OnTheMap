@@ -18,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-U-inverse-128" translatesAutoresizingMaskIntoConstraints="NO" id="DLG-1U-NUk">
-                                <rect key="frame" x="116.5" y="89.5" width="128" height="128"/>
+                                <rect key="frame" x="116.5" y="49.5" width="128" height="128"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="lC5-8W-bph">
-                                <rect key="frame" x="40" y="253" width="295" height="161"/>
+                                <rect key="frame" x="40" y="213" width="295" height="241"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="usr" borderStyle="roundedRect" placeholder="email" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I3W-D9-Q0i" userLabel="emailField">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="30"/>
@@ -47,58 +47,44 @@
                                             <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="erO-ur-KZy"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="left" translatesAutoresizingMaskIntoConstraints="NO" id="3bE-jF-GoU">
+                                    <stackView opaque="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="3bE-jF-GoU">
                                         <rect key="frame" x="0.0" y="132" width="295" height="29"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have a Udacity account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbq-ha-fKm" userLabel="signUpLabel">
-                                                <rect key="frame" x="0.0" y="0.0" width="193.5" height="29"/>
-                                                <fontDescription key="fontDescription" name=".SFNSText" family=".SF NS Text" pointSize="14"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have a Udacity account?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fbq-ha-fKm" userLabel="signUpLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="172.5" height="29"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwh-lp-arJ" userLabel="signUpButton">
-                                                <rect key="frame" x="193.5" y="0.0" width="66" height="29"/>
+                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwh-lp-arJ" userLabel="signUpButton">
+                                                <rect key="frame" x="172.5" y="0.0" width="122.5" height="29"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <state key="normal" title="Sign Up"/>
                                                 <connections>
                                                     <action selector="signUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PhD-by-Ko3"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="        " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J4W-MD-hMY" userLabel="spacer">
-                                                <rect key="frame" x="259.5" y="0.0" width="35.5" height="29"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
                                     </stackView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s40-bU-hbG" userLabel="activityIndicator">
+                                        <rect key="frame" x="0.0" y="175" width="295" height="37"/>
+                                        <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </activityIndicatorView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mvO-VT-tbg" userLabel="errorTextfield">
+                                        <rect key="frame" x="0.0" y="226" width="295" height="15"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s40-bU-hbG" userLabel="activityIndicator">
-                                <rect key="frame" x="170" y="502" width="37" height="37"/>
-                                <color key="color" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </activityIndicatorView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mvO-VT-tbg" userLabel="errorTextfield">
-                                <rect key="frame" x="40" y="552" width="294" height="24"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DLG-1U-NUk" firstAttribute="centerX" secondItem="lC5-8W-bph" secondAttribute="centerX" constant="-7" id="3PF-8K-3Zq"/>
-                            <constraint firstItem="mvO-VT-tbg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="3QD-dE-Ppp"/>
-                            <constraint firstItem="mvO-VT-tbg" firstAttribute="top" secondItem="lC5-8W-bph" secondAttribute="bottom" constant="138" id="4DJ-6Z-R2F"/>
-                            <constraint firstItem="s40-bU-hbG" firstAttribute="top" secondItem="lC5-8W-bph" secondAttribute="bottom" constant="88" id="4cj-PA-8qx"/>
-                            <constraint firstItem="s40-bU-hbG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="170" id="8Yh-Lg-x7t"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="IVH-qg-JSL"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mvO-VT-tbg" secondAttribute="trailing" constant="41" id="N6R-bI-luD"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SQL-aS-Kph"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s40-bU-hbG" secondAttribute="trailing" constant="168" id="Ymy-2F-dXZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lC5-8W-bph" secondAttribute="trailing" constant="40" id="aHR-AP-a0k"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="mvO-VT-tbg" secondAttribute="bottom" constant="91" id="bNZ-yk-urO"/>
-                            <constraint firstItem="mvO-VT-tbg" firstAttribute="top" secondItem="s40-bU-hbG" secondAttribute="bottom" constant="13" id="lKX-7E-aJF"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="top" secondItem="DLG-1U-NUk" secondAttribute="bottom" constant="35.5" id="rDc-id-oHY"/>
                             <constraint firstItem="lC5-8W-bph" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sEq-kD-mfW"/>
                             <constraint firstItem="DLG-1U-NUk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-7" id="zUb-ao-Hgc"/>

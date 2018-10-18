@@ -24,17 +24,27 @@ extension MapClient {
         let _ = taskForPOSTOrPUTMethod(address, optionalQueries: parameters, postObject: postBody, requestType: requestType) { (results:Data?, errorString:String?) in
             
             if errorString != nil {
-                completionHandlerForloginToUdacity(false, nil, errorString)
+                return completionHandlerForloginToUdacity(false, nil, errorString)
             }
 
             if results == nil {
-                let errorString = "No error was returned, but no data was returned either."
-                completionHandlerForloginToUdacity(false, nil, errorString)
+                let errorString = "No error or data was returned."
+                return completionHandlerForloginToUdacity(false, nil, errorString)
             }
+            
+            print("** Your results: ")
+            print(String(data: results!, encoding: .utf8)!)
             
             var accountResult: POSTSessionResponseJSON? = nil
             accountResult = self.decodeJSONResponse(data: results!, object: accountResult)
-            
+            if accountResult == nil {
+                var udacityError: UdacityError? = nil
+                udacityError = self.decodeJSONResponse(data: results!, object: udacityError)
+                let status: String = "\(udacityError!.status ?? 0)"
+                let errorString = "\(udacityError?.error ?? "error")"
+                let errorMessage = "\(status) - \(errorString)"
+                return completionHandlerForloginToUdacity(false, nil, errorMessage)
+            }
             // MARK: - Captures user's accountKey (elsewhere a uniqueKey)
             let key = accountResult?.account.key
             MapClient.sharedInstance().accountKey = key
@@ -43,12 +53,15 @@ extension MapClient {
             MapClient.sharedInstance().sessionID = id
             
             if errorString != nil {
-                completionHandlerForloginToUdacity(false, nil, errorString)
+                return completionHandlerForloginToUdacity(false, nil, errorString)
+            } else if results == nil {
+                let errorString = "Login failed."
+                return completionHandlerForloginToUdacity(false, nil, errorString)
             } else if key == nil {
-                let errorString = "No account key was returned from Udacity."
+                let errorString = "No account key was returned."
                 completionHandlerForloginToUdacity(false, nil, errorString)
             } else if id == nil {
-                let errorString = "No session ID was returned from Udacity."
+                let errorString = "No session ID was returned."
                 completionHandlerForloginToUdacity(false, nil, errorString)
             } else {
                 let sessionID = id
@@ -213,7 +226,7 @@ extension MapClient {
         
         // Udacity prefixes 5 security characters
         // This method removes them
-        if T.self ==  POSTSessionResponseJSON.self || T.self == DeleteSessionResponseJSON.self {
+        if T.self ==  POSTSessionResponseJSON.self || T.self == DeleteSessionResponseJSON.self || T.self == UdacityError.self {
             let range = (5..<data.count)
             let newData = data.subdata(in: range)
             dataToParse = newData
