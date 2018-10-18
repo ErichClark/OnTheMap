@@ -60,7 +60,7 @@ class MapConfirmationViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func confirmMapLocation(_ sender: Any) {
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
             self.displayTextOnUI("Posting your location to Udacity...")
         }
@@ -72,12 +72,12 @@ class MapConfirmationViewController: UIViewController {
         // Sends information to pin posting method
         mapClient.placeStudentLocationPin(newMediaURL: urlFromSegue!, mapString: mapString!, latitude: coordinateLat!, longitude: coordinateLong!) { (success, successMessage, errorString) in
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.debuggingTextField.isHidden = true
             }
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 if success {
                     print(successMessage!)
                 } else {

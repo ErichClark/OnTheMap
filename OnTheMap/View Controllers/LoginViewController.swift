@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
             self.displayTextOnUI("Please enter your password.")
         } else {
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.startAnimating()
                 self.resignFirstResponder()
             }
@@ -55,12 +55,12 @@ class LoginViewController: UIViewController {
              mapClient.loginToUdacity(username: self.emailField.text!, password: self.passwordField.text!) {
              (success, sessionID, errorString) in
             
-                performUIUpdatesOnMain {
+                DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.errorTextfield.isHidden = true
                 }
                 
-                performUIUpdatesOnMain {
+                DispatchQueue.main.async {
                     if success {
                         self.loadStudentLocations()
                     } else {
@@ -82,7 +82,7 @@ class LoginViewController: UIViewController {
     
     func loadStudentLocations() {
         
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
         }
         
@@ -90,11 +90,11 @@ class LoginViewController: UIViewController {
         mapClient.getStudentLocations() {
             (success, allValidStudentLocations, errorString) in
 
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
             }
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 if success {
                     self.errorTextfield.isHidden = true
                     self.performSegue(withIdentifier: "loginComplete", sender: self)

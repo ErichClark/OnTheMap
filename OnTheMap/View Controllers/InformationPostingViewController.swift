@@ -48,7 +48,7 @@ class InformationPostingViewController: UIViewController {
             displayTextOnUI("Please enter a location to search.")
         } else {
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.startAnimating()
                 self.displayTextOnUI("Searching for a location match...")
             }
@@ -58,12 +58,12 @@ class InformationPostingViewController: UIViewController {
             
             mapClient.getResultsFromStringQuery(queryString: queryText!, region: queryRegion) { (success, returnedResults, errorString) in
                 
-                performUIUpdatesOnMain {
+                DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.displayTextOnUI("")
                 }
                 
-                performUIUpdatesOnMain {
+                DispatchQueue.main.async {
                     if success! {
                         print("** Success! Match(es) found.")
                         self.resultsFromSearch = returnedResults

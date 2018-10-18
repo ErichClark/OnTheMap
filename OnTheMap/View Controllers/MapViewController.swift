@@ -85,7 +85,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Actions
     @IBAction func reload(_ sender: Any) {
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
             self.displayTextOnUI("Getting student locations...")
         }
@@ -93,7 +93,7 @@ class MapViewController: UIViewController {
         mapClient.getStudentLocations() {
             (success, allValidStudentLocations, errorString) in
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 if success {
                     self.loadingTextField.isHidden = true
                     self.activityIndicator.stopAnimating()
@@ -117,17 +117,17 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func logOut(_ sender: Any) {
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
         }
         
         displayTextOnUI("Logging out of Udacity...")
         mapClient.logOutOfUdacity() { (success, successMessage, errorMessage) in
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
             }
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 if success {
                     print(successMessage!)
                 } else {

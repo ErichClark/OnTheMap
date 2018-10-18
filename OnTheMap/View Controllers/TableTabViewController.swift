@@ -48,18 +48,18 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Actions
     @IBAction func logOut(_ sender: Any) {
         
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
         }
         
         displayTextOnUI("Logging out of Udacity...")
         mapClient.logOutOfUdacity() { (success, successMessage, errorMessage) in
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
                 self.feedbackTextField.isHidden = true
             }
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 if success {
                     print(successMessage!)
                 } else {
@@ -72,7 +72,7 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func reload(_ sender: Any)  {
         
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
             self.displayTextOnUI("Getting student locations...")
         }
@@ -80,11 +80,11 @@ class TableTabViewController: UIViewController, UITableViewDelegate, UITableView
         mapClient.getStudentLocations() {
             (success, allValidStudentLocations, errorString) in
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
             }
             
-            performUIUpdatesOnMain {
+            DispatchQueue.main.async {
                 if success {
                     self.feedbackTextField.isHidden = true
                     self.studentTable.reloadData()
